@@ -79,7 +79,7 @@ const setStore = (props) => {
     //let clonedStore = cloneDeep(rootStore);
     let current;
     let { action, data, type, id, parentId, gridItemId } = props;
-    console.log(action, data, type, id, parentId, gridItemId);
+    //console.log(action, data, type, id, parentId, gridItemId);
     switch (action) {
         case "update":
             current = findFirst(rootStore, 'grid', { idFuck: id });

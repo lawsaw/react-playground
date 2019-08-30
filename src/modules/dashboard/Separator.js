@@ -13,7 +13,7 @@ const styles = () => ({
         bottom:     props => `${props.style.bottom}`   || 'auto',
         transform:  props => `translate3d(${-props.style.width/2 || 0}px, ${-props.style.height/2 || 0}px, 0)`,
         backgroundColor: 'lightgreen',
-        zIndex: 2,
+        zIndex: 5,
         cursor: props => props.options.cursor,
         '&:hover': {
             backgroundColor: 'lightblue',

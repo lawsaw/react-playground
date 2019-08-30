@@ -239,10 +239,10 @@ export default withStyles(styles)(({ classes }) => {
         //     newData[id+1].grid = currentGrid;
         // }
         newData = getDefaultSize(newData);
-        console.log(id);
-        console.log(srcData[id].grid);
-        console.log(srcData);
-        console.log(newData);
+        // console.log(id);
+        // console.log(srcData[id].grid);
+        // console.log(srcData);
+        // console.log(newData);
         return newData;
     }
 

@@ -85,7 +85,7 @@ export default withStyles(styles)(({
     function update(id, data) {
         //dispatch({type: 'set', data, id, parentId, gridItemId});
         //let currentData = getGrid(id);
-        console.log(data);
+        //console.log(data);
         setData(data);
     }
 
@@ -100,20 +100,21 @@ export default withStyles(styles)(({
 
         if(newType === type) {
             newData = sectionAdd(ids, current);
-            console.log('newType === type');
-            console.log(current);
-            console.log(newData);
             update(idFuck, newData);
+            console.log(`case: add_1; idFuck: ${idFuck}; ids: ${ids}; length: ${data.length}`);
+            console.log({newData, rootStore});
         } else if(newType !== type) {
             if(current.length === 1) {
-                console.log('ACTION');
                 setType(newType);
                 newData = sectionAdd(ids, current);
                 update(idFuck, newData);
+                console.log(`case: add_2; idFuck: ${idFuck}; ids: ${ids}; length: ${data.length}`);
+                console.log({newData, rootStore});
             } else {
-                console.log('ELSE');
                 newData = sectionSplit(ids, idUnic, idFuck, data, newType);
                 update(idFuck, newData);
+                console.log(`case: add_3; idFuck: ${idFuck}; ids: ${ids}; length: ${data.length}`);
+                console.log({newData, rootStore});
             }
         }
 
@@ -122,14 +123,8 @@ export default withStyles(styles)(({
 
     function deleteSection(ids, id) {
         if(idFuck === 'root' && data.length === 1) {
-            console.log(`idFuck: ${idFuck}; id: ${id}; index: ${ids}; type 1; length: ${data.length}`);
-            return false;
-        }
-        else if(data.length > 2) {
-            let cloneData = [...data];
-            cloneData.splice(ids, 1);
-            update(id, getDefaultSize(cloneData));
-            console.log(`idFuck: ${idFuck}; id: ${id}; index: ${ids}; type 2; length: ${data.length}`);
+            console.log(`case: del_1; idFuck: ${idFuck}; id: ${id}; ids: ${ids}; length: ${data.length}`);
+            console.log({rootStore});
             return false;
         } else if(data.length === 2) {
             let cloneData = [...data];
@@ -138,14 +133,22 @@ export default withStyles(styles)(({
                 let lastData = [...cloneData[0].grid];
                 setType(cloneData[0].type);
                 update(id, getDefaultSize(lastData));
+                console.log(`case: del_2; idFuck: ${idFuck}; id: ${id}; ids: ${ids}; length: ${data.length}`);
+                console.log({cloneData, rootStore});
             } else {
-                console.log('ELSE');
-                console.log(`idFuck: ${idFuck}; id: ${id}; index: ${ids}; type 3; length: ${data.length}`);
-                console.log(cloneData);
-                console.log(rootStore);
+                let cloneData = [...data];
+                cloneData.splice(ids, 1);
+                update(id, getDefaultSize(cloneData));
+                console.log(`case: del_3; idFuck: ${idFuck}; id: ${id}; ids: ${ids}; length: ${data.length}`);
+                console.log({cloneData, rootStore});
+                return false;
             }
         } else {
-            console.log(`idFuck: ${idFuck}; id: ${id}; index: ${ids}; type ELSE; length: ${data.length}`);
+            let cloneData = [...data];
+            cloneData.splice(ids, 1);
+            update(id, getDefaultSize(cloneData));
+            console.log(`case: del_4; idFuck: ${idFuck}; id: ${id}; ids: ${ids}; length: ${data.length}`);
+            console.log({cloneData, rootStore});
             return false;
         }
     }
@@ -181,7 +184,7 @@ export default withStyles(styles)(({
         document.removeEventListener('mouseup', onMouseUpEvent, false);
         document.removeEventListener('mousemove', onMouseMoveEvent, false);
     }
-    console.log({idFuck, data, rootStore});
+    //console.log({idFuck, data, rootStore});
 
     function returnContent(contentArray) {
         return contentArray.map((item, index) => {
