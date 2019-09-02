@@ -1,3 +1,4 @@
+import Container from './Container';
 import Dashboard from './Dashboard';
 import Toolbar from './Toolbar';
 import Window from './Window';
@@ -9,6 +10,7 @@ import Separator from './Separator';
 import { StoreContext, StoreProvider, initialStore, rootStore, setStore } from './Store';
 
 export {
+    Container,
     Dashboard,
     Toolbar,
     Window,
