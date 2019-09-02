@@ -6,19 +6,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf276a12-ba85-4e17-93a3-7ef6e8fa304c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/modules/dashboard/Container.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/dashboard/constants.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/dashboard/redux/actionTypes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/dashboard/redux/actions.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/dashboard/redux/reducers/cascade.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/dashboard/redux/reducers/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/dashboard/redux/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/dashboard/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/dashboard/Dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/dashboard/Container.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/dashboard/Container.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/dashboard/Grid.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/dashboard/Grid.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/dashboard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/dashboard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/dashboard/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/dashboard/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/dashboard/redux/reducers/cascade.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/dashboard/redux/reducers/cascade.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,8 +24,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/modules/dashboard/redux/reducers/cascade.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="195">
-                  <caret line="13" column="23" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="23" />
+                <state relative-caret-position="435">
+                  <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
                   <folding>
                     <element signature="e#0#60#0" expanded="true" />
                   </folding>
@@ -45,8 +36,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/modules/dashboard/Grid.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1170">
-                  <caret line="78" column="20" selection-start-line="78" selection-start-column="16" selection-end-line="78" selection-end-column="20" />
+                <state relative-caret-position="237">
+                  <caret line="37" column="38" selection-start-line="37" selection-start-column="28" selection-end-line="37" selection-end-column="38" />
                   <folding>
                     <element signature="e#0#63#0" expanded="true" />
                   </folding>
@@ -54,11 +45,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/modules/dashboard/Container.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="442">
-                  <caret line="133" selection-start-line="133" selection-end-line="133" />
+                <state relative-caret-position="420">
+                  <caret line="125" lean-forward="true" selection-start-line="125" selection-end-line="125" />
                   <folding>
                     <element signature="e#0#84#0" expanded="true" />
                   </folding>
@@ -66,11 +57,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/modules/dashboard/constants.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="435">
-                  <caret line="29" column="1" lean-forward="true" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
+                <state relative-caret-position="255">
+                  <caret line="17" column="17" lean-forward="true" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
                 </state>
               </provider>
             </entry>
@@ -83,7 +74,7 @@
             <entry file="file://$PROJECT_DIR$/src/modules/dashboard/redux/actions.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="345">
-                  <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+                  <caret line="23" selection-start-line="23" selection-end-line="23" />
                 </state>
               </provider>
             </entry>
@@ -115,8 +106,6 @@
       <find>type</find>
       <find>split</find>
       <find>sectionSplit</find>
-      <find>setType</find>
-      <find>sectionAdd</find>
       <find>smartMerge</find>
       <find>deleteSection</find>
       <find>cloneDeep</find>
@@ -124,6 +113,8 @@
       <find>setFilter</find>
       <find>data</find>
       <find>setStore</find>
+      <find>sectionAdd</find>
+      <find>setType</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src/modules</dir>
@@ -180,10 +171,10 @@
         <option value="$PROJECT_DIR$/src/modules/dashboard/Dashboard.js" />
         <option value="$PROJECT_DIR$/src/modules/dashboard/redux/actionTypes.js" />
         <option value="$PROJECT_DIR$/src/modules/dashboard/redux/actions.js" />
-        <option value="$PROJECT_DIR$/src/modules/dashboard/Grid.js" />
         <option value="$PROJECT_DIR$/src/modules/dashboard/redux/reducers/cascade.js" />
-        <option value="$PROJECT_DIR$/src/modules/dashboard/Container.js" />
         <option value="$PROJECT_DIR$/src/modules/dashboard/constants.js" />
+        <option value="$PROJECT_DIR$/src/modules/dashboard/Grid.js" />
+        <option value="$PROJECT_DIR$/src/modules/dashboard/Container.js" />
       </list>
     </option>
   </component>
@@ -308,12 +299,12 @@
       <workItem from="1566286312057" duration="75235000" />
       <workItem from="1566658045876" duration="567000" />
       <workItem from="1566890775715" duration="53808000" />
-      <workItem from="1567424416498" duration="6537000" />
+      <workItem from="1567424416498" duration="8639000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="291135000" />
+    <option name="totallyTimeSpent" value="293237000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -328,7 +319,7 @@
     <frame x="1920" y="-2" width="1920" height="1202" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14621131" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14621131" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -342,7 +333,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="TypeScript" order="10" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.26001865" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.26001865" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -731,13 +722,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/dashboard/redux/actions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/helpers/etc.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -752,20 +736,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/dashboard/redux/actions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/dashboard/redux/reducers/cascade.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="23" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="23" />
+        <state relative-caret-position="435">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
           <folding>
             <element signature="e#0#60#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/dashboard/constants.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="17" lean-forward="true" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/dashboard/Grid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1170">
-          <caret line="78" column="20" selection-start-line="78" selection-start-column="16" selection-end-line="78" selection-end-column="20" />
+        <state relative-caret-position="237">
+          <caret line="37" column="38" selection-start-line="37" selection-start-column="28" selection-end-line="37" selection-end-column="38" />
           <folding>
             <element signature="e#0#63#0" expanded="true" />
           </folding>
@@ -774,18 +772,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/dashboard/Container.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="133" selection-start-line="133" selection-end-line="133" />
+        <state relative-caret-position="420">
+          <caret line="125" lean-forward="true" selection-start-line="125" selection-end-line="125" />
           <folding>
             <element signature="e#0#84#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/dashboard/constants.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="1" lean-forward="true" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
         </state>
       </provider>
     </entry>

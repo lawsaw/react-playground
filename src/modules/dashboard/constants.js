@@ -5,26 +5,26 @@ export const initData = {
         {
             content: 'FUCK',
         },
-        // {
-        //     content: 54855,
-        // },
-        // {
-        //     //content: 11,
-        //     type: 'col',
-        //     grid: [
-        //         {
-        //             content: 34,
-        //         },
-        //         {
-        //             content: 4325,
-        //         },
-        //         {
-        //             content: 24,
-        //         },
-        //     ]
-        // },
-        // {
-        //     content: 4112,
-        // },
+        {
+            content: 54855,
+        },
+        {
+            //content: 11,
+            type: 'col',
+            grid: [
+                {
+                    content: 34,
+                },
+                {
+                    content: 4325,
+                },
+                {
+                    content: 24,
+                },
+            ]
+        },
+        {
+            content: 4112,
+        },
     ]
 }

@@ -16,6 +16,7 @@ const cascade = (state = initialState, action) => {
                 current.grid = data;
                 current.type = type;
             }
+            console.log(id);
             console.log(state);
             return state;
         }

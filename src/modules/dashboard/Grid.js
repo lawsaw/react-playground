@@ -97,6 +97,15 @@ export default connect(
             //let currentData = getGrid(id);
             //console.log(data);
             setData(data);
+
+            props.updateCascade({
+                data,
+                type,
+                id: idFuck,
+                parentId,
+                gridItemId
+            });
+
         }
 
         function del(id, data) {

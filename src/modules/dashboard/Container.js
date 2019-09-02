@@ -126,7 +126,7 @@ export default withStyles(styles)(({ classes }) => {
 
     function getDefaultSize(dataSrc) {
         let sizeDefault = 100 / dataSrc.length;
-        return dataSrc.map(({ idFuck, element, grid, type, content, ...props }, index) => {
+        return dataSrc.map(({ idFuck, element, type, content, ...props }, index) => {
             return {
                 ...props,
                 idFuck: idFuck || generateId(),
@@ -135,7 +135,7 @@ export default withStyles(styles)(({ classes }) => {
                 //content: grid && grid.length ? renderGrid({idFuck: generateId(), grid, type, parentId: idFuck, gridItemId: index}) : 'FUCK',
                 //grid: grid ? getDefaultSize(grid) : [],
                 //grid: grid && grid.length ? renderGrid({...dataSrc}) : null,
-                content: grid && grid.length ? renderGrid({grid, type, idFuck: generateId()}) : content,
+                content: props.grid && props.grid.length ? renderGrid({idFuck, grid: props.grid, type}) : content,
                 element: element || React.createRef(),
             }
         });
