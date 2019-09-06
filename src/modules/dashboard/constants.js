@@ -16,7 +16,16 @@ export const initData = {
                     content: 34,
                 },
                 {
-                    content: 4325,
+                    //content: 4325,
+                    type: 'row',
+                    grid: [
+                        {
+                            content: 1,
+                        },
+                        {
+                            content: 2,
+                        }
+                    ]
                 },
                 {
                     content: 24,

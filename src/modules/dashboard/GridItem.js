@@ -17,12 +17,12 @@ const styles = () => ({
     },
 });
 
-export default withStyles(styles)(({ classes, id, idUnic, content, element, currentData, isLast, styleSeparator, handleOnMouseDown, optionsSeparator, addSection, deleteSection }) => {
+export default withStyles(styles)(({ classes, id, idUnic, content, grid, type, element, currentData, renderGrid, isLast, styleSeparator, handleOnMouseDown, optionsSeparator, addSection, deleteSection }) => {
 
 
 
     // useEffect(() => {
-         //console.log(idUnic);
+    //      console.log(currentData);
     // });
 
     return (
@@ -32,7 +32,7 @@ export default withStyles(styles)(({ classes, id, idUnic, content, element, curr
                 ref={element}
             >
                 {
-                    !isElement(content) && (
+                    !grid && (
                         <Toolbar
                             id={id}
                             idUnic={idUnic}
@@ -42,11 +42,16 @@ export default withStyles(styles)(({ classes, id, idUnic, content, element, curr
                     )
                 }
                 {
-                    content && (
+
+                    grid && grid.length ? (
+                        <Window>
+                            {renderGrid({idFuck: idUnic, grid, type})}
+                        </Window>
+                    ) : content ? (
                         <Window>
                             {content}
                         </Window>
-                    )
+                    ) : 'No Lol'
                 }
             </Box>
             {

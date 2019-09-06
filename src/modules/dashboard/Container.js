@@ -3,10 +3,50 @@ import { withStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import { Grid } from './';
-import { cloneDeep, cloneDeepWith } from "lodash";
+import { clone, cloneDeep, cloneDeepWith } from "lodash";
 import { StoreProvider, StoreContext, initialStore, rootStore } from "./";
 import { findFirst } from '../../helpers/etc';
-import { initData } from './constants';
+//import { initData } from './constants';
+
+export const initData = {
+    idFuck: 'root',
+    type: 'row',
+    grid: [
+        {
+            content: 'FUCK',
+        },
+        {
+            content: 54855,
+        },
+        {
+            //content: 11,
+            type: 'col',
+            grid: [
+                {
+                    content: 34,
+                },
+                {
+                    //content: 4325,
+                    type: 'row',
+                    grid: [
+                        {
+                            content: 1,
+                        },
+                        {
+                            content: 2,
+                        }
+                    ]
+                },
+                {
+                    content: 24,
+                },
+            ]
+        },
+        {
+            content: 4112,
+        },
+    ]
+}
 
 const styles = (theme) => ({
     dashboard: {
@@ -34,6 +74,7 @@ export default withStyles(styles)(({ classes }) => {
 
     function getUpdatedData(id, type, distance, srcData, realSize) {
         let cloneData = cloneDeepWith(srcData, value => {if(value && isValidElement(value)) return value});
+        //let cloneData = clone(srcData);
         let { size: sizePrev, space:spacePrev } = cloneData[id];
         let { size: sizeNext, space:spaceNext } = cloneData[id+1];
         let { widthRealPrev, heightRealPrev, widthRealNext, heightRealNext } = realSize;
@@ -126,33 +167,27 @@ export default withStyles(styles)(({ classes }) => {
 
     function getDefaultSize(dataSrc) {
         let sizeDefault = 100 / dataSrc.length;
-        return dataSrc.map(({ idFuck, element, type, content, ...props }, index) => {
+        //let { isInited } = dataSrc;
+        return dataSrc.map(({ idFuck, element, size, space, ...props }, index) => {
+            let etc = {};
+            // if(grid && grid.length) {
+            //     etc.grid = isInited ? grid : getDefaultSize(grid);
+            //     etc.content = renderGrid({idFuck, grid: etc.grid, type: props.type});
+            //     //console.log({idFuck, grid: etc.grid, type: props.type});
+            // } else {
+            //     etc.content = content;
+            // }
+            //*etc.content = content;
             return {
                 ...props,
                 idFuck: idFuck || generateId(),
                 size: sizeDefault,
                 space: sizeDefault * index,
-                //content: grid && grid.length ? renderGrid({idFuck: generateId(), grid, type, parentId: idFuck, gridItemId: index}) : 'FUCK',
-                //grid: grid ? getDefaultSize(grid) : [],
-                //grid: grid && grid.length ? renderGrid({...dataSrc}) : null,
-                content: props.grid && props.grid.length ? renderGrid({idFuck, grid: props.grid, type}) : content,
                 element: element || React.createRef(),
+                //...etc,
             }
         });
     }
-
-    // function getDefaultSize___OLD(count, newData) {
-    //     let data = newData.length > 0 ? newData : [...Array(count).keys()];
-    //     let size = 100 / data.length;
-    //     return data.map((item, index) => {
-    //         return {
-    //             size,
-    //             space: size * index,
-    //             content: newData[index] && newData[index].content ? newData[index].content : getRandomContent(),
-    //             element: newData[index] && newData[index].element ? newData[index].element : React.createRef(),
-    //         }
-    //     });
-    // }
 
     function getGrid(id) {
         return findFirst(rootStore, 'grid', { idFuck: id }).grid;
@@ -187,44 +222,6 @@ export default withStyles(styles)(({ classes }) => {
     //     return newData;
     // }
 
-    function getDataWithNewSection(id, newType, currentType, srcData) {
-        //console.log(id, newType, currentType, srcData);
-        let newData = cloneDeep(srcData);
-        let currentContent = newData[id].data;
-        let currentElement = newData[id].element;
-        // console.log(newData);
-        // console.log(currentContent);
-        // console.log(currentElement);
-        if(newType === currentType) {
-            newData.splice(id, 0, {data: initialContent, element: React.createRef()});
-            newData[id+1].data = currentContent;
-            newData[id+1].element = currentElement;
-            newData = getDefaultSize(newData);
-            //console.log(newData);
-        } else {
-            let nGrid = [
-                {
-                    content: 'ПИЗДА',
-                    //element: React.createRef(),
-                },
-                {
-                    content: 'fdsfdsfdsf',
-                    //element: React.createRef(),
-                }
-            ];
-            newData[id].grid = nGrid;
-            newData[id].content = renderGrid({type: 'row', grid: nGrid, id: generateId()})
-            //console.log(newData);
-        }
-        //     let nData = [
-        //         {data: initialContent, element: React.createRef()},
-        //         {data: currentContent, element: React.createRef()},
-        //     ];
-        //     newData[id].data = [renderGrid({isRoot: false, type: newType, data: nData})];
-        // }
-        return newData;
-    }
-
     function sectionAdd(id, srcData) {
         let newData = [...srcData];
         let currentContent = srcData[id].content;
@@ -247,7 +244,7 @@ export default withStyles(styles)(({ classes }) => {
         return newData;
     }
 
-    function sectionSplit(id, idUnic, parentId, srcData, newType) {
+    function sectionSplit(id, idUnic, srcData, newType) {
         let newData = [...srcData];
         let currentContent = newData[id].content;
         let idNew = generateId();
@@ -266,7 +263,7 @@ export default withStyles(styles)(({ classes }) => {
         ];
         newData[id].grid = nData;
         newData[id].type = newType;
-        newData[id].content = renderGrid({idFuck: idUnic, grid: nData, type: newType, parentId, gridItemId: id});
+        newData[id].content = renderGrid({idFuck: idUnic, grid: nData, type: newType});
         return newData;
     }
 
@@ -283,7 +280,6 @@ export default withStyles(styles)(({ classes }) => {
                 getItemSizeAccordingToType={getItemSizeAccordingToType}
                 getDefaultSize={getDefaultSize}
                 getSeparatorOptions={getSeparatorOptions}
-                getDataWithNewSection={getDataWithNewSection}
                 prepareData={prepareData}
                 sectionAdd={sectionAdd}
                 sectionSplit={sectionSplit}

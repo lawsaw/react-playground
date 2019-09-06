@@ -21,3 +21,5 @@ export const updateCascade = ({data, type, id, parentId, gridItemId}) => ({
     type: UPDATE_CASCADE,
     payload: { data, type, id, parentId, gridItemId }
 });
+
+export const getTest = () => ({ type: 'TEST', payload: {} });
