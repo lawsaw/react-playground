@@ -4,7 +4,7 @@ import { isElement } from 'react-dom/test-utils';
 import Box from '@material-ui/core/Box';
 import {GridItem, Grid as GridComponent, setStore, rootStore} from './';
 import { connect } from "react-redux";
-import { updateCascade, getTest } from "./redux/actions";
+import { updateCascade, getTest, add, del } from "./redux/actions";
 import { clone, cloneDeep, isEqual } from 'lodash';
 import { StoreContext } from "./";
 import { findFirst, findAndDeleteFirst } from '../../helpers/etc';
@@ -33,76 +33,50 @@ const Grid = withStyles(styles)(({
      sectionAdd,
      sectionSplit,
      renderGrid,
+     generateId,
      getGrid,
      level,
      grid,
      idFuck,
-     //type,
+     parentId,
+     store,
+     storeData,
+     storeType,
+     storeContent,
+     type,
      //grid,
 
      ...props
  }) => {
 
-    //class Grid extends Component {
-
-    //let grid = findFirst(rootStore, 'grid', { idFuck }).grid || props.grid;
-
     let inited = false;
 
-    //const { store, dispatch } = useContext(StoreContext);
 
-    //let grid = dispatch({type: 'get', id: idFuck});
-
-    const [data, setData] = useState(getDefaultSize(grid));
-    //let data = getDefaultSize(grid);
-
-
-    const [type, setType] = useState(props.type);
-
-    //setStore({action: 'update', data, type, id: idFuck});
-
-    //let data = getGrid(store, idFuck) || null;
-
-    // useEffect(() => {
-    //     if(!inited) {
-    //         dispatch({type: 'set', data: getDefaultSize(grid), id: idFuck});
-    //         console.log(data);
-    //         console.log(store);
-    //         inited = true;
-    //     }
-    // }, []);
-
-
-    //let data = null;
-    //let request = findFirst(props.cascade, 'grid', { idFuck }).grid;
-    //data = request && request[0].size ? request : null;
-    //console.log({idFuck, data, request});
-
-    //const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
     useEffect(() => {
+        props.updateCascade({
+            data: storeData || getDefaultSize(idFuck, grid),
+            type: storeType || type,
+            idFuck,
+            parentId,
+        });
 
+        // props.updateCascade({
+        //     data: storeData,
+        //     type,
+        //     idFuck,
+        //     parentId,
+        // });
+    }, []);
+
+    function update(data) {
         props.updateCascade({
             data,
-            type,
-            id: idFuck,
+            type: storeType,
+            idFuck,
+            parentId,
         });
-        console.log({idFuck, data});
-        //forceUpdate();
-
-    }, [idFuck]);
-
-
-
-    // useEffect(() => {
-    //     console.log('111111111111111111111111');
-    //
-    //     return () => {
-    //
-    //         console.log('2222222222222222222');
-    //     }
-    // });
-
+    }
 
 
     let tempDataSize = null;
@@ -113,109 +87,44 @@ const Grid = withStyles(styles)(({
     let onMouseMoveEvent = null;
     let savedChildData = null;
 
-
-    //console.log(props.cascade);
-
-    function update(id, data) {
-        //dispatch({type: 'set', data, id});
-        //let currentData = getGrid(id);
-        setData(data);
-
-        props.updateCascade({
-            data,
-            type,
-            id: idFuck,
-        });
-        //console.log(data);
-    }
-
-    //console.log(props);
-
     function del(id, data) {
 
     }
 
     function addSection(ids, idUnic, newType) {
-        // console.log(props);
-        // props.setFilter('action');
-        let newData;
-        //let current = findFirst(rootStore, 'grid', { idFuck }).grid;
-        let current = data;
-
-        if(newType === type) {
-            // newData = sectionAdd(ids, current);
-            // update(idFuck, newData);
-            console.log(`case: 1; idFuck: ${idFuck}; ids: ${ids}; length: ${data.length}`);
-            //console.log({newData, rootStore});
-        } else if(newType !== type) {
-            if(current.length === 1) {
-                // setType(newType);
-                // newData = sectionAdd(ids, current);
-                // update(idFuck, newData);
-                console.log(`case: 2; idFuck: ${idFuck}; ids: ${ids}; length: ${data.length}`);
-                //console.log({newData, rootStore});
-            } else {
-                // newData = sectionSplit(ids, idUnic, idFuck, data, newType);
-                // update(idFuck, newData);
-                console.log(`case: 3; idFuck: ${idFuck}; ids: ${ids}; length: ${data.length}`);
-                //console.log({newData, rootStore});
-            }
-        }
-
+        props.addCascade({
+            idFuck,
+            idChild: idUnic,
+            index: ids,
+            parentId,
+            type: newType,
+        });
+        //update(storeData);
+        // console.log(ids, idUnic, newType, parentId);
+        // console.log(idFuck, store);
     }
 
-
     function deleteSection(ids, id) {
-        let cloneData = [...data];
-        if(idFuck === 'root' && data.length === 1) {
-            console.log(`case: del_1; idFuck: ${idFuck}; id: ${id}; ids: ${ids}; length: ${data.length}`);
-            //console.log({rootStore});
-            return false;
-        } else if(data.length === 2) {
-            cloneData.splice(ids, 1);
-            //let child = findFirst(props.cascade, 'grid', { idFuck: cloneData[0].idFuck });
-            let child = findFirst(null, 'grid', { idFuck: cloneData[0].idFuck });
-            if(child && child.content && child.content.type === <GridComponent />.type) {
-                // cloneData.type = child.type;
-                // cloneData.content = child.content;
-                // cloneData.grid = child.grid;
-                //cloneData = cloneData[0].grid;
-                //setType(child.type);
-                //cloneData = [...child];
-                //update(id, cloneData.grid);
-                console.log(`case: del_3; idFuck: ${idFuck}; id: ${id}; ids: ${ids}; length: ${data.length}`);
-            } else {
-                console.log(`case: del_4; idFuck: ${idFuck}; id: ${id}; ids: ${ids}; length: ${data.length}`);
-            }
-        } else {
-            console.log({
-                length: data.length,
-                cloneData,
-                //cascade: props.cascade,
-                idFuck,
-            });
-            //cloneData.splice(ids, 1);
-            //update(id, getDefaultSize(cloneData, false));
-            console.log(`case: del_5; idFuck: ${idFuck}; id: ${id}; ids: ${ids}; length: ${data.length}`);
-            // console.log({cloneData, rootStore});
-            // return false;
-
-        }
-
+        console.log(ids, id);
+        props.delCascade({
+            index: ids,
+            idFuck: id,
+            parentId: idFuck,
+        })
     }
 
     function updateData(ids, distance) {
-        let nData = getUpdatedData(ids, type, distance, data, realSize);
+        let nData = getUpdatedData(ids, storeType, distance, storeData, realSize);
         if(tempDataSize !== nData[ids].size) {
             tempDataSize = nData[ids].size;
-            update(idFuck, nData);
+            update(nData);
         }
     }
 
     function handleOnMouseDown(e, id) {
-        let { clientDirection } = getSeparatorOptions(type);
+        let { clientDirection } = getSeparatorOptions(storeType);
         start = e[clientDirection];
-        realSize = getRealSize(id, data);
+        realSize = getRealSize(id, storeData);
         onMouseUpEvent = e => handleOnMouseUp(e, id);
         onMouseMoveEvent = e => handleOnMouseMove(e, id);
         document.addEventListener('mouseup', onMouseUpEvent, false);
@@ -223,23 +132,22 @@ const Grid = withStyles(styles)(({
     }
 
     function handleOnMouseMove(e, id) {
-        let { clientDirection } = getSeparatorOptions(type);
+        let { clientDirection } = getSeparatorOptions(storeType);
         finish = e[clientDirection];
         let distance = finish - start;
         updateData(id, distance);
     }
 
     function handleOnMouseUp(e, id) {
-        let { clientDirection } = getSeparatorOptions(type);
+        let { clientDirection } = getSeparatorOptions(storeType);
         finish = e[clientDirection];
         document.removeEventListener('mouseup', onMouseUpEvent, false);
         document.removeEventListener('mousemove', onMouseMoveEvent, false);
     }
-    //console.log({idFuck, data, rootStore});
 
     function returnContent(contentArray) {
         return contentArray.map((item, index) => {
-            let { gridItem: style, separator: styleSeparator } = getItemSizeAccordingToType(item, type);
+            let { gridItem: style, separator: styleSeparator } = getItemSizeAccordingToType(item, storeType);
             return (
                 <GridItem
                     key={item.idFuck}
@@ -251,8 +159,9 @@ const Grid = withStyles(styles)(({
                     styleSeparator={styleSeparator}
                     addSection={addSection}
                     deleteSection={deleteSection}
-                    optionsSeparator={getSeparatorOptions(type)}
+                    optionsSeparator={getSeparatorOptions(storeType)}
                     handleOnMouseDown={handleOnMouseDown}
+                    generateId={generateId}
                     content={item.content}
                     element={item.element}
                     grid={item.grid}
@@ -263,13 +172,15 @@ const Grid = withStyles(styles)(({
         })
     }
 
+    if(props.root) console.log(props.root);
+
+
     return (
         <Box
             className={classes.grid}
         >
             {
-                //grid && grid[0].size ? returnContent(grid) : data && data[0].size ? returnContent(data) : 'No Data'
-                data ? returnContent(data) : 'No Data LOL'
+                storeData ? returnContent(storeData) : 'No Data LOL'
             }
 
         </Box>
@@ -277,17 +188,20 @@ const Grid = withStyles(styles)(({
 });
 
 export default connect(
-    // null,
-    // { updateCascade }
-
-    store => {
+    (store, props) => {
         return {
-            cascade: store.cascade,
+            root: store.cascade,
+            store: store.cascade[props.idFuck],
+            storeData: store.cascade[props.idFuck] && store.cascade[props.idFuck].data,
+            storeType: store.cascade[props.idFuck] && store.cascade[props.idFuck].type,
+            storeContent: store.cascade[props.idFuck] && store.cascade[props.idFuck].content,
         }
     },
     dispatch => {
         return {
             updateCascade: (props) => dispatch(updateCascade(props)),
+            addCascade: (props) => dispatch(add(props)),
+            delCascade: (props) => dispatch(del(props)),
             getTest: (props) => dispatch(getTest(props)),
 
         }

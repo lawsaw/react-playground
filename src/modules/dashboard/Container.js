@@ -162,10 +162,10 @@ export default withStyles(styles)(({ classes }) => {
     }
 
     function generateId() {
-        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        return Math.random().toString(36).substring(2, 4) + Math.random().toString(36).substring(2, 4);
     }
 
-    function getDefaultSize(dataSrc) {
+    function getDefaultSize(id, dataSrc) {
         let sizeDefault = 100 / dataSrc.length;
         //let { isInited } = dataSrc;
         return dataSrc.map(({ idFuck, element, size, space, ...props }, index) => {
@@ -180,10 +180,11 @@ export default withStyles(styles)(({ classes }) => {
             //*etc.content = content;
             return {
                 ...props,
-                idFuck: idFuck || generateId(),
+                idFuck: idFuck || `${id}_${generateId()}`,
                 size: sizeDefault,
                 space: sizeDefault * index,
                 element: element || React.createRef(),
+                parentId: id,
                 //...etc,
             }
         });
@@ -284,6 +285,7 @@ export default withStyles(styles)(({ classes }) => {
                 sectionAdd={sectionAdd}
                 sectionSplit={sectionSplit}
                 renderGrid={renderGrid}
+                generateId={generateId}
                 getGrid={getGrid}
             />
         )

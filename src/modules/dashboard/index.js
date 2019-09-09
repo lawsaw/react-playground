@@ -8,6 +8,7 @@ import Grid from './Grid';
 import GridItem from './GridItem';
 import Separator from './Separator';
 import { StoreContext, StoreProvider, initialStore, rootStore, setStore } from './Store';
+import F from './etc';
 
 export {
     Container,
@@ -24,4 +25,5 @@ export {
     initialStore,
     rootStore,
     setStore,
+    F,
 }

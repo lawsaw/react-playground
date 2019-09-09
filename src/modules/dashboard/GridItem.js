@@ -17,7 +17,7 @@ const styles = () => ({
     },
 });
 
-export default withStyles(styles)(({ classes, id, idUnic, content, grid, type, element, currentData, renderGrid, isLast, styleSeparator, handleOnMouseDown, optionsSeparator, addSection, deleteSection }) => {
+export default withStyles(styles)(({ classes, id, idUnic, content, grid, type, element, currentData, generateId, renderGrid, isLast, styleSeparator, handleOnMouseDown, optionsSeparator, addSection, deleteSection }) => {
 
 
 
@@ -45,7 +45,7 @@ export default withStyles(styles)(({ classes, id, idUnic, content, grid, type, e
 
                     grid && grid.length ? (
                         <Window>
-                            {renderGrid({idFuck: idUnic, grid, type})}
+                            {renderGrid({idFuck: idUnic, parentId: currentData[0].parentId, grid, type})}
                         </Window>
                     ) : content ? (
                         <Window>
