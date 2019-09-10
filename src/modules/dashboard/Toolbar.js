@@ -1,7 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-//import { lighten } from '@material-ui/core/styles/colorManipulator';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -14,7 +13,8 @@ const styles = () => ({
     },
 });
 
-export default withStyles(styles)(({ classes, id, idUnic, addSection, deleteSection }) => {
+export default withStyles(styles)(({ classes, index, idFuck, addSection, deleteSection }) => {
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
@@ -27,12 +27,12 @@ export default withStyles(styles)(({ classes, id, idUnic, addSection, deleteSect
     }
 
     function createNewWin(callback, nType) {
-        callback(id, idUnic, nType);
+        callback(index, idFuck, nType);
         setAnchorEl(null);
     }
 
     function deleteWin(callback) {
-        callback(id, idUnic);
+        callback(index, idFuck);
         setAnchorEl(null);
     }
 
@@ -41,19 +41,15 @@ export default withStyles(styles)(({ classes, id, idUnic, addSection, deleteSect
             className={classes.toolbar}
         >
             <IconButton
-                aria-label="more"
-                aria-controls="long-menu"
-                aria-haspopup="true"
                 onClick={handleClick}
             >
                 <MoreVertIcon />
             </IconButton>
             <Menu
-                id="long-menu"
                 anchorEl={anchorEl}
-                keepMounted
                 open={open}
                 onClose={handleClose}
+                keepMounted
             >
                 <MenuItem onClick={() => createNewWin(addSection, 'col')}>
                     Col

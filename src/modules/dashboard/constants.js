@@ -1,26 +1,41 @@
-export const initData = {
+export const LIMIT_ABSOLUTE = 0;
+export const LIMIT_RELATIVE = 50;
+export const DEFAULT_CONTENT = 'DEFAULT_CONTENT';
+export const INIT_DATA = {
     idFuck: 'root',
-    type: 'row',
+    type: 'col',
     grid: [
         {
-            content: 'FUCK',
+            content: 'Some Content',
         },
         {
             content: 54855,
         },
         {
-            //content: 11,
-            type: 'col',
+            type: 'row',
             grid: [
                 {
                     content: 34,
                 },
                 {
-                    //content: 4325,
-                    type: 'row',
+                    type: 'col',
                     grid: [
                         {
-                            content: 1,
+                            type: 'row',
+                            grid: [
+                                {
+                                    content: '11',
+                                },
+                                {
+                                    content: '22',
+                                },
+                                {
+                                    content: '33',
+                                },
+                                {
+                                    content: '44',
+                                }
+                            ]
                         },
                         {
                             content: 2,
@@ -36,4 +51,4 @@ export const initData = {
             content: 4112,
         },
     ]
-}
+};

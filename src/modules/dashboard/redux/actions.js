@@ -1,21 +1,4 @@
-import { ADD_TODO, TOGGLE_TODO, SET_FILTER, UPDATE_CASCADE, ADD, DELETE } from "./actionTypes";
-
-let nextTodoId = 0;
-
-export const addTodo = content => ({
-    type: ADD_TODO,
-    payload: {
-        id: ++nextTodoId,
-        content
-    }
-});
-
-export const toggleTodo = id => ({
-    type: TOGGLE_TODO,
-    payload: { id }
-});
-
-export const setFilter = filter => ({ type: SET_FILTER, payload: { filter } });
+import { UPDATE_CASCADE, ADD, DELETE } from "./actionTypes";
 
 export const updateCascade = ({data, type, idFuck, parentId, gridItemId}) => ({
     type: UPDATE_CASCADE,
@@ -27,10 +10,7 @@ export const add = ({idFuck, idChild, index, parentId, type}) => ({
     payload: { idFuck, idChild, index, parentId, type }
 });
 
-export const del = ({index, idFuck, parentId}) => ({
+export const del = ({index, idFuck, parentId, grandParentId}) => ({
     type: DELETE,
-    payload: { index, idFuck, parentId }
+    payload: { index, idFuck, parentId, grandParentId }
 });
-
-
-export const getTest = () => ({ type: 'TEST', payload: {} });

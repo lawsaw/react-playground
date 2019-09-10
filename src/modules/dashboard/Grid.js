@@ -1,14 +1,9 @@
-import React, { Component, useState, useEffect, useContext, useReducer } from 'react';
+import React, { useEffect } from 'react';
 import { withStyles } from '@material-ui/core';
-import { isElement } from 'react-dom/test-utils';
 import Box from '@material-ui/core/Box';
-import {GridItem, Grid as GridComponent, setStore, rootStore} from './';
+import { GridItem, F } from './';
 import { connect } from "react-redux";
-import { updateCascade, getTest, add, del } from "./redux/actions";
-import { clone, cloneDeep, isEqual } from 'lodash';
-import { StoreContext } from "./";
-import { findFirst, findAndDeleteFirst } from '../../helpers/etc';
-import cascade from "./redux/reducers/cascade";
+import { updateCascade, add, del } from "./redux/actions";
 
 const styles = () => ({
     grid: {
@@ -23,19 +18,6 @@ const styles = () => ({
 const Grid = withStyles(styles)(({
      propData,
      classes,
-     getUpdatedData,
-     getRealSize,
-     getItemSizeAccordingToType,
-     getDefaultSize,
-     getSeparatorOptions,
-     updateParentData,
-     prepareData,
-     sectionAdd,
-     sectionSplit,
-     renderGrid,
-     generateId,
-     getGrid,
-     level,
      grid,
      idFuck,
      parentId,
@@ -44,29 +26,16 @@ const Grid = withStyles(styles)(({
      storeType,
      storeContent,
      type,
-     //grid,
-
      ...props
  }) => {
 
-    let inited = false;
-
-
-
     useEffect(() => {
         props.updateCascade({
-            data: storeData || getDefaultSize(idFuck, grid),
+            data: storeData || F.getDefaultSize(idFuck, storeData || grid),
             type: storeType || type,
             idFuck,
             parentId,
         });
-
-        // props.updateCascade({
-        //     data: storeData,
-        //     type,
-        //     idFuck,
-        //     parentId,
-        // });
     }, []);
 
     function update(data) {
@@ -78,43 +47,34 @@ const Grid = withStyles(styles)(({
         });
     }
 
-
     let tempDataSize = null;
     let realSize = {};
     let start = 0;
     let finish = 0;
     let onMouseUpEvent = null;
     let onMouseMoveEvent = null;
-    let savedChildData = null;
 
-    function del(id, data) {
-
-    }
-
-    function addSection(ids, idUnic, newType) {
+    function addSection(index, idChild, type) {
         props.addCascade({
             idFuck,
-            idChild: idUnic,
-            index: ids,
+            idChild,
+            index,
             parentId,
-            type: newType,
+            type,
         });
-        //update(storeData);
-        // console.log(ids, idUnic, newType, parentId);
-        // console.log(idFuck, store);
     }
 
-    function deleteSection(ids, id) {
-        console.log(ids, id);
+    function deleteSection(index, id) {
         props.delCascade({
-            index: ids,
+            index,
             idFuck: id,
             parentId: idFuck,
+            grandParentId: parentId,
         })
     }
 
     function updateData(ids, distance) {
-        let nData = getUpdatedData(ids, storeType, distance, storeData, realSize);
+        let nData = F.getUpdatedData(ids, storeType, distance, storeData, realSize);
         if(tempDataSize !== nData[ids].size) {
             tempDataSize = nData[ids].size;
             update(nData);
@@ -122,24 +82,24 @@ const Grid = withStyles(styles)(({
     }
 
     function handleOnMouseDown(e, id) {
-        let { clientDirection } = getSeparatorOptions(storeType);
+        let { clientDirection } = F.getSeparatorOptions(storeType);
         start = e[clientDirection];
-        realSize = getRealSize(id, storeData);
-        onMouseUpEvent = e => handleOnMouseUp(e, id);
+        realSize = F.getRealSize(id, storeData);
+        onMouseUpEvent = e => handleOnMouseUp(e);
         onMouseMoveEvent = e => handleOnMouseMove(e, id);
         document.addEventListener('mouseup', onMouseUpEvent, false);
         document.addEventListener('mousemove', onMouseMoveEvent, false);
     }
 
     function handleOnMouseMove(e, id) {
-        let { clientDirection } = getSeparatorOptions(storeType);
+        let { clientDirection } = F.getSeparatorOptions(storeType);
         finish = e[clientDirection];
         let distance = finish - start;
         updateData(id, distance);
     }
 
-    function handleOnMouseUp(e, id) {
-        let { clientDirection } = getSeparatorOptions(storeType);
+    function handleOnMouseUp(e) {
+        let { clientDirection } = F.getSeparatorOptions(storeType);
         finish = e[clientDirection];
         document.removeEventListener('mouseup', onMouseUpEvent, false);
         document.removeEventListener('mousemove', onMouseMoveEvent, false);
@@ -147,40 +107,31 @@ const Grid = withStyles(styles)(({
 
     function returnContent(contentArray) {
         return contentArray.map((item, index) => {
-            let { gridItem: style, separator: styleSeparator } = getItemSizeAccordingToType(item, storeType);
+            let { gridItem: style, separator: styleSeparator } = F.getItemSizeAccordingToType(item, storeType);
             return (
                 <GridItem
                     key={item.idFuck}
-                    id={index}
-                    idUnic={item.idFuck}
-                    currentData={contentArray}
+                    index={index}
+                    item={item}
+                    parentId={contentArray[0].parentId}
                     isLast={contentArray[index+1]}
                     style={style}
                     styleSeparator={styleSeparator}
                     addSection={addSection}
                     deleteSection={deleteSection}
-                    optionsSeparator={getSeparatorOptions(storeType)}
+                    optionsSeparator={F.getSeparatorOptions(storeType)}
                     handleOnMouseDown={handleOnMouseDown}
-                    generateId={generateId}
-                    content={item.content}
-                    element={item.element}
-                    grid={item.grid}
-                    type={item.type}
-                    renderGrid={renderGrid}
                 />
             )
         })
     }
-
-    if(props.root) console.log(props.root);
-
 
     return (
         <Box
             className={classes.grid}
         >
             {
-                storeData ? returnContent(storeData) : 'No Data LOL'
+                storeData ? returnContent(storeData) : 'No Data LoL'
             }
 
         </Box>
@@ -202,10 +153,7 @@ export default connect(
             updateCascade: (props) => dispatch(updateCascade(props)),
             addCascade: (props) => dispatch(add(props)),
             delCascade: (props) => dispatch(del(props)),
-            getTest: (props) => dispatch(getTest(props)),
-
         }
     },
     null,
-    //{ withRef: true }
 )(Grid);

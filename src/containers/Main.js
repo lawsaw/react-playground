@@ -23,6 +23,7 @@ const styles = () => ({
         backgroundColor: '#282c34',
     },
     work: {
+        position: 'relative',
         backgroundColor: '#fff',
         display: 'flex',
         flexDirection: 'column',
