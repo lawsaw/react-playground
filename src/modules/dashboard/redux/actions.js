@@ -1,16 +1,16 @@
-import { UPDATE_CASCADE, ADD, DELETE } from "./actionTypes";
+import { UPDATE, ADD, DELETE } from "./actionTypes";
 
-export const updateCascade = ({data, type, idFuck, parentId, gridItemId}) => ({
-    type: UPDATE_CASCADE,
-    payload: { data, type, idFuck, parentId, gridItemId }
+export const update = ({data, type, idCurrent, idParent, gridItemId}) => ({
+    type: UPDATE,
+    payload: { data, type, idCurrent, idParent, gridItemId }
 });
 
-export const add = ({idFuck, idChild, index, parentId, type}) => ({
+export const add = ({idCurrent, idChild, index, idParent, type}) => ({
     type: ADD,
-    payload: { idFuck, idChild, index, parentId, type }
+    payload: { idCurrent, idChild, index, idParent, type }
 });
 
-export const del = ({index, idFuck, parentId, grandParentId}) => ({
+export const del = ({index, idCurrent, idParent, idGrandParent}) => ({
     type: DELETE,
-    payload: { index, idFuck, parentId, grandParentId }
+    payload: { index, idCurrent, idParent, idGrandParent }
 });

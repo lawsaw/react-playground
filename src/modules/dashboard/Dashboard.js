@@ -2,8 +2,8 @@ import React from 'react';
 import Box from "@material-ui/core/Box";
 import { withStyles } from '@material-ui/core';
 import { Provider } from 'react-redux';
-import store from "./redux/store";
 import { lighten } from "@material-ui/core/styles";
+import store from "./redux/store";
 import { Grid } from './';
 import { INIT_DATA } from "./constants";
 

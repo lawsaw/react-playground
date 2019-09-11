@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import { GridItem, F } from './';
 import { connect } from "react-redux";
-import { updateCascade, add, del } from "./redux/actions";
+import { update, add, del } from "./redux/actions";
 
 const styles = () => ({
     grid: {
@@ -19,9 +19,8 @@ const Grid = withStyles(styles)(({
      propData,
      classes,
      grid,
-     idFuck,
-     parentId,
-     store,
+     idCurrent,
+     idParent,
      storeData,
      storeType,
      storeContent,
@@ -30,20 +29,20 @@ const Grid = withStyles(styles)(({
  }) => {
 
     useEffect(() => {
-        props.updateCascade({
-            data: storeData || F.getDefaultSize(idFuck, storeData || grid),
+        props.update({
+            data: storeData || F.getDefaultSize(idCurrent, storeData || grid),
             type: storeType || type,
-            idFuck,
-            parentId,
+            idCurrent,
+            idParent,
         });
     }, []);
 
     function update(data) {
-        props.updateCascade({
+        props.update({
             data,
             type: storeType,
-            idFuck,
-            parentId,
+            idCurrent,
+            idParent,
         });
     }
 
@@ -55,47 +54,47 @@ const Grid = withStyles(styles)(({
     let onMouseMoveEvent = null;
 
     function addSection(index, idChild, type) {
-        props.addCascade({
-            idFuck,
+        props.add({
+            idCurrent,
             idChild,
             index,
-            parentId,
+            idParent,
             type,
         });
     }
 
     function deleteSection(index, id) {
-        props.delCascade({
+        props.del({
             index,
-            idFuck: id,
-            parentId: idFuck,
-            grandParentId: parentId,
+            idCurrent: id,
+            idParent: idCurrent,
+            idGrandParent: idParent,
         })
     }
 
-    function updateData(ids, distance) {
-        let nData = F.getUpdatedData(ids, storeType, distance, storeData, realSize);
-        if(tempDataSize !== nData[ids].size) {
-            tempDataSize = nData[ids].size;
-            update(nData);
+    function updateData(index, distance) {
+        let data = F.getUpdatedData(index, storeType, distance, storeData, realSize);
+        if(tempDataSize !== data[index].size) {
+            tempDataSize = data[index].size;
+            update(data);
         }
     }
 
-    function handleOnMouseDown(e, id) {
+    function handleOnMouseDown(e, index) {
         let { clientDirection } = F.getSeparatorOptions(storeType);
         start = e[clientDirection];
-        realSize = F.getRealSize(id, storeData);
+        realSize = F.getRealSize(index, storeData);
         onMouseUpEvent = e => handleOnMouseUp(e);
-        onMouseMoveEvent = e => handleOnMouseMove(e, id);
+        onMouseMoveEvent = e => handleOnMouseMove(e, index);
         document.addEventListener('mouseup', onMouseUpEvent, false);
         document.addEventListener('mousemove', onMouseMoveEvent, false);
     }
 
-    function handleOnMouseMove(e, id) {
+    function handleOnMouseMove(e, index) {
         let { clientDirection } = F.getSeparatorOptions(storeType);
         finish = e[clientDirection];
         let distance = finish - start;
-        updateData(id, distance);
+        updateData(index, distance);
     }
 
     function handleOnMouseUp(e) {
@@ -105,16 +104,16 @@ const Grid = withStyles(styles)(({
         document.removeEventListener('mousemove', onMouseMoveEvent, false);
     }
 
-    function returnContent(contentArray) {
-        return contentArray.map((item, index) => {
+    function returnContent(data) {
+        return data.map((item, index) => {
             let { gridItem: style, separator: styleSeparator } = F.getItemSizeAccordingToType(item, storeType);
             return (
                 <GridItem
-                    key={item.idFuck}
+                    key={item.idCurrent}
                     index={index}
                     item={item}
-                    parentId={contentArray[0].parentId}
-                    isLast={contentArray[index+1]}
+                    idParent={data[0].idParent}
+                    isLast={data[index+1]}
                     style={style}
                     styleSeparator={styleSeparator}
                     addSection={addSection}
@@ -133,7 +132,6 @@ const Grid = withStyles(styles)(({
             {
                 storeData ? returnContent(storeData) : 'No Data LoL'
             }
-
         </Box>
     );
 });
@@ -141,18 +139,16 @@ const Grid = withStyles(styles)(({
 export default connect(
     (store, props) => {
         return {
-            root: store.cascade,
-            store: store.cascade[props.idFuck],
-            storeData: store.cascade[props.idFuck] && store.cascade[props.idFuck].data,
-            storeType: store.cascade[props.idFuck] && store.cascade[props.idFuck].type,
-            storeContent: store.cascade[props.idFuck] && store.cascade[props.idFuck].content,
+            storeData: store.cascade[props.idCurrent] && store.cascade[props.idCurrent].data,
+            storeType: store.cascade[props.idCurrent] && store.cascade[props.idCurrent].type,
+            storeContent: store.cascade[props.idCurrent] && store.cascade[props.idCurrent].content,
         }
     },
     dispatch => {
         return {
-            updateCascade: (props) => dispatch(updateCascade(props)),
-            addCascade: (props) => dispatch(add(props)),
-            delCascade: (props) => dispatch(del(props)),
+            update: props => dispatch(update(props)),
+            add: props => dispatch(add(props)),
+            del: props => dispatch(del(props)),
         }
     },
     null,

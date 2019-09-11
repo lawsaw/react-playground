@@ -13,7 +13,7 @@ const styles = () => ({
     },
 });
 
-export default withStyles(styles)(({ classes, index, idFuck, addSection, deleteSection }) => {
+export default withStyles(styles)(({ classes, index, idCurrent, addSection, deleteSection }) => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -27,12 +27,12 @@ export default withStyles(styles)(({ classes, index, idFuck, addSection, deleteS
     }
 
     function createNewWin(callback, nType) {
-        callback(index, idFuck, nType);
+        callback(index, idCurrent, nType);
         setAnchorEl(null);
     }
 
     function deleteWin(callback) {
-        callback(index, idFuck);
+        callback(index, idCurrent);
         setAnchorEl(null);
     }
 

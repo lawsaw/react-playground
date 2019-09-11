@@ -2,7 +2,7 @@ export const LIMIT_ABSOLUTE = 0;
 export const LIMIT_RELATIVE = 50;
 export const DEFAULT_CONTENT = 'DEFAULT_CONTENT';
 export const INIT_DATA = {
-    idFuck: 'root',
+    idCurrent: 'root',
     type: 'col',
     grid: [
         {

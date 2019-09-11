@@ -19,8 +19,8 @@ const styles = () => ({
 export default withStyles(styles)(({
         classes,
         index,
-        item: { idFuck, content, element, grid, type },
-        parentId,
+        item: { idCurrent, content, element, grid, type },
+        idParent,
         isLast,
         styleSeparator,
         handleOnMouseDown,
@@ -29,7 +29,7 @@ export default withStyles(styles)(({
         deleteSection
     }) => {
 
-    const HAS_GRID = Boolean(grid && grid.length);
+    const IS_GRID_INSIDE = Boolean(grid && grid.length);
 
     return (
         <Fragment>
@@ -38,12 +38,12 @@ export default withStyles(styles)(({
                 ref={element}
             >
                 {
-                    !HAS_GRID && (
+                    !IS_GRID_INSIDE && (
                         <Fragment>
 
                             <Toolbar
                                 index={index}
-                                idFuck={idFuck}
+                                idCurrent={idCurrent}
                                 addSection={addSection}
                                 deleteSection={deleteSection}
                             />
@@ -53,10 +53,10 @@ export default withStyles(styles)(({
                 }
                 <Window>
                     {
-                        HAS_GRID ? (
+                        IS_GRID_INSIDE ? (
                             <Grid
-                                idFuck={idFuck}
-                                parentId={parentId}
+                                idCurrent={idCurrent}
+                                idParent={idParent}
                                 grid={grid}
                                 type={type}
                             />

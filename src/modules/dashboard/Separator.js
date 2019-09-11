@@ -17,6 +17,7 @@ const styles = () => ({
         cursor: props => props.options.cursor,
         '&:hover': {
             backgroundColor: 'lightblue',
+            zIndex: 6,
         },
     },
 });

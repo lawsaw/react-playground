@@ -1,5 +1,5 @@
 import React from "react";
-import { UPDATE_CASCADE, ADD, DELETE } from "../actionTypes";
+import { UPDATE, ADD, DELETE } from "../actionTypes";
 import { F } from '../../';
 import { DEFAULT_CONTENT } from '../../constants';
 
@@ -7,8 +7,8 @@ const cascade = (state = {}, action) => {
     let cloneState = {...state};
     switch (action.type) {
         case ADD: {
-            const { idFuck, index, type } = action.payload;
-            let current = cloneState[idFuck];
+            const { idCurrent, index, type } = action.payload;
+            let current = cloneState[idCurrent];
             if(type === current.type) {
                 let currentContent = current.data[index].content;
                 let currentElement = current.data[index].element;
@@ -18,7 +18,7 @@ const cascade = (state = {}, action) => {
                 });
                 current.data[index+1].content = currentContent;
                 current.data[index+1].element = currentElement;
-                current.data = F.getDefaultSize(idFuck, current.data);
+                current.data = F.getDefaultSize(idCurrent, current.data);
             } else {
                 let currentContent = current.data[index].content;
                 let grid = [
@@ -39,54 +39,54 @@ const cascade = (state = {}, action) => {
             return cloneState;
         }
         case DELETE: {
-            const { idFuck, parentId, grandParentId } = action.payload;
-            let { length } = cloneState[parentId].data;
+            const { idCurrent, idParent, idGrandParent } = action.payload;
+            let { length } = cloneState[idParent].data;
             const defaultDeleteF = () => {
-                cloneState[parentId].data = F.getDefaultSize(
-                        parentId,
-                        cloneState[parentId].data.filter(item => item.idFuck !== idFuck
+                cloneState[idParent].data = F.getDefaultSize(
+                        idParent,
+                        cloneState[idParent].data.filter(item => item.idCurrent !== idCurrent
                     )
                 );
-                if(grandParentId) {
-                    if(cloneState[grandParentId].data[0].grid) {
-                        cloneState[grandParentId].data[0].grid = cloneState[parentId].data.map(item => ({ content: item.content }))
+                if(idGrandParent) {
+                    if(cloneState[idGrandParent].data[0].grid) {
+                        cloneState[idGrandParent].data[0].grid = cloneState[idParent].data.map(item => ({ content: item.content }))
                     }
                 }
             };
             if(length > 2) {
                 defaultDeleteF();
             } else if (length === 2) {
-                let lastItem = cloneState[parentId].data.find(item => item.idFuck !== idFuck);
-                if(grandParentId && cloneState[grandParentId]) {
-                    let targetItem = cloneState[grandParentId].data.find(item => item.idFuck === parentId);
-                    let targetItemIndex = cloneState[grandParentId].data.findIndex(item => (item.idFuck === parentId));
+                let lastItem = cloneState[idParent].data.find(item => item.idCurrent !== idCurrent);
+                if(idGrandParent && cloneState[idGrandParent]) {
+                    let targetItem = cloneState[idGrandParent].data.find(item => item.idCurrent === idParent);
+                    let targetItemIndex = cloneState[idGrandParent].data.findIndex(item => (item.idCurrent === idParent));
                     if(lastItem.grid && !lastItem.content) {
-                        let id = lastItem.idFuck;
+                        let id = lastItem.idCurrent;
                         let dataRoot = cloneState[id].data;
                         let dataToBeAddedIntoTargetItem = dataRoot.map(item => ({
                             content: item.content,
                             grid: item.grid
                         }));
-                        cloneState[grandParentId].data.splice(targetItemIndex, 1, ...dataToBeAddedIntoTargetItem);
-                        cloneState[grandParentId].data = F.getDefaultSize(grandParentId, cloneState[grandParentId].data);
+                        cloneState[idGrandParent].data.splice(targetItemIndex, 1, ...dataToBeAddedIntoTargetItem);
+                        cloneState[idGrandParent].data = F.getDefaultSize(idGrandParent, cloneState[idGrandParent].data);
                         delete cloneState[id];
                     } else {
                         delete targetItem.grid;
                         targetItem.content = lastItem.content;
                     }
-                    delete cloneState[parentId];
+                    delete cloneState[idParent];
                 } else {
                     defaultDeleteF();
                 }
             }
             return cloneState;
         }
-        case UPDATE_CASCADE: {
-            const { data, type, idFuck, parentId } = action.payload;
-            cloneState[idFuck] = {
+        case UPDATE: {
+            const { data, type, idCurrent, idParent } = action.payload;
+            cloneState[idCurrent] = {
                 type,
                 data,
-                parentId
+                idParent
             };
             return cloneState;
         }
