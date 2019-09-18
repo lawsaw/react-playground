@@ -1,12 +1,10 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-//import { lighten } from '@material-ui/core/styles/colorManipulator';
 
-const styles = (theme) => ({
+const styles = () => ({
     point: {
         position: 'absolute',
-        //backgroundColor: lighten(theme.palette.grey[200], 0.2),
         width: 20,
         height: 20,
         transformOrigin: 'center center',
@@ -21,7 +19,7 @@ const styles = (theme) => ({
     }
 });
 
-export default withStyles(styles)(({ classes, children, ...props }) => {
+export default withStyles(styles)(({ classes, children }) => {
     return (
         <Box
             className={classes.point}

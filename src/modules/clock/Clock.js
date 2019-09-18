@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-import { Arrow, Point, Face } from './';
-
-let timer = null;
+import { Arrows, Faces } from './';
 
 const styles = (theme) => ({
     clock: {
@@ -16,98 +14,59 @@ const styles = (theme) => ({
     },
 });
 
-const ArrowSecond = ({ ...props }) => {
-    return (
-        <Arrow
-            width={140}
-            height={5}
-            {...props}
-        />
-    )
+const getHoursInAnalogFormat = hours => hours > 12 ? hours - 12 : hours;
+
+const makeValueCircled = () => {
+    let circle = 0;
+    return value => {
+        if(value === 0) circle += 360;
+        value = circle + value;
+        return value;
+    }
 };
 
-const ArrowMinute = ({ ...props }) => {
-    return (
-        <Arrow
-            width={120}
-            height={8}
-            {...props}
-        />
-    )
-};
+let makeSecondsCircled = makeValueCircled();
+let makeMinutesCircled = makeValueCircled();
+let makeHoursCircled = makeValueCircled();
 
-const ArrowHour = ({ ...props }) => {
-    return (
-        <Arrow
-            width={100}
-            height={12}
-            {...props}
-        />
-    )
-};
-
-const ClockFace = ({ ...props }) => {
-  return Array.from({length: 12}, (step, index) => {
-      let deg = ((index + 1) * 30) + 45;
-      return (
-          <Face
-              key={index}
-              pos={deg}
-              {...props}
-          >
-              {index + 1}
-          </Face>
-      );
-  });
-};
-
-const setTime = (setSeconds, setMinutes, setHours) => {
+const getTime = () => {
     let time = new Date();
-    let seconds = time.getSeconds() * 6;
-    let minutes = time.getMinutes() * 6 + seconds/60;
-    let hours = (time.getHours() > 12 ? (time.getHours() - 12) * 30/(1/5) : time.getHours() * 30/(1/5)) + minutes/60;
-    setSeconds(seconds);
-    setMinutes(minutes);
-    setHours(hours);
+    let s = time.getSeconds();
+    let m = time.getMinutes();
+    let h = time.getHours();
+    let seconds = s * 6;
+    let minutes = m * 6 + s/60;
+    let hours = getHoursInAnalogFormat(h) * 30 + minutes/12;
+    seconds = makeSecondsCircled(seconds);
+    minutes = makeMinutesCircled(minutes);
+    hours = makeHoursCircled(hours);
     //console.log(seconds, minutes, hours);
-}
+    return {seconds, minutes, hours}
+};
 
-export default withStyles(styles)(({ classes, ...props }) => {
+let tempTime = getTime();
 
-    const [seconds, setSeconds] = useState(0);
-    const [minutes, setMinutes] = useState(0);
-    const [hours, setHours] = useState(0);
+export default withStyles(styles)(({ classes }) => {
 
-    useEffect(() => {
-       if(seconds === 0) {
-           setTime(setSeconds, setMinutes, setHours);
-       }
-    }, [seconds]);
+    const [time, setTime] = useState(tempTime || getTime());
 
     useEffect(() => {
-        timer = setTimeout(() => {
-            setTime(setSeconds, setMinutes, setHours);
+        let timer = setTimeout(() => {
+            tempTime = getTime();
+            setTime(tempTime);
         }, 1000);
         return () => {
             clearTimeout(timer);
+            tempTime = null;
         }
-    }, [seconds]);
+    }, [time]);
 
     return (
         <Box
             className={classes.clock}
         >
-            <ClockFace />
-            <Point>
-                <ArrowSecond deg={seconds} />
-            </Point>
-            <Point>
-                <ArrowMinute deg={minutes} />
-            </Point>
-            <Point>
-                <ArrowHour deg={hours} />
-            </Point>
-
+            <Faces />
+            <Arrows time={time} />
         </Box>
     );
 });
