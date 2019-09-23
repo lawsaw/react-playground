@@ -36,8 +36,13 @@ const styles = () => ({
         fontSize: 16,
         position: 'absolute',
         transformOrigin: 'center center',
-        transform: 'translateX(-50%) translateY(-100%)',
+        transform: 'translateX(-50%) translateY(calc(-100% - 5px))',
     },
+    valueContent: {
+        position: 'relative',
+        transformOrigin: 'center center',
+        transform: props => `rotateZ(${-props.pos}deg)`,
+    }
 });
 
 export default withStyles(styles)(({ classes, value }) => {
@@ -56,7 +61,11 @@ export default withStyles(styles)(({ classes, value }) => {
                         <Box
                             className={classes.value}
                         >
-                            {value/5}
+                            <Box
+                                className={classes.valueContent}
+                            >
+                                {value/5}
+                            </Box>
                         </Box>
                     )
                 }
