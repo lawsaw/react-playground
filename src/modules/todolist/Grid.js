@@ -1,12 +1,10 @@
 import React from 'react';
-import Box from "@material-ui/core/Box";
 import { withStyles } from '@material-ui/core';
 import GridMaterial from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { connect } from "react-redux";
 import Typography from '@material-ui/core/Typography';
 
-import { Task, Set, Bar } from './';
+import { Set, Bar } from './';
 import {add, del, update, done} from "./redux/actions";
 
 const styles = (theme) => ({
