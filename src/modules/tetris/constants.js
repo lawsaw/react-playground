@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 
 export const FIGURES = {
     'T': {
@@ -125,20 +125,18 @@ export const FIGURES = {
             [1],
             [1],
             [1],
-            [1],
         ],
         'down': [
             [1],
             [1],
             [1],
             [1],
-            [1],
         ],
         'left': [
-            [1,1,1,1,1],
+            [1,1,1,1],
         ],
         'right': [
-            [1,1,1,1,1],
+            [1,1,1,1],
         ],
     }
 };

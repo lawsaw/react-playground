@@ -28,7 +28,7 @@ const styles = () => ({
         flexWrap: 'nowrap',
     },
     square: {
-        backgroundColor: 'lightgrey',
+        backgroundColor: 'grey',
     }
 });
 

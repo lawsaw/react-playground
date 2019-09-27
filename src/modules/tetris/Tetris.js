@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
-import { cloneDeep, isEqual } from 'lodash';
+import { cloneDeep } from 'lodash';
 import Box from "@material-ui/core/Box";
 import { withStyles } from '@material-ui/core';
 import { Provider } from 'react-redux';
 import store from "./redux/store";
-//import MaterialButton from '@material-ui/core/Button';
 import { Grid } from './';
 import { FIGURES, ROTATION_CIRCLE } from './constants';
-
-// const StyledMaterialButton = withStyles(theme => ({
-//     root: {
-//         padding: 3,
-//         minWidth: 'auto',
-//         '& svg': {
-//             fontSize: theme.typography.pxToRem(16),
-//         },
-//     },
-// }))(MaterialButton);
 
 const styles = () => ({
     tetris: {
@@ -24,24 +13,16 @@ const styles = () => ({
     }
 });
 
-// const KEY_EVENTS = {
-//     'ArrowUp':    'up',
-//     'ArrowLeft':  'left',
-//     'ArrowRight': 'right',
-//     'ArrowDown':  'down',
-//     'Space':      'rotate',
-// }
-
 class Tetris extends Component {
 
     constructor(props) {
         super(props);
         this.timer = null;
         this.state = {
-            table: this.generateGrid(10, 20),
+            table: this.renderDemoHouse(this.generateGrid(10, 20)),
             rotation: 'left',
             figure: FIGURES['L'],
-            position: [2,4],
+            position: [10,4],
             duration: 1000,
 
         }
@@ -71,12 +52,17 @@ class Tetris extends Component {
     }
 
     mergeFigure = (figure, grid, [rowPosition, colPosition]) => {
-        //console.log(rowPosition, colPosition);
         let table = cloneDeep(grid);
         return table.map((row, rowIndex) => {
             if(rowIndex === rowPosition) {
                 figure.forEach((figureRow, figureRowIndex) => {
-                    table[rowIndex + figureRowIndex].splice(colPosition, figureRow.length, ...figureRow);
+                    let replacement = table[rowIndex + figureRowIndex].splice(colPosition, figureRow.length, ...figureRow);
+                    replacement.forEach((replacementItem, replacementIndex) => {
+                        if(replacementItem !== 0) {
+                            let tableRowTarget = rowIndex + figureRowIndex;
+                            table[tableRowTarget][colPosition+replacementIndex] = 1;
+                        }
+                    })
                 });
             }
             return row.map(col => col);
@@ -116,21 +102,20 @@ class Tetris extends Component {
     getFigureRotatePosition = (rotation) => {
         const { position: [rowPosition, colPosition]} = this.state;
         let figureOutsideSpace = this.getFigureOutsideSpace(rotation);
-        //let [rowPosition, colPosition] = this.getFigureIPosition(rotation);
         return figureOutsideSpace < 0 ? [rowPosition, colPosition+figureOutsideSpace] : [rowPosition, colPosition];
     }
 
-    // getFigureIPosition = (rotation) => {
-    //     const { figure, position: [rowPosition, colPosition] } = this.state;
-    //     if(isEqual(figure, FIGURES['I'])) {
-    //         if(rotation === 'left' || rotation === 'right') {
-    //             return [rowPosition, colPosition-2];
-    //         } else {
-    //             return [rowPosition, colPosition+2];
-    //         }
-    //     }
-    //     return [rowPosition, colPosition];
-    // }
+    renderDemoHouse = (table) => {
+        let house = [
+            [1,0,0,0,0,1,0,0,0,0],
+            [1,1,0,0,0,1,0,1,0,1],
+            [1,1,1,1,0,1,0,1,1,1],
+            [1,1,1,1,0,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1]
+        ];
+        let newGrid = this.mergeFigure(house, table, [table.length-house.length, 0]);
+        return newGrid;
+    }
 
     handleKeyPress = (e) => {
         const code = e.code;
@@ -151,39 +136,60 @@ class Tetris extends Component {
                 }));
                 break;
             case 'ArrowLeft':
-                if(this.isFigureCloseToLeft()) {
+                if(this.isFigureCloseToLeft() && this.hasFigureRightToMove(true)) {
                     this.setState(() => ({
                         position: [rowPosition, colPosition-1],
                     }));
                 }
                 break;
             case 'ArrowRight':
-                if(this.isFigureCloseToRight(rotation)) {
+                if(this.isFigureCloseToRight(rotation) && this.hasFigureRightToMove(true)) {
                     this.setState(() => ({
                         position: [rowPosition, colPosition+1],
                     }));
                 }
                 break;
             case 'Space':
-                this.setState(() => ({
-                    position: [rowPosition+1, colPosition],
-                }));
+                this.makeStepDown();
                 break;
         }
+    }
+
+    makeStepDown = () => {
+        const { position: [rowPosition, colPosition] } = this.state;
+        let rightToMove = this.hasFigureRightToMove();
+        if(rightToMove) {
+            let rowPositionNext = rowPosition+1;
+            this.setState(() => ({
+                position: [rowPositionNext, colPosition],
+            }));
+        }
+    }
+
+    getFigureMap = () => {
+        const { position: [rowPosition, colPosition], rotation, figure } = this.state;
+        let cleanGrid = this.generateGrid(10, 20);
+        return this.mergeFigure(figure[rotation], cleanGrid, [rowPosition+1, colPosition]);
+    }
+
+    hasFigureRightToMove = (isNext) => {
+        const { table } = this.state;
+        let figureMap = this.getFigureMap();
+        let current = isNext;
+        return !table.find((tableRow, tableRowIndex) => tableRow.find((tableCol, tableColIndex) => tableCol === figureMap[tableRowIndex][tableColIndex] && tableCol === 1));
     }
 
     render() {
         const { classes } = this.props;
         const { table, figure, rotation, position } = this.state;
-        let tableGrid = this.mergeFigure(figure[rotation], table, position);
-        console.log(position);
+        let gridWithFigure = this.mergeFigure(figure[rotation], table, position);
         return (
             <Provider store={store}>
                 <Box
                     className={classes.tetris}
                 >
                     <Grid
-                        table={tableGrid}
+                        table={gridWithFigure}
                     />
                 </Box>
             </Provider>
