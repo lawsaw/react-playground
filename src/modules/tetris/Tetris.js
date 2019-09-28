@@ -21,7 +21,7 @@ class Tetris extends Component {
         this.state = {
             table: this.renderDemoHouse(this.generateGrid(10, 20)),
             rotation: 'left',
-            figure: FIGURES['L'],
+            figure: FIGURES['I'],
             position: [10,4],
             duration: 1000,
 
@@ -51,7 +51,7 @@ class Tetris extends Component {
         return Array.from({length: ver}, () => Array.from({length: hor}, () => 0));
     }
 
-    mergeFigure = (figure, grid, [rowPosition, colPosition]) => {
+    merge = (figure, grid, [rowPosition, colPosition]) => {
         let table = cloneDeep(grid);
         return table.map((row, rowIndex) => {
             if(rowIndex === rowPosition) {
@@ -111,78 +111,109 @@ class Tetris extends Component {
             [1,1,0,0,0,1,0,1,0,1],
             [1,1,1,1,0,1,0,1,1,1],
             [1,1,1,1,0,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,1]
+            [1,1,1,1,1,1,0,1,1,1]
         ];
-        let newGrid = this.mergeFigure(house, table, [table.length-house.length, 0]);
+        let newGrid = this.merge(house, table, [table.length-house.length, 0]);
         return newGrid;
     }
 
-    handleKeyPress = (e) => {
-        const code = e.code;
-        const {position: [rowPosition, colPosition], rotation, table, figure} = this.state;
-        switch(code) {
-            case 'ArrowUp':
-                let rotationNext = this.getNextRotationPosition(rotation);
-                this.setState(() => ({
-                    position: this.getFigureRotatePosition(rotationNext),
-                    rotation: rotationNext,
-                }));
-                break;
-            case 'ArrowDown':
-                let rotationPrev = this.getPrevRotationPosition(rotation);
-                this.setState(() => ({
-                    position: this.getFigureRotatePosition(rotationPrev),
-                    rotation: rotationPrev,
-                }));
-                break;
-            case 'ArrowLeft':
-                if(this.isFigureCloseToLeft() && this.hasFigureRightToMove(true)) {
-                    this.setState(() => ({
-                        position: [rowPosition, colPosition-1],
-                    }));
-                }
-                break;
-            case 'ArrowRight':
-                if(this.isFigureCloseToRight(rotation) && this.hasFigureRightToMove(true)) {
-                    this.setState(() => ({
-                        position: [rowPosition, colPosition+1],
-                    }));
-                }
-                break;
-            case 'Space':
-                this.makeStepDown();
-                break;
-        }
-    }
-
-    makeStepDown = () => {
-        const { position: [rowPosition, colPosition] } = this.state;
-        let rightToMove = this.hasFigureRightToMove();
-        if(rightToMove) {
-            let rowPositionNext = rowPosition+1;
+    rotateFigure = (getRotationFunc) => {
+        const { rotation: rotationCurrent } = this.state;
+        let rotation = getRotationFunc(rotationCurrent);
+        let position = this.getFigureRotatePosition(rotation);
+        if(this.hasFigureRightToRotate(rotation, position)) {
             this.setState(() => ({
-                position: [rowPositionNext, colPosition],
+                position,
+                rotation
             }));
         }
     }
 
-    getFigureMap = () => {
-        const { position: [rowPosition, colPosition], rotation, figure } = this.state;
-        let cleanGrid = this.generateGrid(10, 20);
-        return this.mergeFigure(figure[rotation], cleanGrid, [rowPosition+1, colPosition]);
+    getMoveStep = (moveDirection, [row, col]) => {
+        let [rowNew, colNew] = [row, col];
+        switch(moveDirection) {
+            case 'down':
+                rowNew += 1;
+                break;
+            case 'left':
+                colNew -= 1;
+                break;
+            case 'right':
+                colNew += 1;
+                break;
+        }
+        return [rowNew, colNew];
     }
 
-    hasFigureRightToMove = (isNext) => {
+    moveFigure = (moveDirection) => {
+        const { position: [rowPosition, colPosition] } = this.state;
+        let [row, col] = this.getMoveStep(moveDirection, [rowPosition, colPosition]);
+        if(this.hasFigureRightToMove(moveDirection)) {
+            this.setState(() => ({
+                position: [row, col],
+            }));
+        }
+    }
+
+    handleKeyPress = (e) => {
+        const code = e.code;
+        const { rotation } = this.state;
+        switch(code) {
+            case 'ArrowUp':
+                this.rotateFigure(this.getNextRotationPosition);
+                break;
+            case 'ArrowDown':
+                this.rotateFigure(this.getPrevRotationPosition);
+                break;
+            case 'ArrowLeft':
+                if(this.isFigureCloseToLeft(rotation)) {
+                    this.moveFigure('left');
+                }
+                break;
+            case 'ArrowRight':
+                if(this.isFigureCloseToRight(rotation)) {
+                    this.moveFigure('right');
+                }
+                break;
+            case 'Space':
+                this.moveFigure('down');
+                break;
+        }
+    }
+
+    getFigureMap = (moveDirection, rotationCustom, [rowPositionCustom, colPositionCustom]) => {
+        const { position: [rowPosition, colPosition], rotation, figure } = this.state;
+        let cleanGrid = this.generateGrid(10, 20);
+        let [row, col] = this.getMoveStep(moveDirection, [rowPositionCustom || rowPosition, colPositionCustom || colPosition]);
+        let rot = rotationCustom || rotation;
+        return this.merge(figure[rot], cleanGrid, [row, col]);
+    }
+
+    hasTablesConflict = (table1, table2) => {
+        return !table1.find((tableRow, tableRowIndex) => tableRow.find((tableCol, tableColIndex) => tableCol === table2[tableRowIndex][tableColIndex] && tableCol === 1));
+    }
+
+    hasFigureRightToMove = (moveDirection) => {
         const { table } = this.state;
-        let figureMap = this.getFigureMap();
-        let current = isNext;
-        return !table.find((tableRow, tableRowIndex) => tableRow.find((tableCol, tableColIndex) => tableCol === figureMap[tableRowIndex][tableColIndex] && tableCol === 1));
+        let figureMap = this.getFigureMap(moveDirection, null, []);
+        return this.hasTablesConflict(table, figureMap);
+    }
+
+    hasFigureRightToRotate = (rot, pos) => {
+        const { table } = this.state;
+        let figureMap = this.getFigureMap(null, rot, pos);
+        return this.hasTablesConflict(table, figureMap);
+    }
+
+    hasGridFullRow = (table) => {
+        return table.filter(row => row.reduce((a, b) => a+b) === 10)
     }
 
     render() {
         const { classes } = this.props;
         const { table, figure, rotation, position } = this.state;
-        let gridWithFigure = this.mergeFigure(figure[rotation], table, position);
+        let gridWithFigure = this.merge(figure[rotation], table, position);
+        console.log(this.hasGridFullRow(gridWithFigure));
         return (
             <Provider store={store}>
                 <Box
