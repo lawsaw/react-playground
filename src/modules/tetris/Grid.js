@@ -4,6 +4,7 @@ import { isEqual } from 'lodash';
 import { withStyles } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 //import {F} from "../dashboard";
+import { ROWS_HIDDEN, COL_SIZE } from './constants';
 
 const styles = () => ({
     grid: {
@@ -17,8 +18,8 @@ const styles = () => ({
         flexWrap: 'nowrap',
     },
     col: {
-        width: 30,
-        height: 30,
+        width: COL_SIZE,
+        height: COL_SIZE,
         margin: 0,
         border: '1px solid lightgrey',
         display: 'flex',
@@ -26,10 +27,14 @@ const styles = () => ({
         alignItems: 'center',
         justifyContent: 'center',
         flexWrap: 'nowrap',
+        //transition: 'all 0.3s ease 0s',
     },
     square: {
         backgroundColor: 'grey',
-    }
+    },
+    hidden: {
+        opacity: 0,
+    },
 });
 
 class Grid extends Component {
@@ -39,8 +44,7 @@ class Grid extends Component {
     }
 
     render() {
-        const { classes, table } = this.props;
-        //console.log(table);
+        const { classes, table, isPreview } = this.props;
         return (
             <Box
                 className={classes.grid}
@@ -50,7 +54,7 @@ class Grid extends Component {
                         return (
                             <Box
                                 key={rowIndex}
-                                className={classes.row}
+                                className={cx(classes.row, !isPreview && (rowIndex < ROWS_HIDDEN) && classes.hidden)}
                             >
                                 {
                                     row.map((col, colIndex) => {

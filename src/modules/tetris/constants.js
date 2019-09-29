@@ -1,7 +1,11 @@
 //import React from 'react';
 
-export const ROWS = 20;
+
+export const COL_SIZE = 30;
+export const ROWS_HIDDEN = 3;
+export const ROWS = 20+ROWS_HIDDEN;
 export const COLS = 10;
+export const POSITION = [0, COLS/2-1];
 
 export const FIGURES = {
     'T': {

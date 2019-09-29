@@ -1,16 +1,33 @@
 import React, { Component } from 'react';
 import { cloneDeep } from 'lodash';
 import Box from "@material-ui/core/Box";
+import GridMaterial from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
 import { Provider } from 'react-redux';
 import store from "./redux/store";
 import { Grid } from './';
-import { FIGURES, ROTATION_CIRCLE, ROWS, COLS } from './constants';
+import { FIGURES, ROTATION_CIRCLE, ROWS, COLS, POSITION, COL_SIZE, ROWS_HIDDEN } from './constants';
 
 const styles = () => ({
-    tetris: {
+    screen: {
         position: 'relative',
-    }
+        width: COL_SIZE*COLS,
+        height: COL_SIZE*(ROWS-ROWS_HIDDEN),
+    },
+    screenInner: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+    },
+    preview: {
+        width: COL_SIZE*4,
+        height: COL_SIZE*4,
+    },
+    points: {
+        fontSize: 40,
+    },
 });
 
 class Tetris extends Component {
@@ -20,31 +37,42 @@ class Tetris extends Component {
         this.timer = null;
         this.state = {
             table: this.renderDemoHouse(this.generateGrid(COLS, ROWS)),
-            rotation: 'left',
-            figure: FIGURES['L'],
-            position: [10,4],
-            duration: 1000,
-
+            rotation: this.getRandomRotation(),
+            rotationNext: this.getRandomRotation(),
+            figure: this.getRandomFigure(),
+            figureNext: this.getRandomFigure(),
+            position: POSITION,
+            speed: 200,
+            points: 0,
+            isPause: true,
         }
     }
 
     componentDidMount() {
         document.addEventListener('keydown', this.handleKeyPress);
-        //this.startTimer();
     }
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleKeyPress);
     }
 
-    startTimer = () => {
-        this.timer = setTimeout(() => {
-            let [rowPosition, colPosition] = this.state.position;
-            this.setState(() => ({
-                position: [++rowPosition, colPosition],
-            }));
-            this.startTimer();
-        }, 750);
+    getRandomFigure = () => {
+        let figures = Object.keys(FIGURES);
+        let figure = Math.ceil(Math.random() * (figures.length-1));
+        return FIGURES[figures[figure]];
+    }
+
+    getRandomRotation = () => {
+        let rotation = Math.ceil(Math.random() * (ROTATION_CIRCLE.length-1));
+        return ROTATION_CIRCLE[rotation];
+    }
+
+    startGame = () => {
+        const { speed } = this.state;
+        this.timer = setInterval(() => {
+            this.moveFigure('down');
+            //this.startGame();
+        }, speed);
     }
 
     generateGrid = (hor, ver) => {
@@ -107,11 +135,18 @@ class Tetris extends Component {
 
     renderDemoHouse = (table) => {
         let house = [
-            [1,0,0,0,0,1,0,0,0,0],
-            [1,1,0,0,0,1,0,1,0,1],
-            [1,1,1,1,0,1,1,1,1,1],
-            [1,1,1,1,0,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,1]
+            [0,0,0,0,1,1,0,0,0,0],
+            [0,0,0,1,1,1,1,0,0,0],
+            [0,0,0,1,1,1,1,0,0,0],
+            [0,0,0,0,1,1,0,0,0,0],
+            [0,0,0,0,1,1,0,0,0,0],
+            [0,0,0,0,1,1,0,0,0,0],
+            [0,0,0,0,1,1,0,0,0,0],
+            [0,0,0,0,1,1,0,0,0,0],
+            [0,0,0,0,1,1,0,0,0,0],
+            [0,0,1,1,1,1,1,1,0,0],
+            [0,0,1,1,1,1,1,1,0,0],
+            [0,0,1,1,1,1,1,1,0,0],
         ];
         let newGrid = this.merge(house, table, [table.length-house.length, 0]);
         return newGrid;
@@ -148,36 +183,77 @@ class Tetris extends Component {
     moveFigure = (moveDirection) => {
         const { position: positionCurrent } = this.state;
         let position = this.getMoveStep(moveDirection, positionCurrent);
-        let isLastStepDown = this.isLastStepDown(position);
         if(this.hasFigureRightToMove(moveDirection, position)) {
             this.setState(() => ({
                 position,
             }));
-        } if(isLastStepDown) {
-            this.handleLastStepDown();
+        }
+        if(moveDirection === 'down' && !this.hasFigureRightToMove('down', position)) {
+            if(!this.isEndGame()) {
+                this.handleLastStepDown();
+            } else {
+                this.handleEndGame();
+            }
         }
     }
 
-    isLastStepDown = (pos) => {
-        let position = this.getMoveStep('down', pos);
-        return !this.hasFigureRightToMove('down', position)
+    isEndGame = () => {
+        const { table } = this.state;
+        let checkedRow = table[ROWS_HIDDEN-1];
+        return checkedRow.find(col => col === 1);
+    }
+
+    handleEndGame = () => {
+        const { points } = this.state;
+        //clearTimeout(this.timer);
+        clearInterval(this.timer);
+        this.setState(() => ({
+            isPause: true,
+        }));
+        alert(`You lost. You score is ${points}`);
+    }
+
+    handleResetGame = () => {
+        this.setState(() => ({
+            table: this.generateGrid(COLS, ROWS),
+            figure: this.getRandomFigure(),
+            figureNext: this.getRandomFigure(),
+            position: POSITION,
+            rotation: this.getRandomRotation(),
+            rotationNext: this.getRandomRotation(),
+            points: 0,
+            isPause: false,
+        }));
+        this.startGame();
     }
 
     handleLastStepDown = () => {
-        const { figure, rotation, table, position } = this.state;
+        const { figure, rotation, table, position, figureNext, rotationNext, points } = this.state;
         let tableWithFigure = this.merge(figure[rotation], table, position);
         let fullRows = this.getAllFullRowsIndexes(tableWithFigure);
         if(fullRows.length) {
-            tableWithFigure = this.cleanTableFromFullRows(tableWithFigure);
+            tableWithFigure = this.cleanTableFromFullRows(tableWithFigure, fullRows);
         }
         this.setState(() => ({
             table: tableWithFigure,
+            figure: figureNext,
+            figureNext: this.getRandomFigure(),
+            position: POSITION,
+            rotation: rotationNext,
+            rotationNext: this.getRandomRotation(),
+            points: points + fullRows.length,
         }));
-        console.log(fullRows);
     }
 
-    cleanTableFromFullRows = (table) => {
-        return table;
+    cleanTableFromFullRows = (table, fullRows) => {
+        let cleanRow = Array.from({length: COLS}, () => 0);
+        let newTable = cloneDeep(table);
+        fullRows.forEach((rowToClean, rowToCleanIndex, arr) => {
+            let top = newTable.slice(0, rowToClean);
+            let bottom = newTable.slice(arr[rowToCleanIndex]+1, newTable.length);
+            newTable = [cleanRow, ...top, ...bottom];
+        })
+        return newTable;
     }
 
     getFigureFullGrid = () => {
@@ -194,10 +270,10 @@ class Tetris extends Component {
         const { rotation } = this.state;
         switch(code) {
             case 'ArrowUp':
-                this.rotateFigure(this.getNextRotationPosition);
+                this.rotateFigure(this.getPrevRotationPosition);
                 break;
             case 'ArrowDown':
-                this.rotateFigure(this.getPrevRotationPosition);
+                this.rotateFigure(this.getNextRotationPosition);
                 break;
             case 'ArrowLeft':
                 if(this.isFigureCloseToLeft(rotation)) {
@@ -234,7 +310,6 @@ class Tetris extends Component {
     hasFigureRightToRotate = (rotation, position) => {
         const { figure, table } = this.state;
         if(!this.isPositionInArea(rotation, position)) return false;
-        console.log(position);
         let figureMap = this.getFigureMap(figure[rotation], null, position);
         let figureMap2 = this.getFigureFullGrid();
         return this.hasTablesConflict(table, figureMap2);
@@ -258,20 +333,52 @@ class Tetris extends Component {
 
     render() {
         const { classes } = this.props;
-        const { table, figure, rotation, position } = this.state;
-        let tableWithFigure = this.merge(figure[rotation], table, position);
-        //console.log(this.getAllFullRowsIndexes(gridWithFigure));
-        //console.log(this.getFigureFullGrid());
-        //console.log(table);
+        const { table, figure, rotation, position, figureNext, rotationNext, points, isPause } = this.state;
+        let tableWithFigure = figure ? this.merge(figure[rotation], table, position) : table;
         return (
             <Provider store={store}>
-                <Box
-                    className={classes.tetris}
-                >
-                    <Grid
-                        table={tableWithFigure}
-                    />
-                </Box>
+                <GridMaterial container justify="center" spacing={5}>
+                    <GridMaterial item>
+                        <Box
+                            className={classes.screen}
+                        >
+                            <Box
+                                className={classes.screenInner}
+                            >
+                                <Grid
+                                    table={tableWithFigure}
+                                />
+                            </Box>
+                        </Box>
+                    </GridMaterial>
+                    <GridMaterial item>
+                        {
+                            !isPause && (
+                                <Box
+                                    className={classes.preview}
+                                >
+                                    <Grid
+                                        table={figureNext[rotationNext]}
+                                        isPreview
+                                    />
+                                </Box>
+                            )
+                        }
+                        <Box
+                            className={classes.points}
+                        >
+                            Score: {points}
+                        </Box>
+                        {
+                            isPause && (
+                                <Button color="secondary" onClick={this.handleResetGame}>
+                                    Start New Game
+                                </Button>
+                            )
+                        }
+                    </GridMaterial>
+                </GridMaterial>
+
             </Provider>
         );
     }
