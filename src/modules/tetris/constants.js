@@ -1,5 +1,8 @@
 //import React from 'react';
 
+export const ROWS = 20;
+export const COLS = 10;
+
 export const FIGURES = {
     'T': {
         'up': [

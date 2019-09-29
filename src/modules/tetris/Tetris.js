@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core';
 import { Provider } from 'react-redux';
 import store from "./redux/store";
 import { Grid } from './';
-import { FIGURES, ROTATION_CIRCLE } from './constants';
+import { FIGURES, ROTATION_CIRCLE, ROWS, COLS } from './constants';
 
 const styles = () => ({
     tetris: {
@@ -19,9 +19,9 @@ class Tetris extends Component {
         super(props);
         this.timer = null;
         this.state = {
-            table: this.renderDemoHouse(this.generateGrid(10, 20)),
+            table: this.renderDemoHouse(this.generateGrid(COLS, ROWS)),
             rotation: 'left',
-            figure: FIGURES['I'],
+            figure: FIGURES['L'],
             position: [10,4],
             duration: 1000,
 
@@ -109,9 +109,9 @@ class Tetris extends Component {
         let house = [
             [1,0,0,0,0,1,0,0,0,0],
             [1,1,0,0,0,1,0,1,0,1],
-            [1,1,1,1,0,1,0,1,1,1],
             [1,1,1,1,0,1,1,1,1,1],
-            [1,1,1,1,1,1,0,1,1,1]
+            [1,1,1,1,0,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1]
         ];
         let newGrid = this.merge(house, table, [table.length-house.length, 0]);
         return newGrid;
@@ -120,7 +120,7 @@ class Tetris extends Component {
     rotateFigure = (getRotationFunc) => {
         const { rotation: rotationCurrent } = this.state;
         let rotation = getRotationFunc(rotationCurrent);
-        let position = this.getFigureRotatePosition(rotation);
+        let position = this.getMoveStep(null, this.getFigureRotatePosition(rotation));
         if(this.hasFigureRightToRotate(rotation, position)) {
             this.setState(() => ({
                 position,
@@ -146,13 +146,47 @@ class Tetris extends Component {
     }
 
     moveFigure = (moveDirection) => {
-        const { position: [rowPosition, colPosition] } = this.state;
-        let [row, col] = this.getMoveStep(moveDirection, [rowPosition, colPosition]);
-        if(this.hasFigureRightToMove(moveDirection)) {
+        const { position: positionCurrent } = this.state;
+        let position = this.getMoveStep(moveDirection, positionCurrent);
+        let isLastStepDown = this.isLastStepDown(position);
+        if(this.hasFigureRightToMove(moveDirection, position)) {
             this.setState(() => ({
-                position: [row, col],
+                position,
             }));
+        } if(isLastStepDown) {
+            this.handleLastStepDown();
         }
+    }
+
+    isLastStepDown = (pos) => {
+        let position = this.getMoveStep('down', pos);
+        return !this.hasFigureRightToMove('down', position)
+    }
+
+    handleLastStepDown = () => {
+        const { figure, rotation, table, position } = this.state;
+        let tableWithFigure = this.merge(figure[rotation], table, position);
+        let fullRows = this.getAllFullRowsIndexes(tableWithFigure);
+        if(fullRows.length) {
+            tableWithFigure = this.cleanTableFromFullRows(tableWithFigure);
+        }
+        this.setState(() => ({
+            table: tableWithFigure,
+        }));
+        console.log(fullRows);
+    }
+
+    cleanTableFromFullRows = (table) => {
+        return table;
+    }
+
+    getFigureFullGrid = () => {
+        const { figure, rotation, position } = this.state;
+        let rows = figure[rotation].length;
+        let cols = figure[rotation][0].length;
+        let size = rows > cols ? rows : cols;
+        let figureSquare = Array.from({length: size}, () => Array.from({length: size}, () => 1));
+        return this.getFigureMap(figureSquare, null, position);
     }
 
     handleKeyPress = (e) => {
@@ -181,46 +215,61 @@ class Tetris extends Component {
         }
     }
 
-    getFigureMap = (moveDirection, rotationCustom, [rowPositionCustom, colPositionCustom]) => {
-        const { position: [rowPosition, colPosition], rotation, figure } = this.state;
-        let cleanGrid = this.generateGrid(10, 20);
-        let [row, col] = this.getMoveStep(moveDirection, [rowPositionCustom || rowPosition, colPositionCustom || colPosition]);
-        let rot = rotationCustom || rotation;
-        return this.merge(figure[rot], cleanGrid, [row, col]);
+    getFigureMap = (figure, moveDirection, position) => {
+        let cleanGrid = this.generateGrid(COLS, ROWS);
+        return this.merge(figure, cleanGrid, position);
     }
 
     hasTablesConflict = (table1, table2) => {
         return !table1.find((tableRow, tableRowIndex) => tableRow.find((tableCol, tableColIndex) => tableCol === table2[tableRowIndex][tableColIndex] && tableCol === 1));
     }
 
-    hasFigureRightToMove = (moveDirection) => {
-        const { table } = this.state;
-        let figureMap = this.getFigureMap(moveDirection, null, []);
+    hasFigureRightToMove = (moveDirection, position) => {
+        const { figure, table, rotation } = this.state;
+        if(!this.isPositionInArea(rotation, position)) return false;
+        let figureMap = this.getFigureMap(figure[rotation], moveDirection, position);
         return this.hasTablesConflict(table, figureMap);
     }
 
-    hasFigureRightToRotate = (rot, pos) => {
-        const { table } = this.state;
-        let figureMap = this.getFigureMap(null, rot, pos);
-        return this.hasTablesConflict(table, figureMap);
+    hasFigureRightToRotate = (rotation, position) => {
+        const { figure, table } = this.state;
+        if(!this.isPositionInArea(rotation, position)) return false;
+        console.log(position);
+        let figureMap = this.getFigureMap(figure[rotation], null, position);
+        let figureMap2 = this.getFigureFullGrid();
+        return this.hasTablesConflict(table, figureMap2);
     }
 
-    hasGridFullRow = (table) => {
-        return table.filter(row => row.reduce((a, b) => a+b) === 10)
+    getAllFullRowsIndexes = (table) => {
+        return table.reduce(function(a, row, i) {
+            let isRowFull = row.reduce((a, col) => a + col) === COLS;
+            if(isRowFull) a.push(i);
+            return a;
+        }, []);
     }
+
+    isPositionInArea = (rotation, [row, col]) => {
+        const { figure, position } = this.state;
+        let rowLimit = row + figure[rotation].length;
+        let colLimit = col + figure[rotation][0].length;
+        return rowLimit <= ROWS && colLimit <= COLS;
+    }
+
 
     render() {
         const { classes } = this.props;
         const { table, figure, rotation, position } = this.state;
-        let gridWithFigure = this.merge(figure[rotation], table, position);
-        console.log(this.hasGridFullRow(gridWithFigure));
+        let tableWithFigure = this.merge(figure[rotation], table, position);
+        //console.log(this.getAllFullRowsIndexes(gridWithFigure));
+        //console.log(this.getFigureFullGrid());
+        //console.log(table);
         return (
             <Provider store={store}>
                 <Box
                     className={classes.tetris}
                 >
                     <Grid
-                        table={gridWithFigure}
+                        table={tableWithFigure}
                     />
                 </Box>
             </Provider>

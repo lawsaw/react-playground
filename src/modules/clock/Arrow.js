@@ -13,7 +13,7 @@ const styles = (theme) => ({
         transformOrigin: 'left center',
         left: '50%',
         transform: props => `rotateZ(${props.deg}deg)`,
-        transition: 'all 1.05s linear 0s',
+        //transition: 'all 0.1s linear 0s',
     }
 });
 
