@@ -1,5 +1,5 @@
 export const COL_SIZE = 30;
-export const ROWS_HIDDEN = 3;
+export const ROWS_HIDDEN = 4;
 export const ROWS = 20+ROWS_HIDDEN;
 export const COLS = 10;
 export const SPEED = 150;

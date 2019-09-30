@@ -1,6 +1,8 @@
 import React, { Fragment, Component } from 'react';
 import { cloneDeep } from 'lodash';
 import { withSnackbar } from 'notistack';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import Box from "@material-ui/core/Box";
 import GridMaterial from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -44,6 +46,7 @@ class Body extends Component {
             speed: SPEED,
             score: 0,
             isPause: true,
+            isGameRunning: false,
             isResultModalOpen: false,
         }
     }
@@ -226,16 +229,19 @@ class Body extends Component {
     }
 
     handleEndGame = () => {
-        //const { score } = this.state;
         clearInterval(this.timer);
-        this.setState(() => ({
-            isPause: true,
-        }));
         this.handleResultModal();
-        //alert(`The game is over. Your score is ${score}`);
+        this.setState(() => ({
+            isGameRunning: false,
+        }));
     }
 
-    handleResetGame = () => {
+    handleStartNewGame = () => {
+        this.resetGame(true);
+        this.startGame();
+    }
+
+    resetGame = (isRunning) => {
         this.setState(() => ({
             table: this.generateGrid(COLS, ROWS),
             figure: this.getRandomFigure(),
@@ -245,9 +251,9 @@ class Body extends Component {
             rotationNext: this.getRandomRotation(),
             score: 0,
             isPause: false,
+            isGameRunning: isRunning,
             speed: SPEED,
         }));
-        this.startGame();
     }
 
     handleLastStepDown = () => {
@@ -308,29 +314,31 @@ class Body extends Component {
 
     handleKeyPress = (e) => {
         const code = e.code;
-        const { rotation } = this.state;
-        switch(code) {
-            case 'ArrowUp':
-                this.rotateFigure(this.getPrevRotationPosition);
-                break;
-            case 'ArrowDown':
-                this.rotateFigure(this.getNextRotationPosition);
-                break;
-            case 'ArrowLeft':
-                if(this.isFigureCloseToLeft(rotation)) {
-                    this.moveFigure('left');
-                }
-                break;
-            case 'ArrowRight':
-                if(this.isFigureCloseToRight(rotation)) {
-                    this.moveFigure('right');
-                }
-                break;
-            case 'Space':
-                this.moveFigure('down');
-                break;
-            default:
-                break;
+        const { rotation, isPause, isGameRunning } = this.state;
+        if(!isPause || !isGameRunning) {
+            switch(code) {
+                case 'ArrowUp':
+                    this.rotateFigure(this.getPrevRotationPosition);
+                    break;
+                case 'ArrowDown':
+                    this.rotateFigure(this.getNextRotationPosition);
+                    break;
+                case 'ArrowLeft':
+                    if(this.isFigureCloseToLeft(rotation)) {
+                        this.moveFigure('left');
+                    }
+                    break;
+                case 'ArrowRight':
+                    if(this.isFigureCloseToRight(rotation)) {
+                        this.moveFigure('right');
+                    }
+                    break;
+                case 'Space':
+                    this.moveFigure('down');
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -379,9 +387,23 @@ class Body extends Component {
         }))
     }
 
+    handlePause = () => {
+        this.setState(() => ({
+            isPause: true,
+        }))
+        clearInterval(this.timer);
+    }
+
+    handleContinue = () => {
+        this.setState(() => ({
+            isPause: false,
+        }))
+        this.startGame();
+    }
+
     render() {
         const { classes } = this.props;
-        const { table, figure, rotation, position, figureNext, rotationNext, score, isPause, isResultModalOpen } = this.state;
+        const { table, figure, rotation, position, figureNext, rotationNext, score, isPause, isResultModalOpen, isGameRunning } = this.state;
         let tableWithFigure = figure ? this.merge(figure[rotation], table, position) : table;
         return (
             <Fragment>
@@ -401,7 +423,7 @@ class Body extends Component {
                     </GridMaterial>
                     <GridMaterial item>
                         {
-                            !isPause && (
+                            isGameRunning && (
                                 <Box
                                     className={classes.preview}
                                 >
@@ -417,13 +439,44 @@ class Body extends Component {
                         >
                             Score: {score}
                         </Box>
-                        {
-                            isPause && (
-                                <Button color="primary" variant="contained" onClick={this.handleResetGame}>
-                                    Start New Game
-                                </Button>
-                            )
-                        }
+                        <List dense>
+                            {
+                                !isGameRunning && (
+                                    <ListItem>
+                                        <Button color="primary" variant="contained" onClick={this.handleStartNewGame}>
+                                            Start New Game
+                                        </Button>
+                                    </ListItem>
+                                )
+                            }
+                            {
+                                isGameRunning && !isPause && (
+                                    <ListItem>
+                                        <Button color="secondary" variant="contained" onClick={this.handlePause}>
+                                            Pause
+                                        </Button>
+                                    </ListItem>
+                                )
+                            }
+                            {
+                                isGameRunning && isPause && (
+                                    <ListItem>
+                                        <Button color="secondary" variant="contained" onClick={this.handleContinue}>
+                                            Continue
+                                        </Button>
+                                    </ListItem>
+                                )
+                            }
+                            {
+                                isGameRunning && (
+                                    <ListItem>
+                                        <Button color="primary" variant="contained" onClick={this.handleEndGame}>
+                                            Stop Game
+                                        </Button>
+                                    </ListItem>
+                                )
+                            }
+                        </List>
                     </GridMaterial>
                 </GridMaterial>
                 <ResultModal
