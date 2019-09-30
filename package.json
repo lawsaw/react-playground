@@ -8,6 +8,7 @@
     "@material-ui/lab": "^4.0.0-alpha.21",
     "classnames": "^2.2.6",
     "lodash": "^4.17.15",
+    "notistack": "^0.9.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.1",

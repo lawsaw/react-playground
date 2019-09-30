@@ -1,7 +1,7 @@
 import React from 'react';
+import { HOME_PAGE } from '../helpers/constants';
 
 import {
-    Home,
     About,
     Test,
     Clock,
@@ -14,7 +14,7 @@ export const ROUTES = [
     {
         link: '/',
         label: 'Home',
-        page: props => <Home {...props} />
+        page: HOME_PAGE
     },{
         link: '/about',
         label: 'About',

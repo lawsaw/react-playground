@@ -11,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import { ROUTES } from '../helpers/routes';
 import { MenuMain } from '../components';
 import theme from '../helpers/theme';
+import { IS_SINGLE_PAGE } from '../helpers/constants';
 
 const styles = () => ({
     mainContainer: {
@@ -49,14 +50,18 @@ export default withStyles(styles)(({classes, ...props}) => {
                             spacing={4}
                             className={classes.mainGrid}
                         >
+                            {
+                                !IS_SINGLE_PAGE && (
+                                    <Grid
+                                        item xs={2}
+                                        className={classes.sidebar}
+                                    >
+                                        <MenuMain />
+                                    </Grid>
+                                )
+                            }
                             <Grid
-                                item xs={2}
-                                className={classes.sidebar}
-                            >
-                                <MenuMain />
-                            </Grid>
-                            <Grid
-                                item xs={10}
+                                item xs={!IS_SINGLE_PAGE ? 10 : 12}
                                 className={classes.work}
                             >
                                 <Switch>
@@ -67,6 +72,9 @@ export default withStyles(styles)(({classes, ...props}) => {
                                 }
                                 </Switch>
                             </Grid>
+
+
+
                         </Grid>
                     </Container>
                 </Router>
