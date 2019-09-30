@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf276a12-ba85-4e17-93a3-7ef6e8fa304c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/tetris/Body.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/tetris/Body.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,14 +15,14 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.41727054">
+    <splitter split-orientation="horizontal" split-proportion="0.56892383">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/modules/tetris/Body.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="256">
-                  <caret line="239" column="22" lean-forward="true" selection-start-line="239" selection-start-column="22" selection-end-line="239" selection-end-column="22" />
+                <state relative-caret-position="324">
+                  <caret line="234" column="33" lean-forward="true" selection-start-line="234" selection-start-column="33" selection-end-line="234" selection-end-column="33" />
                   <folding>
                     <element signature="e#0#51#0" expanded="true" />
                   </folding>
@@ -44,7 +45,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/modules/tetris/Grid.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="360">
+                <state relative-caret-position="900">
                   <caret line="60" column="48" selection-start-line="60" selection-start-column="48" selection-end-line="60" selection-end-column="48" />
                   <folding>
                     <element signature="e#0#41#0" expanded="true" />
@@ -56,7 +57,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/modules/todolist/Bar.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1097">
+                <state relative-caret-position="1110">
                   <caret line="74" column="44" selection-start-line="74" selection-start-column="25" selection-end-line="74" selection-end-column="44" />
                   <folding>
                     <element signature="e#0#50#0" expanded="true" />
@@ -85,9 +86,7 @@
           </file>
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/helpers/etc.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-853" />
-              </provider>
+              <provider selected="true" editor-type-id="text-editor" />
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
@@ -111,7 +110,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/containers/Main.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="495">
+                <state relative-caret-position="945">
                   <caret line="63" column="66" selection-start-line="63" selection-start-column="66" selection-end-line="63" selection-end-column="66" />
                   <folding>
                     <element signature="e#0#40#0" expanded="true" />
@@ -123,12 +122,15 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/modules/tetris/Body.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="496">
-                  <caret line="253" lean-forward="true" selection-start-line="253" selection-end-line="253" />
+                <state relative-caret-position="436">
+                  <caret line="250" column="12" selection-start-line="250" selection-start-column="12" selection-end-line="250" selection-end-column="25" />
+                  <folding>
+                    <element signature="e#0#51#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -139,7 +141,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>renderDemoHouse</find>
       <find>rowPositionNext</find>
       <find>getFigureLimitRows</find>
       <find>isFigureAtTheBottom</find>
@@ -169,6 +170,7 @@
       <find>up</find>
       <find>this.resetGame</find>
       <find>resetGame</find>
+      <find>handleLastStepDown</find>
     </findStrings>
     <replaceStrings>
       <replace>idCurrent</replace>
@@ -247,10 +249,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="240" />
-    <option name="y" value="158" />
-    <option name="width" value="1440" />
-    <option name="height" value="791" />
+    <option name="x" value="1920" />
+    <option name="y" value="-2" />
+    <option name="width" value="1920" />
+    <option name="height" value="1202" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -258,7 +260,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -283,6 +284,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -340,11 +342,12 @@
       <workItem from="1569225033887" duration="18840000" />
       <workItem from="1569315784853" duration="55499000" />
       <workItem from="1569780286415" duration="12983000" />
+      <workItem from="1569852069994" duration="291000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="535639000" />
+    <option name="totallyTimeSpent" value="537145000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -361,7 +364,7 @@
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.11632871" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.117395945" />
       <window_info id="npm" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -779,45 +782,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/helpers/etc.js">
+    <entry file="file://$PROJECT_DIR$/src/modules/tetris/Grid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-853" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/tetris/ResultModal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" selection-start-column="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/helpers/routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/Main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="63" column="66" selection-start-line="63" selection-start-column="66" selection-end-line="63" selection-end-column="66" />
+        <state relative-caret-position="900">
+          <caret line="60" column="48" selection-start-line="60" selection-start-column="48" selection-end-line="60" selection-end-column="48" />
           <folding>
-            <element signature="e#0#40#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/helpers/constants.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/todolist/Bar.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1097">
+        <state relative-caret-position="1110">
           <caret line="74" column="44" selection-start-line="74" selection-start-column="25" selection-end-line="74" selection-end-column="44" />
           <folding>
             <element signature="e#0#50#0" expanded="true" />
@@ -825,13 +802,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/tetris/Grid.js">
+    <entry file="file://$PROJECT_DIR$/src/modules/tetris/ResultModal.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="60" column="48" selection-start-line="60" selection-start-column="48" selection-end-line="60" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="12" selection-start-column="12" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -842,10 +816,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/helpers/etc.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/helpers/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/helpers/constants.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/Main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="945">
+          <caret line="63" column="66" selection-start-line="63" selection-start-column="66" selection-end-line="63" selection-end-column="66" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/tetris/Body.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="496">
-          <caret line="253" lean-forward="true" selection-start-line="253" selection-end-line="253" />
+        <state relative-caret-position="324">
+          <caret line="234" column="33" lean-forward="true" selection-start-line="234" selection-start-column="33" selection-end-line="234" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

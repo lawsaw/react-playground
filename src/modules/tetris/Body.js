@@ -233,6 +233,7 @@ class Body extends Component {
         this.handleResultModal();
         this.setState(() => ({
             isGameRunning: false,
+            speed: SPEED,
         }));
     }
 
