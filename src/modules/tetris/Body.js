@@ -237,11 +237,6 @@ class Body extends Component {
     }
 
     handleStartNewGame = () => {
-        this.resetGame(true);
-        this.startGame();
-    }
-
-    resetGame = (isRunning) => {
         this.setState(() => ({
             table: this.generateGrid(COLS, ROWS),
             figure: this.getRandomFigure(),
@@ -251,9 +246,10 @@ class Body extends Component {
             rotationNext: this.getRandomRotation(),
             score: 0,
             isPause: false,
-            isGameRunning: isRunning,
+            isGameRunning: true,
             speed: SPEED,
         }));
+        this.startGame();
     }
 
     handleLastStepDown = () => {
@@ -285,8 +281,10 @@ class Body extends Component {
         let stepScore = 2;
         for(let i = 1; i < speed; i++) if(score >= stepScore*i && score < stepScore*i+stepScore && speed !== SPEED-i*stepSpeed) {
             speed -= stepSpeed;
-            this.props.enqueueSnackbar('Speed is up!', {
+            this.props.enqueueSnackbar(`Speed is now ${speed}ms!`, {
                 variant: 'info',
+                autoHideDuration: 1500,
+                dense: true,
             });
         }
         return speed;
