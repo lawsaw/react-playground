@@ -43,6 +43,17 @@ class Grid extends Component {
         return !isEqual(nextProps.table, this.props.table);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.server) {
+            const { table } = this.props;
+            const { master, friend, socket } = this.props.server;
+            socket.emit('game', {
+                friend,
+                table
+            });
+        }
+    }
+
     render() {
         const { classes, table, isPreview } = this.props;
         return (

@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import { cloneDeep } from 'lodash';
 import { withSnackbar } from 'notistack';
 import List from '@material-ui/core/List';
@@ -7,37 +7,24 @@ import Box from "@material-ui/core/Box";
 import GridMaterial from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
-import { Grid, ResultModal } from './';
+import { Grid, ResultModal, Score, Screen } from './';
 import { FIGURES, ROTATION_CIRCLE, ROWS, COLS, POSITION, COL_SIZE, ROWS_HIDDEN, SPEED } from './constants';
+import { generateGrid, merge, renderDemoHouse } from './etc';
 
 const styles = () => ({
-    screen: {
-        position: 'relative',
-        width: COL_SIZE*COLS,
-        height: COL_SIZE*(ROWS-ROWS_HIDDEN),
-    },
-    screenInner: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-    },
     preview: {
         width: COL_SIZE*4,
         height: COL_SIZE*4,
     },
-    score: {
-        fontSize: 40,
-    },
 });
 
-class Body extends Component {
+class Body extends PureComponent {
 
     constructor(props) {
         super(props);
         this.timer = null;
         this.state = {
-            table: this.renderDemoHouse(this.generateGrid(COLS, ROWS)),
+            table: renderDemoHouse(generateGrid(COLS, ROWS)),
             rotation: this.getRandomRotation(),
             rotationNext: this.getRandomRotation(),
             figure: this.getRandomFigure(),
@@ -82,28 +69,6 @@ class Body extends Component {
         this.startGame();
     }
 
-    generateGrid = (hor, ver) => {
-        return Array.from({length: ver}, () => Array.from({length: hor}, () => 0));
-    }
-
-    merge = (figure, grid, [rowPosition, colPosition]) => {
-        let table = cloneDeep(grid);
-        return table.map((row, rowIndex) => {
-            if(rowIndex === rowPosition) {
-                figure.forEach((figureRow, figureRowIndex) => {
-                    let replacement = table[rowIndex + figureRowIndex].splice(colPosition, figureRow.length, ...figureRow);
-                    replacement.forEach((replacementItem, replacementIndex) => {
-                        if(replacementItem !== 0) {
-                            let tableRowTarget = rowIndex + figureRowIndex;
-                            table[tableRowTarget][colPosition+replacementIndex] = 1;
-                        }
-                    })
-                });
-            }
-            return row.map(col => col);
-        });
-    }
-
     getNextRotationPosition = (figure) => {
         let { length } = ROTATION_CIRCLE;
         let index = ROTATION_CIRCLE.indexOf(figure);
@@ -139,40 +104,6 @@ class Body extends Component {
         const { position: [rowPosition, colPosition]} = this.state;
         let figureOutsideSpace = this.getFigureOutsideSpace(rotation);
         return figureOutsideSpace < 0 ? [rowPosition, colPosition+figureOutsideSpace] : [rowPosition, colPosition];
-    }
-
-    renderDemoHouse = (table) => {
-        // let houseHuy = [
-        //     [0,0,0,0,1,1,0,0,0,0],
-        //     [0,0,0,1,1,1,1,0,0,0],
-        //     [0,0,0,1,1,1,1,0,0,0],
-        //     [0,0,0,0,1,1,0,0,0,0],
-        //     [0,0,0,0,1,1,0,0,0,0],
-        //     [0,0,0,0,1,1,0,0,0,0],
-        //     [0,0,0,0,1,1,0,0,0,0],
-        //     [0,0,0,0,1,1,0,0,0,0],
-        //     [0,0,0,0,1,1,0,0,0,0],
-        //     [0,0,1,1,1,1,1,1,0,0],
-        //     [0,0,1,1,1,1,1,1,0,0],
-        //     [0,0,1,1,1,1,1,1,0,0],
-        // ];
-        let smile = [
-            [0,0,1,0,0,0,0,1,0,0],
-            [0,1,1,1,0,0,1,1,1,0],
-            [0,0,1,0,0,0,0,1,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-            [0,0,1,0,0,0,0,1,0,0],
-            [0,0,0,1,0,0,1,0,0,0],
-            [0,0,0,0,1,1,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0],
-        ];
-        let newGrid = this.merge(smile, table, [table.length-smile.length, 0]);
-        return newGrid;
     }
 
     rotateFigure = (getRotationFunc) => {
@@ -239,7 +170,7 @@ class Body extends Component {
 
     handleStartNewGame = () => {
         this.setState(() => ({
-            table: this.generateGrid(COLS, ROWS),
+            table: generateGrid(COLS, ROWS),
             figure: this.getRandomFigure(),
             figureNext: this.getRandomFigure(),
             position: POSITION,
@@ -255,7 +186,7 @@ class Body extends Component {
 
     handleLastStepDown = () => {
         const { figure, rotation, table, position, figureNext, rotationNext, score, speed } = this.state;
-        let tableWithFigure = this.merge(figure[rotation], table, position);
+        let tableWithFigure = merge(figure[rotation], table, position);
         let fullRows = this.getAllFullRowsIndexes(tableWithFigure);
         let scoreNew = score + fullRows.length;
         let speedNew = speed;
@@ -342,8 +273,8 @@ class Body extends Component {
     }
 
     getFigureMap = (figure, moveDirection, position) => {
-        let cleanGrid = this.generateGrid(COLS, ROWS);
-        return this.merge(figure, cleanGrid, position);
+        let cleanGrid = generateGrid(COLS, ROWS);
+        return merge(figure, cleanGrid, position);
     }
 
     hasTablesConflict = (table1, table2) => {
@@ -401,24 +332,18 @@ class Body extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, server } = this.props;
         const { table, figure, rotation, position, figureNext, rotationNext, score, isPause, isResultModalOpen, isGameRunning } = this.state;
-        let tableWithFigure = figure ? this.merge(figure[rotation], table, position) : table;
+        let tableWithFigure = figure ? merge(figure[rotation], table, position) : table;
+
         return (
             <Fragment>
                 <GridMaterial container justify="center" spacing={5}>
                     <GridMaterial item>
-                        <Box
-                            className={classes.screen}
-                        >
-                            <Box
-                                className={classes.screenInner}
-                            >
-                                <Grid
-                                    table={tableWithFigure}
-                                />
-                            </Box>
-                        </Box>
+                        <Screen
+                            table={tableWithFigure}
+                            server={server}
+                        />
                     </GridMaterial>
                     <GridMaterial item>
                         {
@@ -429,15 +354,14 @@ class Body extends Component {
                                     <Grid
                                         table={figureNext[rotationNext]}
                                         isPreview
+                                        server={server}
                                     />
                                 </Box>
                             )
                         }
-                        <Box
-                            className={classes.score}
-                        >
-                            Score: {score}
-                        </Box>
+                        <Score
+                            value={score}
+                        />
                         <List dense>
                             {
                                 !isGameRunning && (

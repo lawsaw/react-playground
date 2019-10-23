@@ -1,4 +1,4 @@
-export const COL_SIZE = 30;
+export const COL_SIZE = 26;
 export const ROWS_HIDDEN = 4;
 export const ROWS = 20+ROWS_HIDDEN;
 export const COLS = 10;
