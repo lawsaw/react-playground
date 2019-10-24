@@ -3,15 +3,19 @@ import { SnackbarProvider } from 'notistack';
 import { Provider } from 'react-redux';
 import store from "./redux/store";
 import { withStyles } from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import { Body, Multi } from './';
-import {COL_SIZE, COLS, ROWS, ROWS_HIDDEN} from "./constants";
+import GridMaterial from '@material-ui/core/Grid';
+import { Body, Multi, Bar } from './';
 
 const styles = () => ({
-
+    wrap: {
+        height: '100%',
+    },
+    wrapHeader: {
+        flexShrink: 0,
+    },
+    wrapWork: {
+        flexGrow: 1,
+    },
 });
 
 class Tetris extends PureComponent {
@@ -30,6 +34,7 @@ class Tetris extends PureComponent {
     }
 
     render() {
+        const { classes } = this.props;
         const { gameMode } = this.state;
         return (
             <Provider store={store}>
@@ -37,35 +42,36 @@ class Tetris extends PureComponent {
                     vertical: 'top',
                     horizontal: 'center',
                 }}>
-                    <AppBar position="static">
-                        <Toolbar>
-                            <Button
-                                variant="contained"
-                                onClick={() => this.onGameModeChange('single')}
-                                disabled={gameMode === 'single'}
-                                color="secondary"
-                            >
-                                SinglePlayer
-                            </Button>
-                            <Button
-                                variant="contained"
-                                onClick={() => this.onGameModeChange('multi')}
-                                disabled={gameMode === 'multi'}
-                                color="secondary"
-                            >
-                                MultiPlayer
-                            </Button>
-                        </Toolbar>
-                    </AppBar>
-
-                    {
-                        gameMode === 'single' ? (
-                            <Body />
-                        ) : (
-                            <Multi />
-                        )
-                    }
-
+                    <GridMaterial
+                        container
+                        direction="column"
+                        className={classes.wrap}
+                    >
+                        <GridMaterial
+                            item
+                            className={classes.wrapHeader}
+                        >
+                            <Bar
+                                gameMode={gameMode}
+                                onGameModeChange={this.onGameModeChange}
+                            />
+                        </GridMaterial>
+                        <GridMaterial
+                            item
+                            container
+                            justify="center"
+                            alignItems="center"
+                            className={classes.wrapWork}
+                        >
+                            {
+                                gameMode === 'single' ? (
+                                    <Body />
+                                ) : (
+                                    <Multi />
+                                )
+                            }
+                        </GridMaterial>
+                    </GridMaterial>
                 </SnackbarProvider>
             </Provider>
         );

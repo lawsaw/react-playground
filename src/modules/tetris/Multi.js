@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import SendIcon from '@material-ui/icons/Send';
 
-import { Body, Friend } from './';
+import { Body, Friend, Lobby } from './';
 
 const styles = () => ({
 
@@ -17,46 +17,74 @@ class Multi extends PureComponent {
 
     constructor(props) {
         super(props);
-        this.socket = socketIOClient('http://localhost:3005/');
         this.state = {
             socket: {},
-            myId: null,
+            id: null,
             friend: null,
             isLobby: true,
             friendInput: '',
             friendTable: null,
+            listOfClients: [],
+            client: null,
+            lobbyStatus: null,
+            type: 'host', //client
         }
     }
 
     componentDidMount() {
+
+        this.socket = socketIOClient('http://localhost:3005/');
+
         this.socket.on('init', (id) => {
             console.log(id);
             this.setState(() => ({
-                myId: id,
-            }))
-        });
-        this.socket.on('start', ({ master, friend }) => {
-            console.log({master, friend});
-            this.setState(() => ({
-                isLobby: false,
-                friend: friend,
-                myId: master,
+                id,
             }))
         });
 
+        // this.socket.on('start', ({ master, friend }) => {
+        //     console.log({master, friend});
+        //     this.setState(() => ({
+        //         isLobby: false,
+        //         friend: friend,
+        //         id: master,
+        //     }))
+        // });
+        //
         this.socket.on('message', ({ type, message }) => {
             this.props.enqueueSnackbar(message, {
                 variant: type,
-                autoHideDuration: 1500,
+                autoHideDuration: 3000,
             });
         });
+        //
+        // this.socket.on('game', ({ friend, table }) => {
+        //     this.setState(() => ({
+        //         friendTable: table,
+        //     }))
+        // });
 
-        this.socket.on('game', ({ friend, table }) => {
+        this.socket.on('update host\'s lobby', (client) => {
+            console.log(client);
             this.setState(() => ({
-                friendTable: table,
+                client: client,
             }))
         });
 
+        this.socket.on('lobby status', (status) => {
+            console.log(status);
+            this.setState(() => ({
+                lobbyStatus: status,
+            }))
+        });
+
+    }
+
+    handleTypeChange = (e) => {
+        const { value } = e.target;
+        this.setState(() => ({
+            type: value,
+        }))
     }
 
     handleFriendInputChange = (e) => {
@@ -66,55 +94,27 @@ class Multi extends PureComponent {
         }))
     }
 
-    handleSubmitFriendId = () => {
-        const { friendInput, myId } = this.state;
-        let players = {
-            master: myId,
-            friend: friendInput,
-        };
-        this.socket.emit('friend', players);
+    handleFriendInvite = (host, nickname) => {
+        const { id } = this.state;
+        this.socket.emit('find host', {
+            id,
+            nickname,
+            host,
+        });
     }
 
-
-
-    renderLobby = () => {
-        const { myId, friendInput } = this.state;
-        return (
-            <GridMaterial container justify="flex-start" alignItems="center">
-                <GridMaterial item xs={6}>
-                    {
-                        myId ? (
-                            <Fragment>
-                                Your ID is <strong>{myId}</strong>
-                            </Fragment>
-                        ) : (
-                            <Fragment>
-                                Loading socket...
-                            </Fragment>
-                        )
-                    }
-                </GridMaterial>
-                <GridMaterial item xs={6}>
-                    <TextField
-                        label="Friend's ID"
-                        margin="normal"
-                        variant="outlined"
-                        value={friendInput}
-                        onChange={this.handleFriendInputChange}
-                    />
-                    <IconButton onClick={this.handleSubmitFriendId} disabled={!friendInput.length}>
-                        <SendIcon />
-                    </IconButton>
-                </GridMaterial>
-
-            </GridMaterial>
-        )
+    handleUpdatePlayer = ({ nickname }) => {
+        const { id } = this.state;
+        this.socket.emit('update player', {
+            id,
+            nickname,
+        });
     }
 
     renderGame = () => {
-        const { myId, friend, friendTable } = this.state;
+        const { id, friend, friendTable } = this.state;
         let server = {
-            master: myId,
+            master: id,
             friend,
             socket: this.socket,
         };
@@ -134,8 +134,16 @@ class Multi extends PureComponent {
     }
 
     render() {
-        const { isLobby } = this.state;
-        return isLobby ? this.renderLobby() : this.renderGame();
+        const { isLobby, id, client, lobbyStatus, type } = this.state;
+        return isLobby ? <Lobby
+            id={id}
+            type={type}
+            status={lobbyStatus}
+            client={client}
+            onFriendInvite={this.handleFriendInvite}
+            onUpdatePlayer={this.handleUpdatePlayer}
+            onTypeChange={this.handleTypeChange}
+        /> : this.renderGame();
     }
 
 };

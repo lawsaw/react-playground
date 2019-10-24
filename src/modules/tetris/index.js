@@ -6,6 +6,8 @@ import Multi from './Multi';
 import Friend from './Friend';
 import Score from './Score';
 import Screen from './Screen';
+import Bar from './Bar';
+import Lobby from './Lobby';
 
 export {
     Tetris,
@@ -16,4 +18,6 @@ export {
     Friend,
     Score,
     Screen,
+    Bar,
+    Lobby,
 }
