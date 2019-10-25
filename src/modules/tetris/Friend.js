@@ -19,7 +19,7 @@ class Friend extends PureComponent {
             <GridMaterial container justify="center" spacing={5}>
                 <GridMaterial item>
                     <Screen
-                        table={table || DEMO_TABLE}
+                        table={table}
                     />
                 </GridMaterial>
                 <GridMaterial item>

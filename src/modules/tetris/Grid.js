@@ -44,13 +44,9 @@ class Grid extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.server) {
-            const { table } = this.props;
-            const { master, friend, socket } = this.props.server;
-            socket.emit('game', {
-                friend,
-                table
-            });
+        const { table, onGameOnline } = this.props;
+        if(onGameOnline) {
+            onGameOnline({table});
         }
     }
 
@@ -61,7 +57,7 @@ class Grid extends Component {
                 className={classes.grid}
             >
                 {
-                    table.map((row, rowIndex) => {
+                    table ? table.map((row, rowIndex) => {
                         return (
                             <Box
                                 key={rowIndex}
@@ -79,7 +75,7 @@ class Grid extends Component {
                                 }
                             </Box>
                         )
-                    })
+                    }) : 'No table'
                 }
             </Box>
         );

@@ -9,11 +9,11 @@ const styles = () => ({
 
 });
 
-export default withStyles(styles)(({ isOpen, onClose, score }) => {
+export default withStyles(styles)(({ isOpen, onClose, children }) => {
 
     return (
         <Dialog onClose={onClose} open={isOpen}>
-            <DialogTitle>Your score is {score}</DialogTitle>
+            <DialogTitle>{children}</DialogTitle>
             <DialogActions>
                 <Button  color="primary" variant="contained" onClick={onClose}>
                     Close

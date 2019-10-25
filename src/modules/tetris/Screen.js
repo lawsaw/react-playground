@@ -21,7 +21,7 @@ const styles = () => ({
 class Screen extends PureComponent {
 
     render() {
-        const { classes, table, server } = this.props;
+        const { classes, table, ...props } = this.props;
         return (
             <Box
                 className={classes.screen}
@@ -31,7 +31,7 @@ class Screen extends PureComponent {
                 >
                     <Grid
                         table={table}
-                        server={server}
+                        {...props}
                     />
                 </Box>
             </Box>

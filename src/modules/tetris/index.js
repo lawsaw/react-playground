@@ -8,6 +8,7 @@ import Score from './Score';
 import Screen from './Screen';
 import Bar from './Bar';
 import Lobby from './Lobby';
+import BodyOnline from './BodyOnline';
 
 export {
     Tetris,
@@ -20,4 +21,5 @@ export {
     Screen,
     Bar,
     Lobby,
+    BodyOnline,
 }

@@ -10,6 +10,7 @@ import { withStyles } from '@material-ui/core';
 import { Grid, ResultModal, Score, Screen } from './';
 import { FIGURES, ROTATION_CIRCLE, ROWS, COLS, POSITION, COL_SIZE, ROWS_HIDDEN, SPEED } from './constants';
 import { generateGrid, merge, renderDemoHouse } from './etc';
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const styles = () => ({
     preview: {
@@ -40,6 +41,8 @@ class Body extends PureComponent {
 
     componentDidMount() {
         document.addEventListener('keydown', this.handleKeyPress);
+
+        if (this.props.onGameOnline) this.handleStartNewGame();
     }
 
     componentWillUnmount() {
@@ -160,12 +163,17 @@ class Body extends PureComponent {
     }
 
     handleEndGame = () => {
+        const { onGameFinish } = this.props;
+        const { score } = this.state;
         clearInterval(this.timer);
         this.handleResultModal();
         this.setState(() => ({
             isGameRunning: false,
             speed: SPEED,
         }));
+        if(onGameFinish) {
+            onGameFinish();
+        }
     }
 
     handleStartNewGame = () => {
@@ -185,6 +193,7 @@ class Body extends PureComponent {
     }
 
     handleLastStepDown = () => {
+        const { onGameOnline } = this.props;
         const { figure, rotation, table, position, figureNext, rotationNext, score, speed } = this.state;
         let tableWithFigure = merge(figure[rotation], table, position);
         let fullRows = this.getAllFullRowsIndexes(tableWithFigure);
@@ -204,6 +213,11 @@ class Body extends PureComponent {
             score: scoreNew,
             speed: speedNew,
         }));
+
+        if(onGameOnline) {
+            onGameOnline({score: scoreNew});
+        }
+
         this.resetSpeed();
     }
 
@@ -332,7 +346,7 @@ class Body extends PureComponent {
     }
 
     render() {
-        const { classes, server } = this.props;
+        const { classes, onGameOnline } = this.props;
         const { table, figure, rotation, position, figureNext, rotationNext, score, isPause, isResultModalOpen, isGameRunning } = this.state;
         let tableWithFigure = figure ? merge(figure[rotation], table, position) : table;
 
@@ -342,7 +356,7 @@ class Body extends PureComponent {
                     <GridMaterial item>
                         <Screen
                             table={tableWithFigure}
-                            server={server}
+                            onGameOnline={onGameOnline}
                         />
                     </GridMaterial>
                     <GridMaterial item>
@@ -354,7 +368,7 @@ class Body extends PureComponent {
                                     <Grid
                                         table={figureNext[rotationNext]}
                                         isPreview
-                                        server={server}
+                                        onGameOnline={onGameOnline}
                                     />
                                 </Box>
                             )
@@ -362,51 +376,70 @@ class Body extends PureComponent {
                         <Score
                             value={score}
                         />
-                        <List dense>
-                            {
-                                !isGameRunning && (
-                                    <ListItem>
-                                        <Button color="primary" variant="contained" onClick={this.handleStartNewGame}>
-                                            Start New Game
-                                        </Button>
-                                    </ListItem>
-                                )
-                            }
-                            {
-                                isGameRunning && !isPause && (
-                                    <ListItem>
-                                        <Button color="secondary" variant="contained" onClick={this.handlePause}>
-                                            Pause
-                                        </Button>
-                                    </ListItem>
-                                )
-                            }
-                            {
-                                isGameRunning && isPause && (
-                                    <ListItem>
-                                        <Button color="secondary" variant="contained" onClick={this.handleContinue}>
-                                            Continue
-                                        </Button>
-                                    </ListItem>
-                                )
-                            }
-                            {
-                                isGameRunning && (
-                                    <ListItem>
-                                        <Button color="primary" variant="contained" onClick={this.handleEndGame}>
-                                            Stop Game
-                                        </Button>
-                                    </ListItem>
-                                )
-                            }
-                        </List>
+                        {
+                            !onGameOnline && (
+                                <List>
+                                    {
+                                        !isGameRunning && (
+                                            <ListItem>
+                                                <Button color="primary" variant="contained" onClick={this.handleStartNewGame}>
+                                                    Start New Game
+                                                </Button>
+                                            </ListItem>
+                                        )
+                                    }
+                                    {
+                                        isGameRunning && !isPause && (
+                                            <ListItem>
+                                                <Button color="secondary" variant="contained" onClick={this.handlePause}>
+                                                    Pause
+                                                </Button>
+                                            </ListItem>
+                                        )
+                                    }
+                                    {
+                                        isGameRunning && isPause && (
+                                            <ListItem>
+                                                <Button color="secondary" variant="contained" onClick={this.handleContinue}>
+                                                    Continue
+                                                </Button>
+                                            </ListItem>
+                                        )
+                                    }
+                                    {
+                                        isGameRunning && (
+                                            <ListItem>
+                                                <Button color="primary" variant="contained" onClick={this.handleEndGame}>
+                                                    Stop Game
+                                                </Button>
+                                            </ListItem>
+                                        )
+                                    }
+                                </List>
+                            )
+                        }
                     </GridMaterial>
                 </GridMaterial>
                 <ResultModal
                     isOpen={isResultModalOpen}
                     onClose={this.handleResultModal}
-                    score={score}
-                />
+                >
+                    {
+                        !this.props.user ? (
+                            <Fragment>
+                                Your score is {score}
+                            </Fragment>
+                        ) : score < this.props.user.opponent.score ? (
+                            <Fragment>
+                                You lost
+                            </Fragment>
+                        ) : (
+                            <Fragment>
+                                You win
+                            </Fragment>
+                        )
+                    }
+                </ResultModal>
             </Fragment>
         );
     }

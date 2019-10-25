@@ -59,14 +59,12 @@ const styles = () => ({
     },
 });
 
-const STEPS = ['Your nickname', 'HOST or CLIENT?', 'Шаг 3'];
-
+const STEPS = ['Your nickname', 'HOST or CLIENT?', ''];
 
 class Lobby extends PureComponent {
 
     state = {
         host: '',
-        nickname: '',
         activeStep: 0,
 
     }
@@ -78,47 +76,34 @@ class Lobby extends PureComponent {
         }))
     }
 
-    handleNicknameChange = (e) => {
-        const { value } = e.target;
-        this.setState(() => ({
-            nickname: value,
-        }))
-    }
-
     handleBackStep = () => {
+        const { activeStep } = this.state;
         this.setState(() => ({
-            activeStep: this.state.activeStep - 1,
+            activeStep: activeStep - 1,
         }))
-        this.handleUpdatePlayer();
     }
 
     handleNextStep = () => {
-        this.setState(() => ({
-            activeStep: this.state.activeStep + 1,
-        }))
-        this.handleUpdatePlayer();
-    }
-
-    handleUpdatePlayer = () => {
-        const { onUpdatePlayer } = this.props;
-        const { activeStep, nickname } = this.state;
-        if(activeStep === 1) {
-            onUpdatePlayer({
-                nickname
-            });
+        const { activeStep } = this.state;
+        if(activeStep === 2) {
+            this.handleFindHost();
+        }
+        if(activeStep < 2) {
+            this.setState(() => ({
+                activeStep: activeStep + 1,
+            }))
         }
     }
 
-    // handleTypeChange = (e) => {
-    //     const { value } = e.target;
-    //     this.setState(() => ({
-    //         type: value,
-    //     }))
-    // }
+    handleFindHost = () => {
+        const { onHostFind } = this.props;
+        const { host } = this.state;
+        onHostFind(host);
+    }
 
     renderStep = (step) => {
-        const { classes, id, onFriendInvite, client, type, onTypeChange } = this.props;
-        const { nickname, host } = this.state;
+        const { classes, id, nickname, onFriendInvite, onNicknameChange, client, connectionType, onConnectionTypeChange } = this.props;
+        const { host } = this.state;
         switch (step) {
             case 0:
                 return (
@@ -127,13 +112,13 @@ class Lobby extends PureComponent {
                         margin="normal"
                         variant="outlined"
                         value={nickname}
-                        onChange={this.handleNicknameChange}
+                        onChange={onNicknameChange}
                     />
                 )
                 break;
             case 1:
                 return (
-                    <RadioGroup aria-label="position" name="position" value={type} onChange={onTypeChange} row>
+                    <RadioGroup aria-label="position" name="position" value={connectionType} onChange={onConnectionTypeChange} row>
                         <FormControlLabel
                             value="host"
                             control={<Radio color="secondary" />}
@@ -153,55 +138,23 @@ class Lobby extends PureComponent {
                 return (
                     <Fragment>
                         {
-                            type === 'host' ? (
+                            connectionType === 'host' ? (
                                 <Fragment>
                                     Share your ID with your friend: <br/>
                                     <strong>{id}</strong> <br/>
-                                    and wait for clients to appear...
-
-                                    {
-                                        client ? (
-                                            <List className={classes.listOfClients}>
-                                                <ListItem
-                                                    className={classes.listOfClientsItem}
-                                                >
-                                                    <ListItemText
-                                                        primary={client.nickname}
-                                                    />
-                                                    <ListItemSecondaryAction>
-                                                        <IconButton>
-                                                            <DeleteIcon />
-                                                        </IconButton>
-                                                    </ListItemSecondaryAction>
-                                                </ListItem>
-                                            </List>
-                                        ) : (
-                                            <Box>
-                                                <CircularProgress className={classes.loader} />
-                                            </Box>
-                                        )
-                                    }
                                 </Fragment>
                             ) : (
-                                <Fragment>
-
-                                    <Box className={classes.textFindHost}>
-                                        <TextField
-                                            label="Enter HOST's ID:"
-                                            margin="normal"
-                                            variant="outlined"
-                                            value={host}
-                                            onChange={this.handleFriendIdChange}
-                                        />
-                                        <IconButton onClick={() => onFriendInvite(host, nickname)} disabled={!host.length}>
-                                            <SearchIcon />
-                                        </IconButton>
-                                    </Box>
-
-                                </Fragment>
+                                <Box className={classes.textFindHost}>
+                                    <TextField
+                                        label="Enter HOST's ID:"
+                                        margin="normal"
+                                        variant="outlined"
+                                        value={host}
+                                        onChange={this.handleFriendIdChange}
+                                    />
+                                </Box>
                             )
                         }
-
                     </Fragment>
                 )
                 break;
@@ -211,10 +164,10 @@ class Lobby extends PureComponent {
     }
 
     setFilledValue = (step) => {
-        const { type } = this.props;
-        const { activeStep, nickname } = this.state;
+        const { connectionType, nickname } = this.props;
+        const { activeStep } = this.state;
         if(activeStep > step && step === 0) return `: ${nickname}`;
-        if(activeStep > step && step === 1) return `: ${type}`;
+        if(activeStep > step && step === 1) return `: ${connectionType}`;
     }
 
 
@@ -236,15 +189,19 @@ class Lobby extends PureComponent {
                                 <StepContent>
                                     {this.renderStep(index)}
                                     <Box>
-                                        <Button
-                                            disabled={activeStep === 0}
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={this.handleBackStep}
-                                            className={classes.button}
-                                        >
-                                            Back
-                                        </Button>
+                                        {
+                                            activeStep > 0 ? (
+                                                <Button
+                                                    disabled={activeStep === 0}
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={this.handleBackStep}
+                                                    className={classes.button}
+                                                >
+                                                    Back
+                                                </Button>
+                                            ) : null
+                                        }
                                         <Button
                                             variant="contained"
                                             color="primary"
