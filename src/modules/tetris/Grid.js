@@ -39,25 +39,34 @@ const styles = () => ({
 
 class Grid extends Component {
 
+    constructor(props) {
+        super(props);
+        this.memoTable = this.props.table;
+    }
+
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         return !isEqual(nextProps.table, this.props.table);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        const { table, onGameOnline } = this.props;
+        const { onGameOnline, isPreview } = this.props;
         if(onGameOnline) {
-            onGameOnline({table});
+            let data = {};
+            if(!isPreview) data.table = this.memoTable;
+            else data.preview = this.memoTable;
+            onGameOnline(data);
         }
     }
 
     render() {
         const { classes, table, isPreview } = this.props;
+        this.memoTable = table && table.length ? table : this.memoTable;
         return (
             <Box
                 className={classes.grid}
             >
                 {
-                    table ? table.map((row, rowIndex) => {
+                    this.memoTable ? this.memoTable.map((row, rowIndex) => {
                         return (
                             <Box
                                 key={rowIndex}
@@ -75,7 +84,7 @@ class Grid extends Component {
                                 }
                             </Box>
                         )
-                    }) : 'No table'
+                    }) : 'no table'
                 }
             </Box>
         );

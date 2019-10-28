@@ -9,6 +9,7 @@ import Screen from './Screen';
 import Bar from './Bar';
 import Lobby from './Lobby';
 import BodyOnline from './BodyOnline';
+import Preview from './Preview';
 
 export {
     Tetris,
@@ -22,4 +23,5 @@ export {
     Bar,
     Lobby,
     BodyOnline,
+    Preview,
 }

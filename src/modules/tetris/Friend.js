@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import { withStyles } from '@material-ui/core';
 import GridMaterial from '@material-ui/core/Grid';
 import { FIGURES, ROTATION_CIRCLE, ROWS, COLS, POSITION, COL_SIZE, ROWS_HIDDEN, SPEED } from './constants';
-import { Score, Screen } from './';
+import { Score, Screen, Preview } from './';
 import { generateGrid, merge, renderDemoHouse } from './etc';
 
 const styles = () => ({
@@ -14,7 +14,7 @@ const DEMO_TABLE = generateGrid(COLS, ROWS);
 class Friend extends PureComponent {
 
     render() {
-        const { score, table } = this.props;
+        const { score, table, preview } = this.props;
         return (
             <GridMaterial container justify="center" spacing={5}>
                 <GridMaterial item>
@@ -23,6 +23,7 @@ class Friend extends PureComponent {
                     />
                 </GridMaterial>
                 <GridMaterial item>
+                    <Preview table={preview} />
                     <Score value={score} />
                 </GridMaterial>
 

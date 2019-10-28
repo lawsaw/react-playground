@@ -14,10 +14,13 @@ const ON_MESSAGE            = 'MESSAGE';
 const ON_START              = 'START';
 const ON_GAME               = 'GAME';
 const ON_GAME_FINISH        = 'GAME FINISH';
+const ON_RESET_GAME         = 'RESET GAME';
 const EMIT_PLAYER_UPDATE    = 'PLAYER UPDATE';
 const EMIT_HOST_FIND        = 'HOST FIND';
 const EMIT_GAME             = 'GAME';
 const EMIT_GAME_FINISH      = 'GAME FINISH';
+const EMIT_KICK_OPPONENT    = 'KICK OPPONENT';
+const EMIT_RESET_GAME       = 'RESET GAME';
 
 const styles = () => ({
 
@@ -27,13 +30,17 @@ class Multi extends PureComponent {
 
     constructor(props) {
         super(props);
+        this.startNewGame = null;
         this.state = {
             user: {
                 id: null,
                 nickname: '',
                 opponent: {
+                    nickname: '',
                     table: [],
-                    score: '0',
+                    preview: [],
+                    score: 0,
+                    isFinish: false,
                 },
             },
             isLobby: true,
@@ -77,14 +84,13 @@ class Multi extends PureComponent {
                     }));
                     break;
                 case ON_GAME:
-                    const { table, score } = props;
+                    //const { action, ...other } = props;
                     this.setState(state => ({
                         user: {
                             ...state.user,
                             opponent: {
                                 ...state.user.opponent,
-                                table: table || state.user.opponent.table,
-                                score: score || state.user.opponent.score,
+                                ...props
                             }
                         },
                     }));
@@ -93,10 +99,17 @@ class Multi extends PureComponent {
                     console.log('ON_GAME_FINISH');
                     console.log(props);
                     break;
+                case ON_RESET_GAME:
+                    //this.startNewGame();
+                    break;
             }
         });
 
     }
+
+    // handleStartNewGame = (callback) => {
+    //     this.startNewGame = callback;
+    // }
 
     handleNicknameChange = (e) => {
         const { value } = e.target;
@@ -136,30 +149,28 @@ class Multi extends PureComponent {
         });
     }
 
-    handleGameOnline = ({ table, score }) => {
+    handleGameOnline = (props) => {
         this.socket.emit(SOCKET_TO, {
             type: EMIT_GAME,
-            table,
-            score,
+            ...props,
         });
     }
 
-    handleGameFinish = () => {
-        console.log('handleGameFinish');
-        this.socket.emit(SOCKET_TO, {
-            type: EMIT_GAME_FINISH,
-        });
-    }
+    // handleResetGame = () => {
+    //     this.socket.emit(SOCKET_TO, {
+    //         type: EMIT_RESET_GAME,
+    //     });
+    // }
 
     render() {
         const { isLobby, connectionType, user } = this.state;
         const { id, nickname } = user;
+        console.log(user);
         return isLobby ? (
             <Lobby
                 id={id}
                 connectionType={connectionType}
                 onHostFind={this.handleFindHost}
-                onUpdatePlayer={this.handleUpdatePlayer}
                 onConnectionTypeChange={this.handleConnectionTypeChange}
                 onNicknameChange={this.handleNicknameChange}
                 nickname={nickname}
@@ -167,7 +178,6 @@ class Multi extends PureComponent {
         ) : (
             <BodyOnline
                 onGameOnline={this.handleGameOnline}
-                onGameFinish={this.handleGameFinish}
                 user={user}
             />
         );

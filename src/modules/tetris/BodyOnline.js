@@ -1,10 +1,10 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import { withStyles } from '@material-ui/core';
 import Box from "@material-ui/core/Box";
 import GridMaterial from '@material-ui/core/Grid';
 import { Body, Friend } from "./";
 
-const styles = (theme) => ({
+const styles = () => ({
     nickname: {
         //margin: 20,
     },
@@ -13,24 +13,23 @@ const styles = (theme) => ({
 class BodyOnline extends PureComponent {
 
     render() {
-        const { onGameFinish, onGameOnline, user } = this.props;
-
-        const { nickname, opponent: { table, score, nickname: opponentNickname } } = user;
+        const { onGameOnline, user } = this.props;
+        const { nickname, opponent: { table, score, nickname: opponentNickname, preview } } = user;
         return (
             <GridMaterial container>
                 <GridMaterial item xs={6}>
-                    <Box component="h3">{nickname}</Box>
+                    <Box component="h2">{nickname || 'No name'}</Box>
                     <Body
                         onGameOnline={onGameOnline}
-                        onGameFinish={onGameFinish}
                         user={user}
                     />
                 </GridMaterial>
                 <GridMaterial item xs={6}>
-                    <Box component="h3">{opponentNickname}</Box>
+                    <Box component="h2">{opponentNickname || 'No name'}</Box>
                     <Friend
                         table={table}
                         score={score}
+                        preview={preview}
                     />
                 </GridMaterial>
             </GridMaterial>

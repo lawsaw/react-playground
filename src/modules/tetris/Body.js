@@ -1,5 +1,5 @@
 import React, { Fragment, PureComponent } from 'react';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isEqual } from 'lodash';
 import { withSnackbar } from 'notistack';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -7,16 +7,13 @@ import Box from "@material-ui/core/Box";
 import GridMaterial from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
-import { Grid, ResultModal, Score, Screen } from './';
+import { Grid, ResultModal, Score, Screen, Preview } from './';
 import { FIGURES, ROTATION_CIRCLE, ROWS, COLS, POSITION, COL_SIZE, ROWS_HIDDEN, SPEED } from './constants';
 import { generateGrid, merge, renderDemoHouse } from './etc';
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 const styles = () => ({
-    preview: {
-        width: COL_SIZE*4,
-        height: COL_SIZE*4,
-    },
+
 });
 
 class Body extends PureComponent {
@@ -41,12 +38,46 @@ class Body extends PureComponent {
 
     componentDidMount() {
         document.addEventListener('keydown', this.handleKeyPress);
-
-        if (this.props.onGameOnline) this.handleStartNewGame();
+        //if(this.props.startNewGameCallback) this.props.startNewGameCallback(this.handleStartNewGame);
+        //if (this.props.onGameOnline) this.handleStartNewGame();
     }
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleKeyPress);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const { user } = this.props;
+        const { isGameRunning } = this.state;
+        if(isGameRunning && this.props.user.opponent.action !== prevProps.user.opponent.action && user) {
+            this.makeSyncAction();
+        }
+        // if(isGameRunning && user && user.opponent.isFinish) {
+        //     console.log('opponent finished');
+        //     this.handleEndGame();
+        // }
+    }
+
+    makeSyncAction = () => {
+        const { onGameOnline, user: { opponent: { action } } } = this.props;
+        if(!action) return false;
+        switch (action) {
+            case 'handleStartNewGame':
+                this.handleStartNewGame(true);
+                break;
+            case 'handlePause':
+                this.handlePause(true);
+                break;
+            case 'handleContinue':
+                this.handleContinue(true);
+                break;
+            case 'handleEndGame':
+                this.handleEndGame(true);
+                break;
+            default:
+                break;
+        }
+        onGameOnline({action: null});
     }
 
     getRandomFigure = () => {
@@ -162,22 +193,59 @@ class Body extends PureComponent {
         return checkedRow.find(col => col === 1);
     }
 
-    handleEndGame = () => {
-        const { onGameFinish } = this.props;
-        const { score } = this.state;
+    handleEndGame = (isActioned) => {
+        if(isActioned) {
+            const { onGameOnline } = this.props;
+            if(onGameOnline) onGameOnline({action: 'handleEndGame'});
+        }
         clearInterval(this.timer);
-        this.handleResultModal();
+        this.handleResultModalOpen();
         this.setState(() => ({
             isGameRunning: false,
             speed: SPEED,
         }));
-        if(onGameFinish) {
-            onGameFinish();
-        }
+        //console.log(this.props.user);
+        //if(onGameOnline) this.handleEndOnlineGame();
     }
 
-    handleStartNewGame = () => {
+    handleResultModalOpen = () => {
         this.setState(() => ({
+            isResultModalOpen: true,
+        }));
+    }
+
+    handleResultModalClose = (action) => {
+        const { onGameOnline, onLobbyOpen } = this.props;
+        // if(onGameOnline) {
+        //     switch (action) {
+        //         case 'newGame':
+        //             this.handleStartNewOnlineGame();
+        //             break;
+        //         case 'lobby':
+        //             if(onLobbyOpen) onLobbyOpen();
+        //             break;
+        //         default:
+        //             break;
+        //     }
+        // }
+        this.setState(() => ({
+            isResultModalOpen: false,
+        }));
+    }
+
+    // handleEndOnlineGame = () => {
+    //     const { onGameOnline } = this.props;
+    //     const { score } = this.state;
+    //     onGameOnline({isFinish: true, score});
+    // }
+
+    handleStartNewGame = (isActioned) => {
+        if(isActioned) {
+            const { onGameOnline } = this.props;
+            if(onGameOnline) onGameOnline({action: 'handleStartNewGame'});
+        }
+        this.setState(() => ({
+            isResultModalOpen: false,
             table: generateGrid(COLS, ROWS),
             figure: this.getRandomFigure(),
             figureNext: this.getRandomFigure(),
@@ -191,6 +259,14 @@ class Body extends PureComponent {
         }));
         this.startGame();
     }
+
+    // handleStartNewOnlineGame = () => {
+    //     const { onGameReset } = this.props;
+    //     if(onGameReset) {
+    //         this.handleStartNewGame();
+    //         onGameReset();
+    //     }
+    // }
 
     handleLastStepDown = () => {
         const { onGameOnline } = this.props;
@@ -237,7 +313,7 @@ class Body extends PureComponent {
     }
 
     cleanTableFromFullRows = (table, fullRows) => {
-        let cleanRow = Array.from({length: COLS}, () => 0);
+        let cleanRow = Array.from({ length: COLS }, () => 0);
         let newTable = cloneDeep(table);
         fullRows.forEach((rowToClean, rowToCleanIndex, arr) => {
             let top = newTable.slice(0, rowToClean);
@@ -252,7 +328,7 @@ class Body extends PureComponent {
         let rows = figure[rotation].length;
         let cols = figure[rotation][0].length;
         let size = rows > cols ? rows : cols;
-        let figureSquare = Array.from({length: size}, () => Array.from({length: size}, () => 1));
+        let figureSquare = Array.from({ length: size }, () => Array.from({ length: size }, () => 1));
         return this.getFigureMap(figureSquare, null, position);
     }
 
@@ -325,20 +401,28 @@ class Body extends PureComponent {
         return rowLimit <= ROWS && colLimit <= COLS;
     }
 
-    handleResultModal = () => {
-        this.setState(() => ({
-            isResultModalOpen: !this.state.isResultModalOpen,
-        }))
-    }
+    // handleResultModal = () => {
+    //     this.setState(() => ({
+    //         isResultModalOpen: !this.state.isResultModalOpen,
+    //     }))
+    // }
 
-    handlePause = () => {
+    handlePause = (isActioned) => {
+        if(isActioned) {
+            const { onGameOnline } = this.props;
+            if(onGameOnline) onGameOnline({action: 'handlePause'});
+        }
         this.setState(() => ({
             isPause: true,
         }))
         clearInterval(this.timer);
     }
 
-    handleContinue = () => {
+    handleContinue = (isActioned) => {
+        if(isActioned) {
+            const { onGameOnline } = this.props;
+            if(onGameOnline) onGameOnline({action: 'handleContinue'});
+        }
         this.setState(() => ({
             isPause: false,
         }))
@@ -346,7 +430,7 @@ class Body extends PureComponent {
     }
 
     render() {
-        const { classes, onGameOnline } = this.props;
+        const { classes, onGameOnline, user } = this.props;
         const { table, figure, rotation, position, figureNext, rotationNext, score, isPause, isResultModalOpen, isGameRunning } = this.state;
         let tableWithFigure = figure ? merge(figure[rotation], table, position) : table;
 
@@ -361,85 +445,62 @@ class Body extends PureComponent {
                     </GridMaterial>
                     <GridMaterial item>
                         {
-                            isGameRunning && (
-                                <Box
-                                    className={classes.preview}
-                                >
-                                    <Grid
-                                        table={figureNext[rotationNext]}
-                                        isPreview
-                                        onGameOnline={onGameOnline}
-                                    />
-                                </Box>
+                            (isGameRunning || onGameOnline) && (
+                                <Preview
+                                    table={figureNext[rotationNext]}
+                                    onGameOnline={onGameOnline}
+                                />
                             )
                         }
                         <Score
                             value={score}
                         />
-                        {
-                            !onGameOnline && (
-                                <List>
-                                    {
-                                        !isGameRunning && (
-                                            <ListItem>
-                                                <Button color="primary" variant="contained" onClick={this.handleStartNewGame}>
-                                                    Start New Game
-                                                </Button>
-                                            </ListItem>
-                                        )
-                                    }
-                                    {
-                                        isGameRunning && !isPause && (
-                                            <ListItem>
-                                                <Button color="secondary" variant="contained" onClick={this.handlePause}>
-                                                    Pause
-                                                </Button>
-                                            </ListItem>
-                                        )
-                                    }
-                                    {
-                                        isGameRunning && isPause && (
-                                            <ListItem>
-                                                <Button color="secondary" variant="contained" onClick={this.handleContinue}>
-                                                    Continue
-                                                </Button>
-                                            </ListItem>
-                                        )
-                                    }
-                                    {
-                                        isGameRunning && (
-                                            <ListItem>
-                                                <Button color="primary" variant="contained" onClick={this.handleEndGame}>
-                                                    Stop Game
-                                                </Button>
-                                            </ListItem>
-                                        )
-                                    }
-                                </List>
-                            )
-                        }
+                        <List>
+                            {
+                                !isGameRunning && (
+                                    <ListItem>
+                                        <Button color="primary" variant="contained" onClick={this.handleStartNewGame}>
+                                            Start New Game
+                                        </Button>
+                                    </ListItem>
+                                )
+                            }
+                            {
+                                isGameRunning && !isPause && (
+                                    <ListItem>
+                                        <Button color="secondary" variant="contained" onClick={this.handlePause}>
+                                            Pause
+                                        </Button>
+                                    </ListItem>
+                                )
+                            }
+                            {
+                                isGameRunning && isPause && (
+                                    <ListItem>
+                                        <Button color="secondary" variant="contained" onClick={this.handleContinue}>
+                                            Continue
+                                        </Button>
+                                    </ListItem>
+                                )
+                            }
+                            {
+                                isGameRunning && (
+                                    <ListItem>
+                                        <Button color="primary" variant="contained" onClick={this.handleEndGame}>
+                                            Stop Game
+                                        </Button>
+                                    </ListItem>
+                                )
+                            }
+                        </List>
                     </GridMaterial>
                 </GridMaterial>
                 <ResultModal
                     isOpen={isResultModalOpen}
-                    onClose={this.handleResultModal}
-                >
-                    {
-                        !this.props.user ? (
-                            <Fragment>
-                                Your score is {score}
-                            </Fragment>
-                        ) : score < this.props.user.opponent.score ? (
-                            <Fragment>
-                                You lost
-                            </Fragment>
-                        ) : (
-                            <Fragment>
-                                You win
-                            </Fragment>
-                        )
-                    }
-                </ResultModal>
+                    onClose={this.handleResultModalClose}
+                    user={user}
+                    score={score}
+                />
             </Fragment>
         );
     }
