@@ -1,8 +1,9 @@
+export const SOCKET_SERVER = 'http://localhost:3005/';
 export const COL_SIZE = 26;
 export const ROWS_HIDDEN = 4;
 export const ROWS = 20+ROWS_HIDDEN;
 export const COLS = 10;
-export const SPEED = 200;
+export const SPEED = 500;
 export const SPEED_STEP = 10;
 export const SPEED_RAISE_FOR_SCORE = 2;
 export const POSITION = [0, COLS/2-1];

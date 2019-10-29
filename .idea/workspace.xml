@@ -27,8 +27,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/modules/tetris/Multi.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="315">
-                  <caret line="36" column="29" lean-forward="true" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
+                <state relative-caret-position="390">
+                  <caret line="198" column="13" lean-forward="true" selection-start-line="198" selection-start-column="13" selection-end-line="198" selection-end-column="13" />
                   <folding>
                     <element signature="e#0#55#0" expanded="true" />
                   </folding>
@@ -39,7 +39,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/modules/tetris/Lobby.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="210">
+                <state relative-caret-position="675">
                   <caret line="78" column="37" selection-start-line="78" selection-start-column="29" selection-end-line="78" selection-end-column="37" />
                   <folding>
                     <element signature="e#0#55#0" expanded="true" />
@@ -52,32 +52,32 @@
             <entry file="file://$PROJECT_DIR$/src/modules/tetris/BodyOnline.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="210">
-                  <caret line="14" column="22" lean-forward="true" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+                  <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
                   <folding>
                     <element signature="e#0#55#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/modules/tetris/Body.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="210">
-                  <caret line="74" column="16" selection-start-line="74" selection-start-column="11" selection-end-line="74" selection-end-column="16" />
-                  <folding>
-                    <element signature="e#0#55#0" expanded="true" />
-                    <marker date="1572350223765" expanded="true" signature="12947:13097" ph="..." />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/modules/tetris/Body.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1350">
+                  <caret line="90" column="5" lean-forward="true" selection-start-line="90" selection-start-column="5" selection-end-line="90" selection-end-column="5" />
+                  <folding>
+                    <element signature="e#0#55#0" expanded="true" />
+                    <marker date="1572354157888" expanded="true" signature="13555:13705" ph="..." />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/modules/tetris/constants.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="105">
-                  <caret line="7" column="38" lean-forward="true" selection-start-line="7" selection-start-column="38" selection-end-line="7" selection-end-column="38" />
+                <state>
+                  <caret column="54" selection-start-column="54" selection-end-column="54" />
                 </state>
               </provider>
             </entry>
@@ -109,7 +109,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/modules/tetris/ResultModal.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="391">
+                <state relative-caret-position="405">
                   <caret line="103" column="52" lean-forward="true" selection-start-line="103" selection-start-column="52" selection-end-line="103" selection-end-column="52" />
                   <folding>
                     <element signature="e#0#55#0" expanded="true" />
@@ -149,11 +149,11 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/modules/tetris/Body.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-3">
-                  <caret line="59" column="29" lean-forward="true" selection-start-line="59" selection-start-column="29" selection-end-line="59" selection-end-column="29" />
+                <state relative-caret-position="-93">
+                  <caret line="69" column="29" lean-forward="true" selection-start-line="69" selection-start-column="29" selection-end-line="69" selection-end-column="29" />
                   <folding>
                     <element signature="e#0#55#0" expanded="true" />
-                    <marker date="1572350223765" expanded="true" signature="12947:13097" ph="..." />
+                    <marker date="1572354157888" expanded="true" signature="13555:13705" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -165,10 +165,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>isGameRunning</find>
-      <find>KICK</find>
-      <find>handlePause</find>
-      <find>socketIOClient</find>
       <find>handleStartNewGame</find>
       <find>onGameOnline</find>
       <find>isOpen</find>
@@ -185,7 +181,6 @@
       <find>EMIT_KICK_OPPONENT</find>
       <find>ON_RESET_GAME</find>
       <find>startNewGame</find>
-      <find>onClose</find>
       <find>step</find>
       <find>stepSpeed</find>
       <find>stepScore</find>
@@ -193,8 +188,13 @@
       <find>getScoreOptimalSpeed</find>
       <find>opponent</find>
       <find>user</find>
-      <find>nickname</find>
       <find>speed</find>
+      <find>this.props.user.speed</find>
+      <find>dense</find>
+      <find>onClose</find>
+      <find>nickname</find>
+      <find>SPEED</find>
+      <find>console</find>
     </findStrings>
     <replaceStrings>
       <replace>idCurrent</replace>
@@ -265,10 +265,10 @@
         <option value="$PROJECT_DIR$/src/modules/tetris/Friend.js" />
         <option value="$PROJECT_DIR$/src/modules/tetris/Lobby.js" />
         <option value="$PROJECT_DIR$/src/modules/tetris/ResultModal.js" />
-        <option value="$PROJECT_DIR$/src/modules/tetris/constants.js" />
         <option value="$PROJECT_DIR$/src/modules/tetris/BodyOnline.js" />
-        <option value="$PROJECT_DIR$/src/modules/tetris/Multi.js" />
         <option value="$PROJECT_DIR$/src/modules/tetris/Body.js" />
+        <option value="$PROJECT_DIR$/src/modules/tetris/Multi.js" />
+        <option value="$PROJECT_DIR$/src/modules/tetris/constants.js" />
       </list>
     </option>
   </component>
@@ -391,7 +391,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="635445000" />
+    <option name="totallyTimeSpent" value="637493000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -801,16 +801,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/tetris/Lobby.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="78" column="37" selection-start-line="78" selection-start-column="29" selection-end-line="78" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#55#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/tetris/Preview.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -851,9 +841,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/tetris/BodyOnline.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/tetris/ResultModal.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
+        <state relative-caret-position="405">
           <caret line="103" column="52" lean-forward="true" selection-start-line="103" selection-start-column="52" selection-end-line="103" selection-end-column="52" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
@@ -861,17 +861,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/tetris/constants.js">
+    <entry file="file://$PROJECT_DIR$/src/modules/tetris/Lobby.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="38" lean-forward="true" selection-start-line="7" selection-start-column="38" selection-end-line="7" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/tetris/BodyOnline.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="22" lean-forward="true" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+        <state relative-caret-position="675">
+          <caret line="78" column="37" selection-start-line="78" selection-start-column="29" selection-end-line="78" selection-end-column="37" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
           </folding>
@@ -880,8 +873,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/tetris/Multi.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="36" column="29" lean-forward="true" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
+        <state relative-caret-position="390">
+          <caret line="198" column="13" lean-forward="true" selection-start-line="198" selection-start-column="13" selection-end-line="198" selection-end-column="13" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
           </folding>
@@ -890,12 +883,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/tetris/Body.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="74" column="16" selection-start-line="74" selection-start-column="11" selection-end-line="74" selection-end-column="16" />
+        <state relative-caret-position="1350">
+          <caret line="90" column="5" lean-forward="true" selection-start-line="90" selection-start-column="5" selection-end-line="90" selection-end-column="5" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
-            <marker date="1572350223765" expanded="true" signature="12947:13097" ph="..." />
+            <marker date="1572354157888" expanded="true" signature="13555:13705" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/tetris/constants.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="54" selection-start-column="54" selection-end-column="54" />
         </state>
       </provider>
     </entry>

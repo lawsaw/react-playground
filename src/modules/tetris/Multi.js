@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import socketIOClient from 'socket.io-client';
 import { withStyles } from '@material-ui/core';
 import { withSnackbar } from 'notistack';
-import { SPEED } from './constants';
+import { SPEED, SOCKET_SERVER } from './constants';
 import { Lobby, BodyOnline } from './';
 
 const SOCKET_FROM           = 'CLIENT';
@@ -50,7 +50,7 @@ class Multi extends PureComponent {
 
     componentDidMount() {
 
-        this.socket = socketIOClient('http://localhost:3005/');
+        this.socket = socketIOClient(SOCKET_SERVER);
 
         this.socket.on(SOCKET_FROM, ({ type, ...props }) => {
             switch(type) {
@@ -91,14 +91,11 @@ class Multi extends PureComponent {
                             speed,
                             opponent: {
                                 ...state.user.opponent,
-                                ...other
+                                ...other,
                             }
                         },
                     }));
-                    if(action) {
-                        //console.log(action);
-                        this[action](false);
-                    }
+                    if(action) this[action](false);
                     break;
                 case ON_LEAVE_SESSION:
                     let user = {
@@ -116,10 +113,6 @@ class Multi extends PureComponent {
         });
 
     }
-
-    // handleStartNewGame = (callback) => {
-    //     this.startNewGame = callback;
-    // }
 
     handleStartNewGameCallback = (func) => {
         this.handleStartNewGame = func;
@@ -182,12 +175,6 @@ class Multi extends PureComponent {
         });
     }
 
-    // handleResetGame = () => {
-    //     this.socket.emit(SOCKET_TO, {
-    //         type: EMIT_RESET_GAME,
-    //     });
-    // }
-
     handleBackToLobby = () => {
         this.setState(() => ({
             isLobby: true,
@@ -200,7 +187,6 @@ class Multi extends PureComponent {
     render() {
         const { isLobby, connectionType, user } = this.state;
         const { id, nickname } = user;
-        //console.log(user);
         return isLobby ? (
             <Lobby
                 id={id}

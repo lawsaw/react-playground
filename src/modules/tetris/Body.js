@@ -54,7 +54,17 @@ class Body extends PureComponent {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-
+        if(this.props.onGameOnline) {
+            if(this.props.user.speed && (this.props.user.speed < this.state.speed)) {
+                this.setState(() => ({
+                    speed: this.props.user.speed,
+                }));
+                this.props.enqueueSnackbar(`${this.props.user.opponent.nickname} has increased your speed. It's now ${this.props.user.speed}ms!`, {
+                    variant: 'info',
+                    autoHideDuration: 1500,
+                });
+            }
+        }
     }
 
     getRandomFigure = () => {
@@ -271,13 +281,13 @@ class Body extends PureComponent {
     }
 
     getScoreOptimalSpeed = (score) => {
+        const { onGameOnline } = this.props;
         let speed = this.state.speed;
         for(let i = 1; i < speed; i++) if(score >= SPEED_RAISE_FOR_SCORE*i && score < SPEED_RAISE_FOR_SCORE*i+SPEED_RAISE_FOR_SCORE && speed !== SPEED-i*SPEED_STEP) {
             speed -= SPEED_STEP;
-            this.props.enqueueSnackbar(`Speed is now ${speed}ms!`, {
+            this.props.enqueueSnackbar(!onGameOnline ? `Speed is now ${speed}ms!` : `You made ${this.props.user.opponent.nickname}'s speed ${speed}ms!`, {
                 variant: 'info',
                 autoHideDuration: 1500,
-                dense: true,
             });
         }
         return speed;
