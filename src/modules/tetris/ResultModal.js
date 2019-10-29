@@ -19,79 +19,81 @@ const styles = () => ({
 
 class ResultModal extends PureComponent {
 
-    renderResultForSingle = () => {
-        const { classes, score } = this.props;
-        return (
-            <Table className={classes.table}>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Your score is</TableCell>
-                        <TableCell>{score}</TableCell>
-                    </TableRow>
-                </TableHead>
-            </Table>
-        )
-    }
-
-    renderResultForOnline = () => {
-        const { classes, score, user: { nickname, opponent: { score: opponentScore, nickname: opponentNickname } } } = this.props;
-        return (
-            <Box>
-                <Box component="h4">
-                    {
-                        score < opponentScore ? (
-                            <Fragment>
-                                You lost!
-                            </Fragment>
-                        ) : score > opponentScore ? (
-                            <Fragment>
-                                You won!
-                            </Fragment>
-                        ) : (
-                            <Fragment>
-                                The friendship won!
-                            </Fragment>
-                        )
-                    }
-                </Box>
-                <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>{nickname}</TableCell>
-                            <TableCell align="right">{opponentNickname}</TableCell>
-                        </TableRow>
-
-                    </TableHead>
-                    <TableBody>
-                        <TableCell>{score}</TableCell>
-                        <TableCell align="right">{opponentScore}</TableCell>
-                    </TableBody>
-                </Table>
-            </Box>
-        )
-    }
-
-    renderButtonForOnline = () => {
-        const { onClose, user: { opponent: { nickname: opponentNickname } } } = this.props;
+    renderResultSingle = () => {
+        const { classes, score, onClose } = this.props;
         return (
             <Fragment>
-                <Button  color="primary" variant="contained" onClick={() => onClose('newGame')}>
-                    Start new game with {opponentNickname}
-                </Button>
-                <Button  color="primary" variant="contained" onClick={() => onClose('lobby')}>
-                    Back to Lobby
-                </Button>
+                <DialogTitle>
+                    <Table className={classes.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Your score is</TableCell>
+                                <TableCell>{score}</TableCell>
+                            </TableRow>
+                        </TableHead>
+                    </Table>
+                </DialogTitle>
+                <DialogActions>
+                    <Button  color="primary" variant="contained" onClick={onClose}>
+                        Close
+                    </Button>
+                </DialogActions>
             </Fragment>
         )
     }
 
-    renderButtonForSingle = () => {
+    handleBack = (action) => {
         const { onClose } = this.props;
+        return () => onClose(action);
+    }
+
+    renderResultOnline = () => {
+        const { classes, score, user: { nickname, opponent: { score: opponentScore, nickname: opponentNickname } } } = this.props;
         return (
             <Fragment>
-                <Button  color="primary" variant="contained" onClick={onClose}>
-                    Close
-                </Button>
+                <DialogTitle>
+                    <Box>
+                        <Box component="h4">
+                            {
+                                score < opponentScore ? (
+                                    <Fragment>
+                                        You lost!
+                                    </Fragment>
+                                ) : score > opponentScore ? (
+                                    <Fragment>
+                                        You won!
+                                    </Fragment>
+                                ) : (
+                                    <Fragment>
+                                        The friendship won!
+                                    </Fragment>
+                                )
+                            }
+                        </Box>
+                        <Table className={classes.table}>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>{nickname}</TableCell>
+                                    <TableCell align="right">{opponentNickname}</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell>{score}</TableCell>
+                                    <TableCell align="right">{opponentScore}</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </Box>
+                </DialogTitle>
+                <DialogActions>
+                    <Button  color="primary" variant="contained" onClick={this.handleBack('replay')}>
+                        Start new game with {opponentNickname}
+                    </Button>
+                    <Button  color="primary" variant="contained" onClick={this.handleBack('lobby')}>
+                        Back to Lobby
+                    </Button>
+                </DialogActions>
             </Fragment>
         )
     }
@@ -100,16 +102,9 @@ class ResultModal extends PureComponent {
         const { user, isOpen, onClose } = this.props;
         return (
             <Dialog onClose={onClose} open={isOpen}>
-                <DialogTitle>
-                    {
-                        user ? this.renderResultForOnline() : this.renderResultForSingle()
-                    }
-                </DialogTitle>
-                <DialogActions>
-                    {
-                        user ? this.renderButtonForOnline() : this.renderButtonForSingle()
-                    }
-                </DialogActions>
+                {
+                    user ? this.renderResultOnline() : this.renderResultSingle()
+                }
             </Dialog>
         );
     }

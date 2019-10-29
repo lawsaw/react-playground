@@ -1,15 +1,11 @@
-import React, { PureComponent, Fragment } from 'react';
-import { withStyles } from '@material-ui/core';
+import React, { PureComponent } from 'react';
 import GridMaterial from '@material-ui/core/Grid';
-import { FIGURES, ROTATION_CIRCLE, ROWS, COLS, POSITION, COL_SIZE, ROWS_HIDDEN, SPEED } from './constants';
+import { ROWS, COLS } from './constants';
 import { Score, Screen, Preview } from './';
-import { generateGrid, merge, renderDemoHouse } from './etc';
-
-const styles = () => ({
-
-});
+import { generateGrid } from './etc';
 
 const DEMO_TABLE = generateGrid(COLS, ROWS);
+const DEMO_PREVIEW = generateGrid(3, 3);
 
 class Friend extends PureComponent {
 
@@ -19,11 +15,11 @@ class Friend extends PureComponent {
             <GridMaterial container justify="center" spacing={5}>
                 <GridMaterial item>
                     <Screen
-                        table={table}
+                        table={table || DEMO_TABLE}
                     />
                 </GridMaterial>
                 <GridMaterial item>
-                    <Preview table={preview} />
+                    <Preview table={preview || DEMO_PREVIEW} />
                     <Score value={score} />
                 </GridMaterial>
 
@@ -33,5 +29,4 @@ class Friend extends PureComponent {
 
 };
 
-
-export default withStyles(styles)(Friend);
+export default Friend;

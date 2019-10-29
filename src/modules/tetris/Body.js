@@ -1,16 +1,14 @@
 import React, { Fragment, PureComponent } from 'react';
-import { cloneDeep, isEqual } from 'lodash';
+import { cloneDeep } from 'lodash';
 import { withSnackbar } from 'notistack';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Box from "@material-ui/core/Box";
 import GridMaterial from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
-import { Grid, ResultModal, Score, Screen, Preview } from './';
-import { FIGURES, ROTATION_CIRCLE, ROWS, COLS, POSITION, COL_SIZE, ROWS_HIDDEN, SPEED } from './constants';
+import { ResultModal, Score, Screen, Preview } from './';
+import { FIGURES, ROTATION_CIRCLE, ROWS, COLS, POSITION, ROWS_HIDDEN, SPEED, SPEED_STEP, SPEED_RAISE_FOR_SCORE } from './constants';
 import { generateGrid, merge, renderDemoHouse } from './etc';
-import DialogTitle from "@material-ui/core/DialogTitle";
 
 const styles = () => ({
 
@@ -38,46 +36,25 @@ class Body extends PureComponent {
 
     componentDidMount() {
         document.addEventListener('keydown', this.handleKeyPress);
-        //if(this.props.startNewGameCallback) this.props.startNewGameCallback(this.handleStartNewGame);
-        //if (this.props.onGameOnline) this.handleStartNewGame();
+        if(this.props.onGameOnline) {
+            this.setOnlineCallbacks();
+        }
     }
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleKeyPress);
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        const { user } = this.props;
-        const { isGameRunning } = this.state;
-        if(isGameRunning && this.props.user.opponent.action !== prevProps.user.opponent.action && user) {
-            this.makeSyncAction();
-        }
-        // if(isGameRunning && user && user.opponent.isFinish) {
-        //     console.log('opponent finished');
-        //     this.handleEndGame();
-        // }
+    setOnlineCallbacks = () => {
+        const { handleStartNewGameCallback, handlePauseCallback, handleContinueCallback, handleEndGameCallback } = this.props;
+        handleStartNewGameCallback(isActioned => this.handleStartNewGame(isActioned));
+        handlePauseCallback(isActioned => this.handlePause(isActioned));
+        handleContinueCallback(isActioned => this.handleContinue(isActioned));
+        handleEndGameCallback(isActioned => this.handleEndGame(isActioned));
     }
 
-    makeSyncAction = () => {
-        const { onGameOnline, user: { opponent: { action } } } = this.props;
-        if(!action) return false;
-        switch (action) {
-            case 'handleStartNewGame':
-                this.handleStartNewGame(true);
-                break;
-            case 'handlePause':
-                this.handlePause(true);
-                break;
-            case 'handleContinue':
-                this.handleContinue(true);
-                break;
-            case 'handleEndGame':
-                this.handleEndGame(true);
-                break;
-            default:
-                break;
-        }
-        onGameOnline({action: null});
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
     }
 
     getRandomFigure = () => {
@@ -171,6 +148,7 @@ class Body extends PureComponent {
     }
 
     moveFigure = (moveDirection) => {
+        const { onGameOnline } = this.props;
         const { position: positionCurrent } = this.state;
         let position = this.getMoveStep(moveDirection, positionCurrent);
         if(this.hasFigureRightToMove(moveDirection, position)) {
@@ -182,7 +160,7 @@ class Body extends PureComponent {
             if(!this.isEndGame()) {
                 this.handleLastStepDown();
             } else {
-                this.handleEndGame();
+                this.handleEndGame(typeof onGameOnline !== 'undefined');
             }
         }
     }
@@ -204,8 +182,10 @@ class Body extends PureComponent {
             isGameRunning: false,
             speed: SPEED,
         }));
-        //console.log(this.props.user);
-        //if(onGameOnline) this.handleEndOnlineGame();
+    }
+
+    handleEndGameOnline = () => {
+        this.handleEndGame(true);
     }
 
     handleResultModalOpen = () => {
@@ -215,29 +195,14 @@ class Body extends PureComponent {
     }
 
     handleResultModalClose = (action) => {
-        const { onGameOnline, onLobbyOpen } = this.props;
-        // if(onGameOnline) {
-        //     switch (action) {
-        //         case 'newGame':
-        //             this.handleStartNewOnlineGame();
-        //             break;
-        //         case 'lobby':
-        //             if(onLobbyOpen) onLobbyOpen();
-        //             break;
-        //         default:
-        //             break;
-        //     }
-        // }
+        const { onBackToLobby } = this.props;
         this.setState(() => ({
             isResultModalOpen: false,
         }));
+        if(onBackToLobby && action === 'lobby') {
+            onBackToLobby();
+        }
     }
-
-    // handleEndOnlineGame = () => {
-    //     const { onGameOnline } = this.props;
-    //     const { score } = this.state;
-    //     onGameOnline({isFinish: true, score});
-    // }
 
     handleStartNewGame = (isActioned) => {
         if(isActioned) {
@@ -260,6 +225,10 @@ class Body extends PureComponent {
         this.startGame();
     }
 
+    handleStartNewGameOnline = () => {
+        this.handleStartNewGame(true);
+    }
+
     // handleStartNewOnlineGame = () => {
     //     const { onGameReset } = this.props;
     //     if(onGameReset) {
@@ -271,6 +240,7 @@ class Body extends PureComponent {
     handleLastStepDown = () => {
         const { onGameOnline } = this.props;
         const { figure, rotation, table, position, figureNext, rotationNext, score, speed } = this.state;
+        //const speed = onGameOnline ? this.props.user.speed : this.state.speed;
         let tableWithFigure = merge(figure[rotation], table, position);
         let fullRows = this.getAllFullRowsIndexes(tableWithFigure);
         let scoreNew = score + fullRows.length;
@@ -287,11 +257,14 @@ class Body extends PureComponent {
             rotation: rotationNext,
             rotationNext: this.getRandomRotation(),
             score: scoreNew,
-            speed: speedNew,
+            speed: onGameOnline ? speed : speedNew, //TODO: increase speed yourself in single game, but increase speed of ypu opponent oin online game
         }));
 
         if(onGameOnline) {
-            onGameOnline({score: scoreNew});
+            onGameOnline({
+                score: scoreNew,
+                speed: speedNew,
+            });
         }
 
         this.resetSpeed();
@@ -299,10 +272,8 @@ class Body extends PureComponent {
 
     getScoreOptimalSpeed = (score) => {
         let speed = this.state.speed;
-        let stepSpeed = 10;
-        let stepScore = 2;
-        for(let i = 1; i < speed; i++) if(score >= stepScore*i && score < stepScore*i+stepScore && speed !== SPEED-i*stepSpeed) {
-            speed -= stepSpeed;
+        for(let i = 1; i < speed; i++) if(score >= SPEED_RAISE_FOR_SCORE*i && score < SPEED_RAISE_FOR_SCORE*i+SPEED_RAISE_FOR_SCORE && speed !== SPEED-i*SPEED_STEP) {
+            speed -= SPEED_STEP;
             this.props.enqueueSnackbar(`Speed is now ${speed}ms!`, {
                 variant: 'info',
                 autoHideDuration: 1500,
@@ -414,8 +385,12 @@ class Body extends PureComponent {
         }
         this.setState(() => ({
             isPause: true,
-        }))
+        }));
         clearInterval(this.timer);
+    }
+
+    handlePauseOnline = () => {
+        this.handlePause(true);
     }
 
     handleContinue = (isActioned) => {
@@ -425,12 +400,16 @@ class Body extends PureComponent {
         }
         this.setState(() => ({
             isPause: false,
-        }))
+        }));
         this.startGame();
     }
 
+    handleContinueOnline = () => {
+        this.handleContinue(true);
+    }
+
     render() {
-        const { classes, onGameOnline, user } = this.props;
+        const { onGameOnline, user } = this.props;
         const { table, figure, rotation, position, figureNext, rotationNext, score, isPause, isResultModalOpen, isGameRunning } = this.state;
         let tableWithFigure = figure ? merge(figure[rotation], table, position) : table;
 
@@ -459,7 +438,7 @@ class Body extends PureComponent {
                             {
                                 !isGameRunning && (
                                     <ListItem>
-                                        <Button color="primary" variant="contained" onClick={this.handleStartNewGame}>
+                                        <Button color="primary" variant="contained" onClick={isGameRunning ? this.handleStartNewGameOnline : this.handleStartNewGame}>
                                             Start New Game
                                         </Button>
                                     </ListItem>
@@ -468,7 +447,7 @@ class Body extends PureComponent {
                             {
                                 isGameRunning && !isPause && (
                                     <ListItem>
-                                        <Button color="secondary" variant="contained" onClick={this.handlePause}>
+                                        <Button color="secondary" variant="contained" onClick={isGameRunning ? this.handlePauseOnline : this.handlePause}>
                                             Pause
                                         </Button>
                                     </ListItem>
@@ -477,7 +456,7 @@ class Body extends PureComponent {
                             {
                                 isGameRunning && isPause && (
                                     <ListItem>
-                                        <Button color="secondary" variant="contained" onClick={this.handleContinue}>
+                                        <Button color="secondary" variant="contained" onClick={isGameRunning ? this.handleContinueOnline : this.handleContinue}>
                                             Continue
                                         </Button>
                                     </ListItem>
@@ -486,7 +465,7 @@ class Body extends PureComponent {
                             {
                                 isGameRunning && (
                                     <ListItem>
-                                        <Button color="primary" variant="contained" onClick={this.handleEndGame}>
+                                        <Button color="primary" variant="contained" onClick={isGameRunning ? this.handleEndGameOnline : this.handleEndGame}>
                                             Stop Game
                                         </Button>
                                     </ListItem>

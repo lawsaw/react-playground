@@ -1,10 +1,9 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import socketIOClient from 'socket.io-client';
 import { withStyles } from '@material-ui/core';
 import { withSnackbar } from 'notistack';
-import GridMaterial from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import { Body, Friend, Lobby, BodyOnline } from './';
+import { SPEED } from './constants';
+import { Lobby, BodyOnline } from './';
 
 const SOCKET_FROM           = 'CLIENT';
 const SOCKET_TO             = 'SERVER';
@@ -13,14 +12,11 @@ const ON_LOG                = 'LOG';
 const ON_MESSAGE            = 'MESSAGE';
 const ON_START              = 'START';
 const ON_GAME               = 'GAME';
-const ON_GAME_FINISH        = 'GAME FINISH';
-const ON_RESET_GAME         = 'RESET GAME';
+const ON_LEAVE_SESSION      = 'LEAVE SESSION';
 const EMIT_PLAYER_UPDATE    = 'PLAYER UPDATE';
 const EMIT_HOST_FIND        = 'HOST FIND';
 const EMIT_GAME             = 'GAME';
-const EMIT_GAME_FINISH      = 'GAME FINISH';
-const EMIT_KICK_OPPONENT    = 'KICK OPPONENT';
-const EMIT_RESET_GAME       = 'RESET GAME';
+const EMIT_LEAVE_SESSION    = 'LEAVE SESSION';
 
 const styles = () => ({
 
@@ -30,11 +26,15 @@ class Multi extends PureComponent {
 
     constructor(props) {
         super(props);
-        this.startNewGame = null;
+        this.handleStartNewGame = null;
+        this.handlePause = null;
+        this.handleContinue = null;
+        this.handleEndGame = null;
         this.state = {
             user: {
                 id: null,
                 nickname: '',
+                speed: SPEED,
                 opponent: {
                     nickname: '',
                     table: [],
@@ -55,7 +55,7 @@ class Multi extends PureComponent {
         this.socket.on(SOCKET_FROM, ({ type, ...props }) => {
             switch(type) {
                 case ON_LOG:
-                    console.log(props);
+                    //console.log(props);
                     break;
                 case ON_INIT:
                     const { id } = props;
@@ -70,7 +70,7 @@ class Multi extends PureComponent {
                     const { messageType, message } = props;
                     this.props.enqueueSnackbar(message, {
                         variant: messageType,
-                        autoHideDuration: 3000,
+                        autoHideDuration: 2000,
                     });
                     break;
                 case ON_START:
@@ -84,23 +84,33 @@ class Multi extends PureComponent {
                     }));
                     break;
                 case ON_GAME:
-                    //const { action, ...other } = props;
+                    const { action, speed, ...other } = props;
                     this.setState(state => ({
                         user: {
                             ...state.user,
+                            speed,
                             opponent: {
                                 ...state.user.opponent,
-                                ...props
+                                ...other
                             }
                         },
                     }));
+                    if(action) {
+                        //console.log(action);
+                        this[action](false);
+                    }
                     break;
-                case ON_GAME_FINISH:
-                    console.log('ON_GAME_FINISH');
-                    console.log(props);
+                case ON_LEAVE_SESSION:
+                    let user = {
+                        id: this.state.user.id,
+                        nickname: this.state.user.nickname,
+                    }
+                    this.setState(() => ({
+                        isLobby: true,
+                        user,
+                    }));
                     break;
-                case ON_RESET_GAME:
-                    //this.startNewGame();
+                default:
                     break;
             }
         });
@@ -110,6 +120,22 @@ class Multi extends PureComponent {
     // handleStartNewGame = (callback) => {
     //     this.startNewGame = callback;
     // }
+
+    handleStartNewGameCallback = (func) => {
+        this.handleStartNewGame = func;
+    }
+
+    handlePauseCallback = (func) => {
+        this.handlePause = func;
+    }
+
+    handleContinueCallback = (func) => {
+        this.handleContinue = func;
+    }
+
+    handleEndGameCallback = (func) => {
+        this.handleEndGame = func;
+    }
 
     handleNicknameChange = (e) => {
         const { value } = e.target;
@@ -162,10 +188,19 @@ class Multi extends PureComponent {
     //     });
     // }
 
+    handleBackToLobby = () => {
+        this.setState(() => ({
+            isLobby: true,
+        }));
+        this.socket.emit(SOCKET_TO, {
+            type: EMIT_LEAVE_SESSION,
+        });
+    }
+
     render() {
         const { isLobby, connectionType, user } = this.state;
         const { id, nickname } = user;
-        console.log(user);
+        //console.log(user);
         return isLobby ? (
             <Lobby
                 id={id}
@@ -178,6 +213,11 @@ class Multi extends PureComponent {
         ) : (
             <BodyOnline
                 onGameOnline={this.handleGameOnline}
+                handleStartNewGameCallback={this.handleStartNewGameCallback}
+                handlePauseCallback={this.handlePauseCallback}
+                handleContinueCallback={this.handleContinueCallback}
+                handleEndGameCallback={this.handleEndGameCallback}
+                onBackToLobby={this.handleBackToLobby}
                 user={user}
             />
         );

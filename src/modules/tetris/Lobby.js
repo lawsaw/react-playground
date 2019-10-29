@@ -1,41 +1,15 @@
 import React, { PureComponent, Fragment } from 'react';
 import { withStyles } from '@material-ui/core';
 import Box from "@material-ui/core/Box";
-import socketIOClient from 'socket.io-client';
-import { withSnackbar } from 'notistack';
-import GridMaterial from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
-import SendIcon from '@material-ui/icons/Send';
-
-
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-import InputBase from '@material-ui/core/InputBase';
-import Divider from '@material-ui/core/Divider';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import DirectionsIcon from '@material-ui/icons/Directions';
-
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 const styles = () => ({
     stepper: {
@@ -102,7 +76,7 @@ class Lobby extends PureComponent {
     }
 
     renderStep = (step) => {
-        const { classes, id, nickname, onFriendInvite, onNicknameChange, client, connectionType, onConnectionTypeChange } = this.props;
+        const { classes, id, nickname, onNicknameChange, connectionType, onConnectionTypeChange } = this.props;
         const { host } = this.state;
         switch (step) {
             case 0:
@@ -114,8 +88,7 @@ class Lobby extends PureComponent {
                         value={nickname}
                         onChange={onNicknameChange}
                     />
-                )
-                break;
+                );
             case 1:
                 return (
                     <RadioGroup aria-label="position" name="position" value={connectionType} onChange={onConnectionTypeChange} row>
@@ -132,8 +105,7 @@ class Lobby extends PureComponent {
                             labelPlacement="end"
                         />
                     </RadioGroup>
-                )
-                break;
+                );
             case 2:
                 return (
                     <Fragment>
@@ -156,8 +128,7 @@ class Lobby extends PureComponent {
                             )
                         }
                     </Fragment>
-                )
-                break;
+                );
             default:
                 break;
         }
@@ -172,10 +143,8 @@ class Lobby extends PureComponent {
 
 
     render() {
-        const { classes, socket, id, onFriendInvite } = this.props;
-        const { host, nickname, activeStep } = this.state;
-        const handleFriendInvite = () => onFriendInvite(host, nickname);
-
+        const { classes } = this.props;
+        const { activeStep } = this.state;
         return (
             <Stepper activeStep={activeStep} orientation="vertical" className={classes.stepper}>
                 {
@@ -219,44 +188,6 @@ class Lobby extends PureComponent {
             </Stepper>
         )
 
-
-
-        // return (
-        //     <GridMaterial container justify="flex-start" alignItems="center">
-        //         <GridMaterial item xs={6}>
-        //             {
-        //                 id ? (
-        //                     <Fragment>
-        //                         Your ID is <br /><strong>{id}</strong>
-        //                     </Fragment>
-        //                 ) : (
-        //                     <Fragment>
-        //                         Loading socket...
-        //                     </Fragment>
-        //                 )
-        //             }
-        //         </GridMaterial>
-        //         <GridMaterial item xs={6}>
-        //             <TextField
-        //                 label="Your nickname"
-        //                 margin="normal"
-        //                 variant="outlined"
-        //                 value={nickname}
-        //                 onChange={this.handleNicknameChange}
-        //             />
-        //             <TextField
-        //                 label="Friend's ID"
-        //                 margin="normal"
-        //                 variant="outlined"
-        //                 value={host}
-        //                 onChange={this.handleFriendIdChange}
-        //             />
-        //             <IconButton onClick={handleFriendInvite} disabled={!host.length}>
-        //                 <SendIcon />
-        //             </IconButton>
-        //         </GridMaterial>
-        //     </GridMaterial>
-        // );
     }
 
 };
