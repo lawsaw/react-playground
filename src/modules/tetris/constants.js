@@ -1,4 +1,5 @@
-export const SOCKET_SERVER = 'http://localhost:3005/';
+//export const SOCKET_SERVER = 'http://localhost:3005/';
+export const SOCKET_SERVER = 'https://lawsaw-tetris-server.herokuapp.com/';
 export const COL_SIZE = 26;
 export const ROWS_HIDDEN = 4;
 export const ROWS = 20+ROWS_HIDDEN;

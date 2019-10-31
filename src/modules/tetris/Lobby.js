@@ -143,7 +143,7 @@ class Lobby extends PureComponent {
 
 
     render() {
-        const { classes } = this.props;
+        const { classes, connectionType } = this.props;
         const { activeStep } = this.state;
         return (
             <Stepper activeStep={activeStep} orientation="vertical" className={classes.stepper}>
@@ -171,14 +171,18 @@ class Lobby extends PureComponent {
                                                 </Button>
                                             ) : null
                                         }
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={this.handleNextStep}
-                                            className={classes.button}
-                                        >
-                                            Next
-                                        </Button>
+                                        {
+                                            !(activeStep === 2 && connectionType === 'host') ? (
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={this.handleNextStep}
+                                                    className={classes.button}
+                                                >
+                                                    Next
+                                                </Button>
+                                            ) : null
+                                        }
                                     </Box>
                                 </StepContent>
                             </Step>

@@ -8,6 +8,7 @@ import {
     Dashboard,
     TodoList,
     Tetris,
+    Crocodile,
 } from '../route-pages';
 
 export const ROUTES = [
@@ -39,5 +40,9 @@ export const ROUTES = [
         link: '/tetris',
         label: 'Tetris',
         page: props => <Tetris {...props} />
+    },{
+        link: '/crocodile',
+        label: 'Crocodile',
+        page: props => <Crocodile {...props} />
     }
 ];

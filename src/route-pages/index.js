@@ -5,6 +5,7 @@ import Clock from './Clock';
 import Dashboard from './Dashboard';
 import TodoList from './TodoList';
 import Tetris from './Tetris';
+import Crocodile from './Crocodile';
 
 export {
     Home,
@@ -14,4 +15,5 @@ export {
     Dashboard,
     TodoList,
     Tetris,
+    Crocodile,
 }
