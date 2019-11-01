@@ -4,13 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/modules/dashboard/Grid.js" line="75" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf276a12-ba85-4e17-93a3-7ef6e8fa304c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/modules/crocodile/Chat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Crocodile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/Crocodile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/DeskDrawing.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/index.js" afterDir="false" />
-    </list>
+    <list default="true" id="cf276a12-ba85-4e17-93a3-7ef6e8fa304c" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,8 +52,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Chat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="38" column="31" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
+            <state relative-caret-position="465">
+              <caret line="76" column="38" lean-forward="true" selection-start-line="76" selection-start-column="38" selection-end-line="76" selection-end-column="38" />
               <folding>
                 <element signature="e#0#56#0" expanded="true" />
               </folding>
@@ -351,7 +345,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="680125000" />
+    <option name="totallyTimeSpent" value="681214000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -838,8 +832,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Chat.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="38" column="31" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
+        <state relative-caret-position="465">
+          <caret line="76" column="38" lean-forward="true" selection-start-line="76" selection-start-column="38" selection-end-line="76" selection-end-column="38" />
           <folding>
             <element signature="e#0#56#0" expanded="true" />
           </folding>
