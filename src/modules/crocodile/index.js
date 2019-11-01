@@ -3,8 +3,8 @@ import Desk from './Desk';
 import Screen from './Screen';
 import DeskToolbar from './DeskToolbar';
 import Paint from './Paint';
-import DeskDrawing from './DeskDrawing';
 import ColorPicker from './ColorPicker';
+import Chat from './Chat';
 
 export {
     Crocodile,
@@ -12,6 +12,6 @@ export {
     Screen,
     DeskToolbar,
     Paint,
-    DeskDrawing,
     ColorPicker,
+    Chat,
 }
