@@ -1,5 +1,5 @@
 import React, { PureComponent, Fragment } from 'react';
-import { withStyles, makeStyles, Grid } from "@material-ui/core";
+import { withStyles, Grid } from "@material-ui/core";
 import { Paint, Screen } from './';
 
 const styles = () => ({
@@ -16,19 +16,21 @@ const styles = () => ({
 class Crocodile extends PureComponent {
 
     state = {
-        paint: {},
+        image: '',
     }
 
-    handlerDrawing = (args) => {
-        //console.log(args);
-        this.setState(() => ({
-            paint: {...args},
-        }));
+    handleConvertToImage = (canvas) => {
+        if(canvas) {
+            let image = canvas.current.toDataURL();
+            this.setState(() => ({
+                image,
+            }));
+        }
     }
 
     render() {
         const { classes } = this.props;
-        const { paint } = this.state;
+        const { image } = this.state;
         return (
             <Fragment>
                 <Grid
@@ -40,7 +42,7 @@ class Crocodile extends PureComponent {
                         className={classes.wrapScreen}
                     >
                         <Paint
-                            onDrawing={this.handlerDrawing}
+                            onConvertToImage={this.handleConvertToImage}
                         />
                     </Grid>
                     <Grid
@@ -50,7 +52,9 @@ class Crocodile extends PureComponent {
                         Chat
                     </Grid>
                 </Grid>
-                <Screen {...paint} />
+                <Screen
+                    image={image}
+                />
             </Fragment>
 
         )

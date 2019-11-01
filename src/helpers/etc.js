@@ -98,3 +98,11 @@ export const findAndDeleteFirst = (tree, childrenKey, objToFindBy) => {
     findInChildren(tree, childrenKey, objToFindBy);
     return modifiedObj ? treeToReturn : false;
 };
+
+export function getHeightFromWidth(widthNew, width, height) {
+    return ( widthNew * height ) / width;
+}
+
+export function getWidthFromHeight(heightNew, width, height) {
+    return ( heightNew * width ) / height;
+}
