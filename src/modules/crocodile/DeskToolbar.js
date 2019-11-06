@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import { withStyles, Box, AppBar, Toolbar, IconButton, Slider } from "@material-ui/core";
+import { withStyles, Box, AppBar, Toolbar, IconButton, Slider as SliderMaterial } from "@material-ui/core";
+import { Undo, Redo, Delete } from '@material-ui/icons';
 import { ColorPicker } from './';
 
 const marks = [
@@ -30,7 +31,8 @@ const styles = () => ({
 
     },
     sizeSlider: {
-        width: 150,
+        flexGrow: 1,
+        marginLeft: 15,
     },
 });
 
@@ -40,7 +42,7 @@ const StyledAppBar = withStyles(() => ({
 
 class DeskToolbar extends PureComponent {
     render() {
-        const { classes, onColorSelect, onUndo, onRedo, onSizeChange, lineWidth } = this.props;
+        const { classes, onColorSelect, onUndo, onRedo, onClear, onSizeChange, lineWidth } = this.props;
         return (
             <StyledAppBar
                 className={classes.toolbar}
@@ -53,9 +55,7 @@ class DeskToolbar extends PureComponent {
                     <ColorPicker
                         onColorSelect={onColorSelect}
                     />
-                   <IconButton onClick={onUndo}>Undo</IconButton>
-                   <IconButton onClick={onRedo}>Redo</IconButton>
-                    <Slider
+                    <SliderMaterial
                         value={lineWidth}
                         onChange={onSizeChange}
                         aria-labelledby="discrete-slider"
@@ -66,6 +66,9 @@ class DeskToolbar extends PureComponent {
                         max={100}
                         className={classes.sizeSlider}
                     />
+                    <IconButton onClick={onUndo}><Undo /></IconButton>
+                    <IconButton onClick={onRedo}><Redo /></IconButton>
+                    <IconButton onClick={onClear}><Delete /></IconButton>
                 </Toolbar>
             </StyledAppBar>
         )

@@ -5,6 +5,9 @@ import DeskToolbar from './DeskToolbar';
 import Paint from './Paint';
 import ColorPicker from './ColorPicker';
 import Chat from './Chat';
+import Lobby from './Lobby';
+import Body from './Body';
+import Game from './Game';
 
 export {
     Crocodile,
@@ -14,4 +17,7 @@ export {
     Paint,
     ColorPicker,
     Chat,
+    Lobby,
+    Body,
+    Game,
 }

@@ -12,8 +12,10 @@ const styles = () => ({
     },
     image: {
         display: 'block',
-        width: 300,
-        height: getHeightFromWidth(300, DESK_WIDTH, DESK_HEIGHT),
+        width: DESK_WIDTH,
+        height: DESK_HEIGHT,
+        // width: 300,
+        // height: getHeightFromWidth(300, DESK_WIDTH, DESK_HEIGHT),
     },
 });
 

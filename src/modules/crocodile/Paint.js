@@ -1,4 +1,4 @@
-import React, {createRef, PureComponent} from 'react';
+import React, { createRef, PureComponent, Fragment } from 'react';
 import UndoCanvas from 'undo-canvas';
 import { withStyles, Grid } from "@material-ui/core";
 import { Desk, DeskToolbar } from './';
@@ -10,6 +10,7 @@ const MOUSE_MIDDLE_BUTTON = 1;
 let context = null;
 
 const styles = () => ({
+    paint: {},
     toolbar: {
         flexGrow: 1,
     },
@@ -29,7 +30,7 @@ class Paint extends PureComponent {
             lineWidth: 20,
             lineJoin: 'round',
             lineCap: 'round',
-            strokeStyle: 'green',
+            strokeStyle: '#ff00ff',
         },
     }
 
@@ -117,6 +118,12 @@ class Paint extends PureComponent {
         onConvertToImage(this.canvas);
     }
 
+    handleClear = () => {
+        const { onConvertToImage } = this.props;
+        context.clearRect(0, 0, this.canvas.current.width, this.canvas.current.height);
+        onConvertToImage(this.canvas);
+    }
+
     handleSizeChange = (e, lineWidth) => {
         console.log(lineWidth);
         this.setState(state => ({
@@ -131,12 +138,7 @@ class Paint extends PureComponent {
         const { classes } = this.props;
         const { lineOptions: { lineWidth } } = this.state;
         return (
-            <Grid
-                container
-                direction="column"
-                spacing={1}
-                className={classes.desk}
-            >
+            <Fragment>
                 <Grid
                     item
                     className={classes.toolbar}
@@ -145,6 +147,7 @@ class Paint extends PureComponent {
                         onColorSelect={this.handlerColorSelect}
                         onUndo={this.handleUndo}
                         onRedo={this.handleRedo}
+                        onClear={this.handleClear}
                         onSizeChange={this.handleSizeChange}
                         lineWidth={lineWidth}
                     />
@@ -158,7 +161,7 @@ class Paint extends PureComponent {
                         onInit={this.handleInit}
                     />
                 </Grid>
-            </Grid>
+            </Fragment>
         )
     }
 }
