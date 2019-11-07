@@ -4,6 +4,7 @@ import { withStyles, Paper, TextField, Grid, IconButton, InputBase, Box, Card, C
 import { Send } from '@material-ui/icons';
 import { DESK_WIDTH, DESK_HEIGHT } from './constants';
 import { getHeightFromWidth } from '../../helpers/etc';
+import { TextInput } from './';
 
 const styles = (theme) => ({
     chat: {
@@ -28,8 +29,6 @@ const styles = (theme) => ({
         overflowX: 'hidden',
         overflowY: 'scroll',
     },
-
-
     textField: {
         width: '100%',
         padding: '2px 4px',
@@ -39,7 +38,6 @@ const styles = (theme) => ({
     input: {
         flex: 1,
     },
-
     card: {
         margin: theme.spacing(1),
     },
@@ -50,7 +48,8 @@ const styles = (theme) => ({
 });
 
 const Window = (props) => {
-    const { classes, chat } = props;
+    const { classes, room } = props;
+    const { chat } = room;
     return (
         <Paper
             elevation={5}
@@ -61,17 +60,20 @@ const Window = (props) => {
                 className={classes.windowInner}
             >
                 {
-                    chat.map(({name, message}, index) => (
-                        <Box
-                            key={index}
-                            className={classes.card}
-                        >
-                            <CardContent>
-                                <Typography className={classes.name} variant="h5" component="h2">{name || 'Default Name'}</Typography>
-                                <Typography className={classes.message} variant="body2" component="p">{message}</Typography>
-                            </CardContent>
-                        </Box>
-                    ))
+                    chat && chat.length ? chat.map(({ id, player, message }, index) => {
+                        let nickname = player.nickname;
+                        return (
+                            <Box
+                                key={index}
+                                className={classes.card}
+                            >
+                                <CardContent>
+                                    <Typography className={classes.name} variant="h5" component="h2">{nickname || 'Default Name'}</Typography>
+                                    <Typography className={classes.message} variant="body2" component="p">{message}</Typography>
+                                </CardContent>
+                            </Box>
+                        )
+                    }) : 'This chat is currently empty'
                 }
             </Box>
         </Paper>
@@ -80,21 +82,39 @@ const Window = (props) => {
 
 class Chat extends PureComponent {
 
+    constructor(props) {
+        super(props);
+        this.isSubmitLocked = false;
+    }
+
     state = {
-        message: 'Fuck',
+        message: '',
     }
 
     handleChat = () => {
         const { onChat } = this.props;
         const { message } = this.state;
-        onChat({ message });
+        if(!this.isSubmitLocked && message.length > 0) {
+            this.isSubmitLocked = true;
+            console.log({
+                message,
+                length: message.length,
+            })
+            this.setState(() => ({
+                message: '',
+            }));
+            onChat({ message });
+            setTimeout(() => {
+                this.isSubmitLocked = false;
+            }, 1000);
+        }
     }
 
     handleMessageChange = (e) => {
         const { value } = e.target;
         this.setState(() => ({
             message: value,
-        }))
+        }));
     }
 
     render() {
@@ -112,20 +132,14 @@ class Chat extends PureComponent {
                     item
                     className={classes.wrapSubmit}
                 >
-                    <Paper
-                        elevation={5}
+                    <TextInput
+                        onChange={this.handleMessageChange}
+                        onSubmit={this.handleChat}
+                        placeholder="Enter your variant"
+                        value={message}
                         className={classes.textField}
-                    >
-                        <InputBase
-                            className={classes.input}
-                            placeholder="Enter your variant"
-                            value={message}
-                            onChange={this.handleMessageChange}
-                        />
-                        <IconButton onClick={this.handleChat}>
-                            <Send />
-                        </IconButton>
-                    </Paper>
+                        elevation={5}
+                    />
                 </Grid>
             </Fragment>
         )

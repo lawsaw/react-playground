@@ -1,8 +1,8 @@
 import React, { PureComponent, Fragment } from 'react';
-import { withStyles, Grid, Box } from "@material-ui/core";
+import { withStyles, Grid, Box, Chip } from "@material-ui/core";
 import { Chat, Paint } from "./";
 
-const styles = () => ({
+const styles = (theme) => ({
     crocodile: {
         alignItems: 'stretch',
         justifyContent: 'stretch',
@@ -11,37 +11,42 @@ const styles = () => ({
     chat: {
         flexGrow: 1,
     },
+    players: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        '& > *': {
+            margin: theme.spacing(0.5),
+        },
+    },
 });
 
 class Screen extends PureComponent {
 
     renderPlayerList = () => {
-        const { roomStore: { players } } = this.props;
+        const { classes, room: { players } } = this.props;
+        const arrayOfPlayers = Object.keys(players);
         return (
-            <Fragment>
+            <Box
+                className={classes.players}
+            >
                 Current players:
                 {
-                    players.map(({ nickname, id }, index) => (
-                        <Fragment
-                            key={id}
-                        >
-                            <Box
-                                component="span"
-                            >
-                                {nickname}
-                            </Box>
-                            {
-                                index !== (players.length -1) ? ', ' : null
-                            }
-                        </Fragment>
-                    ))
+                    players && arrayOfPlayers.length ? arrayOfPlayers.map((playerId, index) => (
+                        <Chip
+                            key={index}
+                            size="small"
+                            label={players[playerId].nickname}
+                            color={players[playerId].isPainter ? 'primary' : 'default'}
+                        />
+                    )) : 'There is no players in this room'
                 }
-            </Fragment>
+            </Box>
         )
     }
 
     render() {
-        const { classes, onConvertToImage, onChat, roomStore: { chat }, user } = this.props;
+        const { classes, onConvertToImage, onChat, room, user } = this.props;
         let players = this.renderPlayerList();
         return (
             <Fragment>
@@ -71,7 +76,7 @@ class Screen extends PureComponent {
                         className={classes.chat}
                     >
                         <Chat
-                            chat={chat}
+                            room={room}
                             onChat={onChat}
                         />
                     </Grid>

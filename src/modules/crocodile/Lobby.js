@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import { withStyles, Paper, IconButton, InputBase, Box, List, ListItem, ListItemText, Divider, Grid, Dialog } from "@material-ui/core";
 import { Send, Add } from '@material-ui/icons';
+import { TextInput } from './';
 
 const styles = (theme) => ({
     lobby: {
@@ -52,62 +53,10 @@ class Lobby extends PureComponent {
 
     constructor(props) {
         super(props);
-        this.state = {
-            isCreateNewRoomModal: false,
-            newRoomName: '',
-        };
-    }
-
-    renderNameInput = (onChange, onSubmit, placeholder, value) => {
-        const { classes } = this.props;
-        return (
-            <Paper className={classes.root}>
-                <form
-                    className={classes.form}
-                    onSubmit={onSubmit}
-                >
-                    <InputBase
-                        className={classes.input}
-                        placeholder={placeholder}
-                        value={value}
-                        onChange={onChange}
-                        autoFocus
-                    />
-                    <IconButton
-                        className={classes.iconButton}
-                        onClick={onSubmit}
-                    >
-                        <Send />
-                    </IconButton>
-                </form>
-            </Paper>
-        );
-    }
-
-    handleNewRoomChange = (e) => {
-        const { value } = e.target;
-        this.setState(state => ({
-            newRoomName: value,
-        }));
-    }
-
-    handleCreateNewRoomModalOpen = () => {
-        this.setState(() => ({
-            isCreateNewRoomModal: true,
-        }));
-    }
-
-    handleCreateNewRoomModalClose = () => {
-        this.setState(() => ({
-            isCreateNewRoomModal: false,
-            newRoomName: '',
-        }));
     }
 
     renderRoomSelect = () => {
-        const { classes, roomList, onNewRoomSubmit, onRoomSelect } = this.props;
-        const { isCreateNewRoomModal, newRoomName } = this.state;
-        console.log(roomList);
+        const { classes, roomList, onNewRoomSubmit, onRoomSelect, newRoomName, onNewRoomCreateModalOpen, onNewRoomCreateModalClose, onNewRoomNameChange, isNewRoomCreateModal } = this.props;
         return (
             <Fragment>
                 <Box className={classes.stepTitle} >Select room or create new one: </Box>
@@ -119,7 +68,7 @@ class Lobby extends PureComponent {
                     >
                         <IconButton
                             className={classes.iconButton}
-                            onClick={this.handleCreateNewRoomModalOpen}
+                            onClick={onNewRoomCreateModalOpen}
                         >
                             <Add />
                         </IconButton>
@@ -130,7 +79,7 @@ class Lobby extends PureComponent {
                         <Paper>
                             <List component="nav" className={classes.list}>
                                 {
-                                    roomList.map(({ room, players }, index) => {
+                                    roomList.length ? roomList.map(({ room, players }, index) => {
                                         return (
                                             <Fragment
                                                 key={room}
@@ -147,19 +96,22 @@ class Lobby extends PureComponent {
                                                 }
                                             </Fragment>
                                         )
-                                    })
+                                    }) : 'No rooms found'
                                 }
                             </List>
                         </Paper>
                     </Grid>
                 </Grid>
                 <Dialog
-                    open={isCreateNewRoomModal}
-                    onClose={this.handleCreateNewRoomModalClose}
+                    open={isNewRoomCreateModal}
+                    onClose={onNewRoomCreateModalClose}
                 >
-                    {
-                        this.renderNameInput(this.handleNewRoomChange, e => onNewRoomSubmit(e, newRoomName), 'Enter new room name', newRoomName )
-                    }
+                    <TextInput
+                        onChange={onNewRoomNameChange}
+                        onSubmit={onNewRoomSubmit}
+                        placeholder="Enter new room name"
+                        value={newRoomName}
+                    />
                 </Dialog>
             </Fragment>
         )
@@ -170,7 +122,12 @@ class Lobby extends PureComponent {
         let Page = null;
         switch (step) {
             case 1:
-                Page = this.renderNameInput(onNicknameChange, onNicknameSubmit, 'Enter your nickname', user.nickname || '' );
+                Page =  <TextInput
+                            onChange={onNicknameChange}
+                            onSubmit={onNicknameSubmit}
+                            placeholder="Enter your nickname"
+                            value={user.nickname || ''}
+                        />
                 break;
             case 2:
                 Page = this.renderRoomSelect();
@@ -181,7 +138,6 @@ class Lobby extends PureComponent {
 
     render() {
         const { classes, lobbyStep } = this.props;
-        console.log(lobbyStep);
         const Step = this.renderStep(lobbyStep);
         return (
             <Box

@@ -12,11 +12,18 @@ const ON_NEW_ROOM           = 'NEW ROOM';
 const ON_MESSAGE            = 'MESSAGE';
 const ON_ROOM_SELECT        = 'ROOM SELECT';
 const ON_GAME               = 'GAME';
+const ON_PLAYER_UPDATE      = 'PLAYER UPDATE';
+const ON_ROOM_LIST          = 'ROOM LIST';
+const ON_CALLBACK           = 'CALLBACK';
+const ON_LOG                = 'LOG';
+const ON_CHAT               = 'CHAT';
 
 const EMIT_INIT             = 'INIT';
 const EMIT_NEW_ROOM         = 'NEW ROOM';
 const EMIT_ROOM_SELECT      = 'ROOM SELECT';
 const EMIT_GAME             = 'GAME';
+const EMIT_PLAYER_UPDATE    = 'PLAYER UPDATE';
+const EMIT_CHAT             = 'CHAT';
 
 const styles = () => ({
 
@@ -29,15 +36,28 @@ class Body extends PureComponent {
         user: {},
         lobbyStep: 1,
         roomList: {},
-        roomStore: {},
+        room: {},
+        isNewRoomCreateModal: false,
+        newRoomName: '',
     }
 
     componentDidMount() {
         this.socket = socketIOClient(SOCKET_SERVER);
 
         this.socket.on(SOCKET_FROM, ({ type, ...props }) => {
-            let roomList, roomStore;
             switch(type) {
+                // case ON_LOG:
+                //     console.log(props);
+                //     break;
+                case ON_PLAYER_UPDATE:
+                    this.onPlayerUpdate(props);
+                    break;
+                case ON_ROOM_LIST:
+                    this.onRoomList(props);
+                    break;
+                case ON_CALLBACK:
+                    this.onCallback(props);
+                    break;
                 case ON_MESSAGE:
                     const { messageType, message } = props;
                     this.props.enqueueSnackbar(message, {
@@ -45,35 +65,22 @@ class Body extends PureComponent {
                         autoHideDuration: 2000,
                     });
                     break;
-                case ON_INIT:
-                    roomList = props.roomList;
-                    let id = props.id;
-                    this.setState(state => ({
-                        lobbyStep: 2,
-                        roomList,
-                        user: {
-                            ...state.user,
-                            id,
-                        },
-                    }));
-                    break;
-                case ON_NEW_ROOM:
-                    roomList = props.roomList;
-                    this.setState(() => ({
-                        roomList,
-                    }));
-                    break;
                 case ON_GAME:
-                    roomStore = props.roomStore;
-                    this.setState(state => ({
-                        lobbyStep: null,
-                        roomStore,
-                    }));
+                    this.onGame(props);
                     break;
                 default:
                     break;
             }
         });
+    }
+
+    onPlayerUpdate = ({ user }) => {
+        this.setState(state => ({
+            user: {
+                ...state.user,
+                ...user,
+            },
+        }));
     }
 
     handleConvertToImage = (canvas) => {
@@ -85,8 +92,24 @@ class Body extends PureComponent {
         }
     }
 
-    handleChat = ({ client, message }) => {
-        console.log({ client, message });
+    handleChat = ({ message }) => {
+        const { user: { id } } = this.state;
+        console.log({ id, message });
+        const chat = { id, message };
+        this.emitGame({ chat });
+    }
+
+    onGame = ({ room }) => {
+        this.setState(() => ({
+            room,
+        }));
+    }
+
+    emitGame = (props) => {
+        this.socket.emit(SOCKET_TO, {
+            type: EMIT_GAME,
+            ...props,
+        });
     }
 
     handleNicknameChange = (e) => {
@@ -101,32 +124,95 @@ class Body extends PureComponent {
 
     handleNicknameSubmit = (e) => {
         e.preventDefault();
-        const { user } = this.state;
-        this.socket.emit(SOCKET_TO, {
-            type: EMIT_INIT,
-            user,
-        });
-        //console.log('submit');
+        this.emitPlayerUpdate('handlePlayerInit');
     }
 
-    handleNewRoomSubmit = (e, room) => {
+    handlePlayerInit = (id) => {
+        console.log(id);
+        this.handleSetPlayerId(id);
+        this.handleLobbyStepRoomSelection();
+    }
+
+    handleNewRoomSubmit = (e) => {
+        const { newRoomName } = this.state;
         e.preventDefault();
-        console.log(room);
         this.socket.emit(SOCKET_TO, {
             type: EMIT_NEW_ROOM,
-            room,
+            room: newRoomName,
+            callback: 'handleNewRoomCreateModalClose',
         });
+    }
+
+    handleSetPlayerId = (id) => {
+        this.setState(state => ({
+            user: {
+                ...state.user,
+                id,
+            },
+        }));
     }
 
     handleRoomSelect = (room) => {
         this.socket.emit(SOCKET_TO, {
             type: EMIT_ROOM_SELECT,
             room,
+            callback: 'handleLobbyExit',
         });
     }
 
+    emitPlayerUpdate = (callback) => {
+        const { user } = this.state;
+        this.socket.emit(SOCKET_TO, {
+            type: EMIT_PLAYER_UPDATE,
+            user,
+            callback,
+        });
+    }
+
+    onRoomList = ({ roomList }) => {
+        this.setState(() => ({
+            roomList,
+        }));
+    }
+
+    onCallback = ({ callback, args }) => {
+        this[callback](...args);
+    }
+
+    handleLobbyStepRoomSelection = () => {
+        this.setState(() => ({
+            lobbyStep: 2,
+        }));
+    }
+
+    handleLobbyExit = () => {
+        this.setState(() => ({
+            lobbyStep: null,
+        }));
+    }
+
+    handleNewRoomNameChange = (e) => {
+        const { value } = e.target;
+        this.setState(() => ({
+            newRoomName: value,
+        }));
+    }
+
+    handleNewRoomCreateModalOpen = () => {
+        this.setState(() => ({
+            isNewRoomCreateModal: true,
+        }));
+    }
+
+    handleNewRoomCreateModalClose = () => {
+        this.setState(() => ({
+            isNewRoomCreateModal: false,
+            newRoomName: '',
+        }));
+    }
+
     render() {
-        const { image, user, lobbyStep, roomList, roomStore } = this.state;
+        const { image, user, lobbyStep, roomList, room, isNewRoomCreateModal, newRoomName } = this.state;
         return lobbyStep ? (
             <Lobby
                 onNicknameChange={this.handleNicknameChange}
@@ -136,13 +222,18 @@ class Body extends PureComponent {
                 roomList={roomList}
                 onNewRoomSubmit={this.handleNewRoomSubmit}
                 onRoomSelect={this.handleRoomSelect}
+                isNewRoomCreateModal={isNewRoomCreateModal}
+                newRoomName={newRoomName}
+                onNewRoomCreateModalOpen={this.handleNewRoomCreateModalOpen}
+                onNewRoomCreateModalClose={this.handleNewRoomCreateModalClose}
+                onNewRoomNameChange={this.handleNewRoomNameChange}
             />
         ) : (
             <Game
                 onConvertToImage={this.handleConvertToImage}
                 onChat={this.handleChat}
                 user={user}
-                roomStore={roomStore}
+                room={room}
             />
         )
     }
