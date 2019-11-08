@@ -69,9 +69,9 @@ class Body extends PureComponent {
         if(!this.isConnected) {
             this.socket = socketIOClient(SOCKET_SERVER);
 
-            socket.on('connect', function () {
-
-            })
+            // socket.on('connect', function () {
+            //
+            // })
 
             this.socket.on(SOCKET_FROM, ({ type, ...props }) => {
                 switch(type) {
