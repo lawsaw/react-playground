@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
-import { withStyles, Grid, Box, Chip } from "@material-ui/core";
-import { Chat, Paint } from "./";
+import { withStyles, Grid, Box, Chip, Button } from "@material-ui/core";
+import { Chat, Paint, Screen } from "./";
 
 const styles = (theme) => ({
     crocodile: {
@@ -21,7 +21,7 @@ const styles = (theme) => ({
     },
 });
 
-class Screen extends PureComponent {
+class Game extends PureComponent {
 
     renderPlayerList = () => {
         const { classes, room: { players } } = this.props;
@@ -45,11 +45,24 @@ class Screen extends PureComponent {
         )
     }
 
+    componentWillUnmount() {
+        const { onRoomLeave } = this.props;
+        onRoomLeave();
+    }
+
+    isPainter = () => {
+        const { room, user } = this.props;
+        return room.players[user.id].isPainter;
+    }
+
     render() {
-        const { classes, onConvertToImage, onChat, room, user } = this.props;
+        const { classes, onConvertToImage, onChat, room, user, onGameLeave, onGameStart } = this.props;
+        console.log(room, user);
         let players = this.renderPlayerList();
+        let isPainter = this.isPainter();
         return (
             <Fragment>
+                <Box>Room: {room.roomName}</Box>
                 <Grid
                     container
                     spacing={1}
@@ -63,9 +76,18 @@ class Screen extends PureComponent {
                         direction="column"
                         className={classes.paint}
                     >
-                        <Paint
-                            onConvertToImage={onConvertToImage}
-                        />
+                        {
+                            isPainter ? (
+                                <Paint
+                                    onConvertToImage={onConvertToImage}
+                                />
+                            ) : (
+                                <Screen
+                                    image={room.image}
+                                />
+                            )
+                        }
+
 
                     </Grid>
                     <Grid
@@ -81,10 +103,22 @@ class Screen extends PureComponent {
                         />
                     </Grid>
                 </Grid>
+                <Button
+                    variant="outlined"
+                    onClick={onGameLeave}
+                >
+                    Leave game
+                </Button>
+                <Button
+                    variant="outlined"
+                    onClick={onGameStart}
+                >
+                    Start game
+                </Button>
                 {players}
             </Fragment>
         )
     }
 }
 
-export default withStyles(styles)(Screen);
+export default withStyles(styles)(Game);

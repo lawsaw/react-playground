@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import cx from 'classnames';
 import { withStyles, Paper, InputBase, IconButton } from "@material-ui/core";
 import { Send } from '@material-ui/icons';
+//import { lockFunc } from '../../helpers/etc';
 
 const styles = (theme) => ({
     root: {
@@ -24,12 +25,16 @@ const styles = (theme) => ({
 
 class TextInput extends PureComponent {
 
+    // constructor(props) {
+    //     super(props);
+    //     this.lockFunc = lockFunc();
+    // }
+
     handleSubmit = (e) => {
         const { onSubmit } = this.props;
         e.preventDefault();
-        onSubmit(e);
+        onSubmit(e)
     }
-
 
     render() {
         const { classes, onChange, placeholder, value, className, ...props } = this.props;

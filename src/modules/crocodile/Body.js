@@ -4,6 +4,7 @@ import socketIOClient from 'socket.io-client';
 import { withStyles, Grid } from "@material-ui/core";
 import { Paint, Screen, Chat, Lobby, Game } from './';
 import { SOCKET_SERVER } from './constants';
+import { preventMultipleSubmit } from '../../helpers/etc';
 
 const SOCKET_FROM           = 'CLIENT';
 const SOCKET_TO             = 'SERVER';
@@ -17,6 +18,8 @@ const ON_ROOM_LIST          = 'ROOM LIST';
 const ON_CALLBACK           = 'CALLBACK';
 const ON_LOG                = 'LOG';
 const ON_CHAT               = 'CHAT';
+const ON_LOBBY              = 'LOBBY';
+const ON_START              = 'START';
 
 const EMIT_INIT             = 'INIT';
 const EMIT_NEW_ROOM         = 'NEW ROOM';
@@ -24,6 +27,8 @@ const EMIT_ROOM_SELECT      = 'ROOM SELECT';
 const EMIT_GAME             = 'GAME';
 const EMIT_PLAYER_UPDATE    = 'PLAYER UPDATE';
 const EMIT_CHAT             = 'CHAT';
+const EMIT_LOBBY            = 'LOBBY';
+const EMIT_START            = 'START';
 
 const styles = () => ({
 
@@ -31,47 +36,73 @@ const styles = () => ({
 
 class Body extends PureComponent {
 
-    state = {
-        image: '',
-        user: {},
-        lobbyStep: 1,
-        roomList: {},
-        room: {},
-        isNewRoomCreateModal: false,
-        newRoomName: '',
+    constructor(props) {
+        super(props);
+        this.preventMultipleSubmitNickname = preventMultipleSubmit();
+        this.preventMultipleSubmitNewRoom = preventMultipleSubmit();
+        this.isConnected = false;
+        this.state = {
+            image: '',
+            user: {
+                nickname: '',
+            },
+            lobbyStep: 1,
+            roomList: {},
+            room: {},
+            isNewRoomCreateModal: false,
+            newRoomName: '',
+        }
+    }
+
+    emit = (type, props) => {
+        this.socket.emit(SOCKET_TO, {
+            type,
+            ...props,
+        });
     }
 
     componentDidMount() {
-        this.socket = socketIOClient(SOCKET_SERVER);
 
-        this.socket.on(SOCKET_FROM, ({ type, ...props }) => {
-            switch(type) {
-                // case ON_LOG:
-                //     console.log(props);
-                //     break;
-                case ON_PLAYER_UPDATE:
-                    this.onPlayerUpdate(props);
-                    break;
-                case ON_ROOM_LIST:
-                    this.onRoomList(props);
-                    break;
-                case ON_CALLBACK:
-                    this.onCallback(props);
-                    break;
-                case ON_MESSAGE:
-                    const { messageType, message } = props;
-                    this.props.enqueueSnackbar(message, {
-                        variant: messageType,
-                        autoHideDuration: 2000,
-                    });
-                    break;
-                case ON_GAME:
-                    this.onGame(props);
-                    break;
-                default:
-                    break;
-            }
-        });
+    }
+
+    listeningToSocket = () => {
+        if(!this.isConnected) {
+            this.socket = socketIOClient(SOCKET_SERVER);
+
+            socket.on('connect', function () {
+
+            })
+
+            this.socket.on(SOCKET_FROM, ({ type, ...props }) => {
+                switch(type) {
+                    case ON_LOG:
+                        console.log(props);
+                        break;
+                    case ON_PLAYER_UPDATE:
+                        this.onPlayerUpdate(props);
+                        break;
+                    case ON_ROOM_LIST:
+                        this.onRoomList(props);
+                        break;
+                    case ON_CALLBACK:
+                        this.onCallback(props);
+                        break;
+                    case ON_MESSAGE:
+                        const { messageType, message } = props;
+                        this.props.enqueueSnackbar(message, {
+                            variant: messageType,
+                            autoHideDuration: 2000,
+                        });
+                        break;
+                    case ON_GAME:
+                        this.onGame(props);
+                        break;
+                    default:
+                        break;
+                }
+            });
+            this.isConnected = true;
+        }
     }
 
     onPlayerUpdate = ({ user }) => {
@@ -86,9 +117,10 @@ class Body extends PureComponent {
     handleConvertToImage = (canvas) => {
         if(canvas) {
             let image = canvas.current.toDataURL();
-            this.setState(() => ({
-                image,
-            }));
+            this.emitGame({ image });
+            // this.setState(() => ({
+            //     image,
+            // }));
         }
     }
 
@@ -106,10 +138,7 @@ class Body extends PureComponent {
     }
 
     emitGame = (props) => {
-        this.socket.emit(SOCKET_TO, {
-            type: EMIT_GAME,
-            ...props,
-        });
+        this.emit(EMIT_GAME, props);
     }
 
     handleNicknameChange = (e) => {
@@ -123,12 +152,14 @@ class Body extends PureComponent {
     }
 
     handleNicknameSubmit = (e) => {
+        const { user } = this.state;
         e.preventDefault();
-        this.emitPlayerUpdate('handlePlayerInit');
+        if(!user.nickname.length) return false;
+        this.listeningToSocket();
+        this.preventMultipleSubmitNickname(() => this.emitPlayerUpdate('handlePlayerInit'));
     }
 
     handlePlayerInit = (id) => {
-        console.log(id);
         this.handleSetPlayerId(id);
         this.handleLobbyStepRoomSelection();
     }
@@ -136,11 +167,10 @@ class Body extends PureComponent {
     handleNewRoomSubmit = (e) => {
         const { newRoomName } = this.state;
         e.preventDefault();
-        this.socket.emit(SOCKET_TO, {
-            type: EMIT_NEW_ROOM,
+        this.preventMultipleSubmitNewRoom(() => this.emit(EMIT_NEW_ROOM, {
             room: newRoomName,
             callback: 'handleNewRoomCreateModalClose',
-        });
+        }));
     }
 
     handleSetPlayerId = (id) => {
@@ -153,8 +183,7 @@ class Body extends PureComponent {
     }
 
     handleRoomSelect = (room) => {
-        this.socket.emit(SOCKET_TO, {
-            type: EMIT_ROOM_SELECT,
+        this.emit(EMIT_ROOM_SELECT, {
             room,
             callback: 'handleLobbyExit',
         });
@@ -162,8 +191,7 @@ class Body extends PureComponent {
 
     emitPlayerUpdate = (callback) => {
         const { user } = this.state;
-        this.socket.emit(SOCKET_TO, {
-            type: EMIT_PLAYER_UPDATE,
+        this.emit(EMIT_PLAYER_UPDATE, {
             user,
             callback,
         });
@@ -183,12 +211,18 @@ class Body extends PureComponent {
         this.setState(() => ({
             lobbyStep: 2,
         }));
+        this.emit(EMIT_LOBBY, {
+            action: 'JOIN', //JOIN || LEAVE
+        });
     }
 
     handleLobbyExit = () => {
         this.setState(() => ({
             lobbyStep: null,
         }));
+        this.emit(EMIT_LOBBY, {
+            action: 'LEAVE', //JOIN || LEAVE
+        });
     }
 
     handleNewRoomNameChange = (e) => {
@@ -209,6 +243,21 @@ class Body extends PureComponent {
             isNewRoomCreateModal: false,
             newRoomName: '',
         }));
+    }
+
+    handleLeaveRoom = () => {
+        this.emitGame({
+            action: 'LEAVE',
+        });
+    }
+
+    handleLeaveGame = () => {
+        this.handleLobbyStepRoomSelection();
+        this.handleLeaveRoom();
+    }
+
+    handleStartGame = () => {
+        this.emit(EMIT_START, {});
     }
 
     render() {
@@ -234,6 +283,9 @@ class Body extends PureComponent {
                 onChat={this.handleChat}
                 user={user}
                 room={room}
+                onGameLeave={this.handleLeaveGame}
+                onRoomLeave={this.handleLeaveRoom}
+                onGameStart={this.handleStartGame}
             />
         )
     }

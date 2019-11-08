@@ -9,6 +9,7 @@ import Lobby from './Lobby';
 import Body from './Body';
 import Game from './Game';
 import TextInput from './TextInput';
+import ChatWindow from './ChatWindow';
 
 export {
     Crocodile,
@@ -22,4 +23,5 @@ export {
     Body,
     Game,
     TextInput,
+    ChatWindow,
 }
