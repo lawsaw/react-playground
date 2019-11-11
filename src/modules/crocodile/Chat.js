@@ -56,7 +56,7 @@ class Chat extends PureComponent {
     }
 
     render() {
-        const { classes, room } = this.props;
+        const { classes, room, onChat } = this.props;
         const { message } = this.state;
         return (
             <Fragment>
@@ -68,19 +68,23 @@ class Chat extends PureComponent {
                         chat={room.chat}
                     />
                 </Grid>
-                <Grid
-                    item
-                    className={classes.wrapSubmit}
-                >
-                    <TextInput
-                        onChange={this.handleMessageChange}
-                        onSubmit={this.handleChat}
-                        placeholder="Enter your variant"
-                        value={message}
-                        className={classes.textField}
-                        elevation={5}
-                    />
-                </Grid>
+                {
+                    onChat ? (
+                        <Grid
+                            item
+                            className={classes.wrapSubmit}
+                        >
+                            <TextInput
+                                onChange={this.handleMessageChange}
+                                onSubmit={this.handleChat}
+                                placeholder="Enter your variant"
+                                value={message}
+                                className={classes.textField}
+                                elevation={5}
+                            />
+                        </Grid>
+                    ) : null
+                }
             </Fragment>
         )
     }

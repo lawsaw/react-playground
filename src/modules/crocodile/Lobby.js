@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import { withStyles, Paper, IconButton, InputBase, Box, List, ListItem, ListItemText, Divider, Grid, Dialog } from "@material-ui/core";
 import { Send, Add } from '@material-ui/icons';
 import { TextInput } from './';
+import { LOBBY_STEPS, LOBBY_STEP_NICKAME_CHANGING, LOBBY_STEP_ROOM_SELECTING, LOBBY_STEP_WORD_SELECTING } from './constants';
 
 const styles = (theme) => ({
     lobby: {
@@ -121,7 +122,7 @@ class Lobby extends PureComponent {
         const { onNicknameChange, onNicknameSubmit, user } = this.props;
         let Page = null;
         switch (step) {
-            case 1:
+            case LOBBY_STEP_NICKAME_CHANGING:
                 Page =  <TextInput
                             onChange={onNicknameChange}
                             onSubmit={onNicknameSubmit}
@@ -129,8 +130,10 @@ class Lobby extends PureComponent {
                             value={user.nickname || ''}
                         />
                 break;
-            case 2:
+            case LOBBY_STEP_ROOM_SELECTING:
                 Page = this.renderRoomSelect();
+                break;
+            default:
                 break;
         }
         return Page;

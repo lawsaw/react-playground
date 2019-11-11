@@ -2,8 +2,8 @@ import React, { PureComponent, Fragment } from 'react';
 import { withSnackbar } from 'notistack';
 import socketIOClient from 'socket.io-client';
 import { withStyles, Grid } from "@material-ui/core";
-import { Paint, Screen, Chat, Lobby, Game } from './';
-import { SOCKET_SERVER } from './constants';
+import { Paint, Screen, Chat, Lobby, Game, GamePainter, GameWatcher, GameInterface } from './';
+import { SOCKET_SERVER, LOBBY_STEPS, LOBBY_STEP_NICKAME_CHANGING, LOBBY_STEP_ROOM_SELECTING, LOBBY_STEP_WORD_SELECTING, ROOM_STATUS_WORD_SELECTING, LOBBY_ROOM_STEP_INIT } from './constants';
 import { preventMultipleSubmit } from '../../helpers/etc';
 
 const SOCKET_FROM           = 'CLIENT';
@@ -12,7 +12,7 @@ const ON_INIT               = 'INIT';
 const ON_NEW_ROOM           = 'NEW ROOM';
 const ON_MESSAGE            = 'MESSAGE';
 const ON_ROOM_SELECT        = 'ROOM SELECT';
-const ON_GAME               = 'GAME';
+const ON_ROOM_UPDATE               = 'GAME';
 const ON_PLAYER_UPDATE      = 'PLAYER UPDATE';
 const ON_ROOM_LIST          = 'ROOM LIST';
 const ON_CALLBACK           = 'CALLBACK';
@@ -20,15 +20,17 @@ const ON_LOG                = 'LOG';
 const ON_CHAT               = 'CHAT';
 const ON_LOBBY              = 'LOBBY';
 const ON_START              = 'START';
+const ON_PRESTART           = 'PRE START';
 
 const EMIT_INIT             = 'INIT';
 const EMIT_NEW_ROOM         = 'NEW ROOM';
 const EMIT_ROOM_SELECT      = 'ROOM SELECT';
-const EMIT_GAME             = 'GAME';
+const EMIT_ROOM_UPDATE             = 'GAME';
 const EMIT_PLAYER_UPDATE    = 'PLAYER UPDATE';
 const EMIT_CHAT             = 'CHAT';
 const EMIT_LOBBY            = 'LOBBY';
 const EMIT_START            = 'START';
+const EMIT_ROOM_LOBBY         = 'PRE START';
 
 const styles = () => ({
 
@@ -46,7 +48,8 @@ class Body extends PureComponent {
             user: {
                 nickname: '',
             },
-            lobbyStep: 1,
+            lobbyStep: LOBBY_STEP_NICKAME_CHANGING,
+            lobbyRoomStep: LOBBY_ROOM_STEP_INIT,
             roomList: {},
             room: {},
             isNewRoomCreateModal: false,
@@ -54,7 +57,7 @@ class Body extends PureComponent {
         }
     }
 
-    emit = (type, props) => {
+    emit = (type, props={}) => {
         this.socket.emit(SOCKET_TO, {
             type,
             ...props,
@@ -88,14 +91,10 @@ class Body extends PureComponent {
                         this.onCallback(props);
                         break;
                     case ON_MESSAGE:
-                        const { messageType, message } = props;
-                        this.props.enqueueSnackbar(message, {
-                            variant: messageType,
-                            autoHideDuration: 2000,
-                        });
+                        this.onMessage(props);
                         break;
-                    case ON_GAME:
-                        this.onGame(props);
+                    case ON_ROOM_UPDATE:
+                        this.onRoomUpdate(props);
                         break;
                     default:
                         break;
@@ -103,6 +102,13 @@ class Body extends PureComponent {
             });
             this.isConnected = true;
         }
+    }
+
+    onMessage = ({ messageType, message }) => {
+        this.props.enqueueSnackbar(message, {
+            variant: messageType,
+            autoHideDuration: 2000,
+        });
     }
 
     onPlayerUpdate = ({ user }) => {
@@ -117,7 +123,7 @@ class Body extends PureComponent {
     handleConvertToImage = (canvas) => {
         if(canvas) {
             let image = canvas.current.toDataURL();
-            this.emitGame({ image });
+            this.emitRoomUpdate({ image });
             // this.setState(() => ({
             //     image,
             // }));
@@ -128,17 +134,17 @@ class Body extends PureComponent {
         const { user: { id } } = this.state;
         console.log({ id, message });
         const chat = { id, message };
-        this.emitGame({ chat });
+        this.emitRoomUpdate({ chat });
     }
 
-    onGame = ({ room }) => {
+    onRoomUpdate = ({ room }) => {
         this.setState(() => ({
             room,
         }));
     }
 
-    emitGame = (props) => {
-        this.emit(EMIT_GAME, props);
+    emitRoomUpdate = (props) => {
+        this.emit(EMIT_ROOM_UPDATE, props);
     }
 
     handleNicknameChange = (e) => {
@@ -182,10 +188,10 @@ class Body extends PureComponent {
         }));
     }
 
-    handleRoomSelect = (room) => {
+    handleJoinRoom = (room) => {
         this.emit(EMIT_ROOM_SELECT, {
             room,
-            callback: 'handleLobbyExit',
+            callback: 'LobbyLeave',
         });
     }
 
@@ -207,22 +213,42 @@ class Body extends PureComponent {
         this[callback](...args);
     }
 
-    handleLobbyStepRoomSelection = () => {
-        this.setState(() => ({
-            lobbyStep: 2,
-        }));
+    LobbyJoin = () => {
         this.emit(EMIT_LOBBY, {
-            action: 'JOIN', //JOIN || LEAVE
+            action: 'JOIN',
         });
     }
+
+    LobbyLeave = () => {
+        this.setState(() => ({
+            lobbyStep: null,
+        }));
+        // this.emit(EMIT_LOBBY, {
+        //     action: 'LEAVE',
+        // });
+    }
+
+    handleLobbyStepRoomSelection = () => {
+        this.setState(() => ({
+            lobbyStep: LOBBY_STEP_ROOM_SELECTING,
+        }));
+        this.LobbyJoin();
+    }
+
+    // handleLobbyStepWordSelecting = () => {
+    //     this.setState(() => ({
+    //         lobbyStep: LOBBY_STEP_WORD_SELECTING,
+    //     }));
+    //     this.LobbyLeave();
+    // }
 
     handleLobbyExit = () => {
         this.setState(() => ({
             lobbyStep: null,
         }));
-        this.emit(EMIT_LOBBY, {
-            action: 'LEAVE', //JOIN || LEAVE
-        });
+        // this.emit(EMIT_LOBBY, {
+        //     action: 'LEAVE', //JOIN || LEAVE
+        // });
     }
 
     handleNewRoomNameChange = (e) => {
@@ -246,7 +272,7 @@ class Body extends PureComponent {
     }
 
     handleLeaveRoom = () => {
-        this.emitGame({
+        this.emitRoomUpdate({
             action: 'LEAVE',
         });
     }
@@ -256,13 +282,52 @@ class Body extends PureComponent {
         this.handleLeaveRoom();
     }
 
-    handleStartGame = () => {
-        this.emit(EMIT_START, {});
+    onRoomLobbyInit = () => {
+        this.emit(EMIT_ROOM_LOBBY, {
+            status: LOBBY_ROOM_STEP_INIT,
+        });
+        this.setState(() => ({
+            lobbyRoomStep: LOBBY_ROOM_STEP_INIT,
+        }))
     }
 
+    handleWordSelect = (word) => {
+        this.onRoomLobbyInit({
+            word,
+            status: ROOM_STATUS_WORD_SELECTING,
+            //callback: 'handleLobbyExit',
+        });
+    }
+
+    isLobbyPreset = () => {
+        const { lobbyStep } = this.state;
+        return (lobbyStep === LOBBY_STEP_NICKAME_CHANGING) || (lobbyStep === LOBBY_STEP_ROOM_SELECTING);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     render() {
-        const { image, user, lobbyStep, roomList, room, isNewRoomCreateModal, newRoomName } = this.state;
-        return lobbyStep ? (
+        const { image, user, lobbyStep, roomList, room, isNewRoomCreateModal, newRoomName, lobbyRoomStep } = this.state;
+        return this.isLobbyPreset() ? (
             <Lobby
                 onNicknameChange={this.handleNicknameChange}
                 onNicknameSubmit={this.handleNicknameSubmit}
@@ -270,7 +335,7 @@ class Body extends PureComponent {
                 lobbyStep={lobbyStep}
                 roomList={roomList}
                 onNewRoomSubmit={this.handleNewRoomSubmit}
-                onRoomSelect={this.handleRoomSelect}
+                onRoomSelect={this.handleJoinRoom}
                 isNewRoomCreateModal={isNewRoomCreateModal}
                 newRoomName={newRoomName}
                 onNewRoomCreateModalOpen={this.handleNewRoomCreateModalOpen}
@@ -278,14 +343,16 @@ class Body extends PureComponent {
                 onNewRoomNameChange={this.handleNewRoomNameChange}
             />
         ) : (
-            <Game
+            <GameInterface
                 onConvertToImage={this.handleConvertToImage}
                 onChat={this.handleChat}
                 user={user}
                 room={room}
+                lobbyRoomStep={lobbyRoomStep}
                 onGameLeave={this.handleLeaveGame}
                 onRoomLeave={this.handleLeaveRoom}
-                onGameStart={this.handleStartGame}
+                onGamePreStart={this.onRoomLobbyInit}
+                onWordSelect={this.handleWordSelect}
             />
         )
     }

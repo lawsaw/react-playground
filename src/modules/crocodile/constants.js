@@ -2,4 +2,21 @@ export const DESK_WIDTH = 600;
 export const DESK_HEIGHT = 400;
 
 export const SOCKET_SERVER = 'http://localhost:3005/';
+
+export const LOBBY_STEP_NICKAME_CHANGING = 'LOBBY_STEP_NICKAME_CHANGING';
+export const LOBBY_STEP_ROOM_SELECTING = 'LOBBY_STEP_ROOM_SELECTING';
+export const LOBBY_STEP_WORD_SELECTING = 'LOBBY_STEP_WORD_SELECTING';
+
+export const LOBBY_STEPS = {
+    LOBBY_STEP_NICKAME_CHANGING,
+    LOBBY_STEP_ROOM_SELECTING,
+    LOBBY_STEP_WORD_SELECTING,
+};
+
+export const ROOM_STATUS_PAINTER_SELECTING = 'PAINTER_SELECTING';
+export const ROOM_STATUS_WORD_SELECTING = 'WORD_SELECTING';
+export const ROOM_STATUS_WAITING = 'WAITING';
+
+export const LOBBY_ROOM_STEP_INIT = 'INIT';
+
 //export const SOCKET_SERVER = 'https://lawsaw-tetris-server.herokuapp.com/';

@@ -8,6 +8,9 @@ import Chat from './Chat';
 import Lobby from './Lobby';
 import Body from './Body';
 import Game from './Game';
+import GamePainter from './GamePainter';
+import GameWatcher from './GameWatcher';
+import GameInterface from './GameInterface';
 import TextInput from './TextInput';
 import ChatWindow from './ChatWindow';
 
@@ -22,6 +25,9 @@ export {
     Lobby,
     Body,
     Game,
+    GamePainter,
+    GameWatcher,
+    GameInterface,
     TextInput,
     ChatWindow,
 }

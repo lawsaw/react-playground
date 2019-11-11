@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import { withStyles, Grid, Box, Chip, Button } from "@material-ui/core";
-import { Chat, Paint, Screen } from "./";
+import { Chat, Paint, Screen, GamePainter, GameWatcher } from "./";
+import { ROOM_STATUS_PAINTER_SELECTING } from './constants';
 
 const styles = (theme) => ({
     crocodile: {
@@ -45,21 +46,15 @@ class Game extends PureComponent {
         )
     }
 
-    componentWillUnmount() {
-        const { onRoomLeave } = this.props;
-        onRoomLeave();
-    }
-
-    isPainter = () => {
-        const { room, user } = this.props;
-        return room.players[user.id].isPainter;
+    handleGamePreStart = () => {
+        const { onGamePreStart } = this.props;
+        onGamePreStart({status: ROOM_STATUS_PAINTER_SELECTING});
     }
 
     render() {
-        const { classes, onConvertToImage, onChat, room, user, onGameLeave, onGameStart } = this.props;
+        const { classes, onChat, room, user, onGameLeave, onGamePreStart, children } = this.props;
         console.log(room, user);
         let players = this.renderPlayerList();
-        let isPainter = this.isPainter();
         return (
             <Fragment>
                 <Box>Room: {room.roomName}</Box>
@@ -76,19 +71,7 @@ class Game extends PureComponent {
                         direction="column"
                         className={classes.paint}
                     >
-                        {
-                            isPainter ? (
-                                <Paint
-                                    onConvertToImage={onConvertToImage}
-                                />
-                            ) : (
-                                <Screen
-                                    image={room.image}
-                                />
-                            )
-                        }
-
-
+                        {children}
                     </Grid>
                     <Grid
                         item
@@ -111,9 +94,9 @@ class Game extends PureComponent {
                 </Button>
                 <Button
                     variant="outlined"
-                    onClick={onGameStart}
+                    onClick={e => this.handleGamePreStart(e)}
                 >
-                    Start game
+                    Pre Start game
                 </Button>
                 {players}
             </Fragment>
