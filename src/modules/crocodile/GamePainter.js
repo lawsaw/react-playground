@@ -24,9 +24,21 @@ class GamePainter extends PureComponent {
         isModalWord: true,
     }
 
-    handleModalWord = () => {
-        this.setState(state => ({
-            isModalWord: !state.isModalWord,
+    // handleModalWord = () => {
+    //     this.setState(state => ({
+    //         isModalWord: !state.isModalWord,
+    //     }))
+    // }
+
+    handleModalWordOpen = () => {
+        this.setState(() => ({
+            isModalWord: true,
+        }))
+    }
+
+    handleModalWordClose = () => {
+        this.setState(() => ({
+            isModalWord: false,
         }))
     }
 
@@ -37,7 +49,7 @@ class GamePainter extends PureComponent {
 
     handleWordSelect = (e, word) => {
         const { onWordSelect } = this.props;
-        this.handleModalWord();
+        this.handleModalWordClose();
         onWordSelect(word);
     }
 
@@ -62,7 +74,6 @@ class GamePainter extends PureComponent {
                 </Game>
                 <Dialog
                     open={isModalWord}
-                    onClose={this.handleModalWord}
                 >
                     <Box
                         className={classes.wordList}

@@ -8,11 +8,23 @@ const styles = (theme) => ({
 
 class GameWatcher extends PureComponent {
 
+    getPainterName = () => {
+        const { room: { players } } = this.props;
+        let id = Object.keys(players).find(player => players[player].isPainter);
+        return players[id] && players[id].nickname;
+    }
+
     render() {
-        const { room: { image, status }, lobbyRoomStep } = this.props;
+        const { room: { image, status } } = this.props;
+        let painter = this.getPainterName();
+        console.log(painter);
         return (
             <Game {...this.props}>
-                <Screen image={image} status={status} />
+                <Screen
+                    image={image}
+                    status={status}
+                    painter={painter}
+                />
             </Game>
         )
     }

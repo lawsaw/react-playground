@@ -15,8 +15,10 @@ export const LOBBY_STEPS = {
 
 export const ROOM_STATUS_PAINTER_SELECTING = 'PAINTER_SELECTING';
 export const ROOM_STATUS_WORD_SELECTING = 'WORD_SELECTING';
+export const ROOM_STATUS_DRAWING = 'DRAWING';
 export const ROOM_STATUS_WAITING = 'WAITING';
 
 export const LOBBY_ROOM_STEP_INIT = 'INIT';
+
 
 //export const SOCKET_SERVER = 'https://lawsaw-tetris-server.herokuapp.com/';
