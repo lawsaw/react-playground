@@ -16,7 +16,7 @@ class GameInterface extends PureComponent {
 
     isPainter = () => {
         const { room, user } = this.props;
-        return room.players[user.id].isPainter;
+        return room.players && room.players[user.id] && room.players[user.id].isPainter;
     }
 
     render() {

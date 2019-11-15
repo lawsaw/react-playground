@@ -13,6 +13,10 @@ import GameWatcher from './GameWatcher';
 import GameInterface from './GameInterface';
 import TextInput from './TextInput';
 import ChatWindow from './ChatWindow';
+import ButtonBar from './ButtonBar';
+import PlayersBar from './PlayersBar';
+import RoomInfoBar from './RoomInfoBar';
+import Winner from './Winner';
 
 export {
     Crocodile,
@@ -30,4 +34,8 @@ export {
     GameInterface,
     TextInput,
     ChatWindow,
+    ButtonBar,
+    PlayersBar,
+    RoomInfoBar,
+    Winner,
 }

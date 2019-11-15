@@ -11,11 +11,21 @@ const styles = (theme) => ({
     chat: {
         flexGrow: 1,
     },
+    wrapChat: {
+        position: 'relative',
+        height: '100%',
+        margin: 0,
+    },
     wrapMessages: {
         position: 'relative',
         flexGrow: 1,
+        padding: '0 !important',
     },
-    wrapSubmit: {},
+    wrapSubmit: {
+        flexShrink: 0,
+        padding: `${theme.spacing(1)}px 0 0 0 !important`,
+
+    },
     textField: {
         width: '100%',
         padding: '2px 4px',
@@ -59,7 +69,12 @@ class Chat extends PureComponent {
         const { classes, room, onChat } = this.props;
         const { message } = this.state;
         return (
-            <Fragment>
+            <Grid
+                container
+                spacing={1}
+                direction="column"
+                className={classes.wrapChat}
+            >
                 <Grid
                     item
                     className={classes.wrapMessages}
@@ -85,7 +100,7 @@ class Chat extends PureComponent {
                         </Grid>
                     ) : null
                 }
-            </Fragment>
+            </Grid>
         )
     }
 }

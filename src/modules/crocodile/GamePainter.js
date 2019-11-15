@@ -53,23 +53,26 @@ class GamePainter extends PureComponent {
         onWordSelect(word);
     }
 
-    renderTask = () => {
+    getTask = () => {
         const { room: { word } } = this.props;
-        return word && word.length ? (
-            <Box>
-                Try to paint {word}
-            </Box>
-        ) : null
+        return word && word.length ? {
+            label: 'Your task',
+            value: `Try to draw word "${word}"`,
+        } : {};
     }
 
     render() {
         const { classes, onConvertToImage, onWordSelect, ...props } = this.props;
         const { isModalWord } = this.state;
         let words = this.getWordList();
+        let task = this.getTask();
         return (
             <Fragment>
-                {this.renderTask()}
-                <Game {...props}>
+
+                <Game
+                    task={task}
+                    {...props}
+                >
                     <Paint onConvertToImage={onConvertToImage} />
                 </Game>
                 <Dialog

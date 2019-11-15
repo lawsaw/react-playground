@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
-import { withStyles, Grid, Box, Chip, Button } from "@material-ui/core";
-import { Chat, Paint, Screen, GamePainter, GameWatcher } from "./";
-import { ROOM_STATUS_PAINTER_SELECTING } from './constants';
+import { withStyles, Grid, Box, Chip, Button, Dialog } from "@material-ui/core";
+import { Chat, Paint, Screen, GamePainter, GameWatcher, ButtonBar, PlayersBar, RoomInfoBar, Winner } from "./";
+import { ROOM_STATUS_PAINTER_SELECTING, ROOM_STATUS_WAITING } from './constants';
 
 const styles = (theme) => ({
     crocodile: {
@@ -24,40 +24,52 @@ const styles = (theme) => ({
 
 class Game extends PureComponent {
 
-    renderPlayerList = () => {
-        const { classes, room: { players } } = this.props;
-        const arrayOfPlayers = Object.keys(players);
-        return (
-            <Box
-                className={classes.players}
-            >
-                Current players:
-                {
-                    players && arrayOfPlayers.length ? arrayOfPlayers.map((playerId, index) => (
-                        <Chip
-                            key={index}
-                            size="small"
-                            label={players[playerId].nickname}
-                            color={players[playerId].isPainter ? 'primary' : 'default'}
-                        />
-                    )) : 'There is no players in this room'
-                }
-            </Box>
-        )
-    }
+    // state = {
+    //     isWinnerModal: false,
+    // }
+    //
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     const { winner } = this.props.room;
+    //     if(winner) {
+    //         this.setState(() => ({
+    //             isWinnerModal: true,
+    //         }))
+    //     }
+    // }
 
-    handleGamePreStart = () => {
-        const { onGamePreStart } = this.props;
-        onGamePreStart({status: ROOM_STATUS_PAINTER_SELECTING});
-    }
+
 
     render() {
-        const { classes, onChat, room, user, onGameLeave, onGamePreStart, children } = this.props;
+        const { classes, onChat, room, user, onGameLeave, onGamePreStart, task, children } = this.props;
+        //const { isWinnerModal } = this.state;
+        let { winner } = room;
+        let status = room.status === ROOM_STATUS_WAITING ?
+                        Object.keys(room.players).length < 2 ?
+                            `Waiting for more players` :
+                            `Game will start in ${room.countdown}` :
+                        room.status;
         console.log(room, user);
-        let players = this.renderPlayerList();
         return (
             <Fragment>
-                <Box>Room: {room.roomName}</Box>
+                <RoomInfoBar
+                    data={[
+                        {
+                            label: 'Room name',
+                            value: room.roomName,
+                        },
+                        {
+                            label: 'Room status',
+                            value: status,
+                        },
+                        {...task},
+                        {
+                            label: 'Current players',
+                            value:  <PlayersBar
+                                        players={room.players}
+                                    />
+                        },
+                    ]}
+                />
                 <Grid
                     container
                     spacing={1}
@@ -66,18 +78,12 @@ class Game extends PureComponent {
                 >
                     <Grid
                         item
-                        container
-                        spacing={1}
-                        direction="column"
                         className={classes.paint}
                     >
                         {children}
                     </Grid>
                     <Grid
                         item
-                        container
-                        spacing={1}
-                        direction="column"
                         className={classes.chat}
                     >
                         <Chat
@@ -86,19 +92,14 @@ class Game extends PureComponent {
                         />
                     </Grid>
                 </Grid>
-                <Button
-                    variant="outlined"
-                    onClick={onGameLeave}
-                >
-                    Leave game
-                </Button>
-                <Button
-                    variant="outlined"
-                    onClick={e => this.handleGamePreStart(e)}
-                >
-                    Pre Start game
-                </Button>
-                {players}
+                <ButtonBar
+                    onGamePreStart={onGamePreStart}
+                    onGameLeave={onGameLeave}
+                />
+                <Winner
+                    winner={winner}
+                    word={room.word}
+                />
             </Fragment>
         )
     }

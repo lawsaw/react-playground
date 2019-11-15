@@ -11,7 +11,8 @@ import {
     ROOM_STATUS_PAINTER_SELECTING,
     ROOM_STATUS_WORD_SELECTING,
     ROOM_STATUS_WAITING,
-    ROOM_STATUS_DRAWING
+    ROOM_STATUS_DRAWING,
+    ROOM_STATUS_GAME_FINISHED,
 } from './constants';
 import { preventMultipleSubmit } from '../../helpers/etc';
 
@@ -60,7 +61,13 @@ class Body extends PureComponent {
             lobbyStep: LOBBY_STEP_NICKAME_CHANGING,
             //lobbyRoomStep: ROOM_STATUS_PAINTER_SELECTING,
             roomList: {},
-            room: {},
+            room: {
+                chat: [],
+                players: {},
+                image: null,
+                word: null,
+                winner: null,
+            },
             isNewRoomCreateModal: false,
             newRoomName: '',
         }
