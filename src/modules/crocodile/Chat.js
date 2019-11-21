@@ -66,7 +66,7 @@ class Chat extends PureComponent {
     }
 
     render() {
-        const { classes, room, onChat } = this.props;
+        const { classes, room, chat, onChat } = this.props;
         const { message } = this.state;
         return (
             <Grid
@@ -80,7 +80,7 @@ class Chat extends PureComponent {
                     className={classes.wrapMessages}
                 >
                     <ChatWindow
-                        chat={room.chat}
+                        chat={chat}
                     />
                 </Grid>
                 {

@@ -8,39 +8,28 @@ import {
     LOBBY_STEPS,
     LOBBY_STEP_NICKAME_CHANGING,
     LOBBY_STEP_ROOM_SELECTING,
+
+    ROOM_STATUS_WAITING,
     ROOM_STATUS_PAINTER_SELECTING,
     ROOM_STATUS_WORD_SELECTING,
-    ROOM_STATUS_WAITING,
     ROOM_STATUS_DRAWING,
     ROOM_STATUS_GAME_FINISHED,
 } from './constants';
 import { preventMultipleSubmit } from '../../helpers/etc';
 
-const SOCKET_FROM           = 'CLIENT';
-const SOCKET_TO             = 'SERVER';
-const ON_INIT               = 'INIT';
-const ON_NEW_ROOM           = 'NEW ROOM';
-const ON_MESSAGE            = 'MESSAGE';
-const ON_ROOM_SELECT        = 'ROOM SELECT';
-const ON_ROOM_UPDATE               = 'GAME';
-const ON_PLAYER_UPDATE      = 'PLAYER UPDATE';
-const ON_ROOM_LIST          = 'ROOM LIST';
-const ON_CALLBACK           = 'CALLBACK';
-const ON_LOG                = 'LOG';
-const ON_CHAT               = 'CHAT';
-const ON_LOBBY              = 'LOBBY';
-const ON_START              = 'START';
-const ON_PRESTART           = 'PRE START';
 
-const EMIT_INIT             = 'INIT';
-const EMIT_NEW_ROOM         = 'NEW ROOM';
-const EMIT_ROOM_SELECT      = 'ROOM SELECT';
-const EMIT_ROOM_UPDATE             = 'GAME';
-const EMIT_PLAYER_UPDATE    = 'PLAYER UPDATE';
-const EMIT_CHAT             = 'CHAT';
-const EMIT_LOBBY            = 'LOBBY';
-const EMIT_START            = 'START';
-const EMIT_ROOM_LOBBY         = 'PRE START';
+const SOCKET_CHANNEL_INIT = 'SOCKET_CHANNEL_INIT';
+const SOCKET_CHANNEL_MESSAGE = 'SOCKET_CHANNEL_MESSAGE';
+const SOCKET_CHANNEL_LOBBY = 'SOCKET_CHANNEL_LOBBY';
+const SOCKET_CHANNEL_ROOM_ACCESS = 'SOCKET_CHANNEL_ROOM_ACCESS';
+const SOCKET_CHANNEL_ROOM_ADD = 'SOCKET_CHANNEL_ROOM_ADD';
+const SOCKET_CHANNEL_CALLBACK = 'SOCKET_CHANNEL_CALLBACK';
+const SOCKET_CHANNEL_ROOM = 'SOCKET_CHANNEL_ROOM';
+
+
+const ROOM_ACTION_JOIN = 'ROOM_ACTION_JOIN';
+const ROOM_ACTION_LEAVE = 'ROOM_ACTION_LEAVE';
+const ROOM_ACTION_UPDATE = 'ROOM_ACTION_UPDATE';
 
 const styles = () => ({
 
@@ -50,287 +39,180 @@ class Body extends PureComponent {
 
     constructor(props) {
         super(props);
-        this.preventMultipleSubmitNickname = preventMultipleSubmit();
-        this.preventMultipleSubmitNewRoom = preventMultipleSubmit();
         this.isConnected = false;
         this.state = {
-            image: '',
-            user: {
-                nickname: '',
+            server: {
+                user: {
+                    nickname: '',
+                },
+                room: {},
             },
-            lobbyStep: LOBBY_STEP_NICKAME_CHANGING,
-            //lobbyRoomStep: ROOM_STATUS_PAINTER_SELECTING,
-            roomList: {},
-            room: {
-                chat: [],
-                players: {},
-                image: null,
-                word: null,
-                winner: null,
-            },
-            isNewRoomCreateModal: false,
-            newRoomName: '',
-        }
-    }
-
-    emit = (type, props={}) => {
-        this.socket.emit(SOCKET_TO, {
-            type,
-            ...props,
-        });
+            nickname: '',
+            lobby_step: 1,
+        };
     }
 
     componentDidMount() {
-
+        this.listeningToSocket();
     }
 
     listeningToSocket = () => {
         if(!this.isConnected) {
             this.socket = socketIOClient(SOCKET_SERVER);
-
-            // socket.on('connect', function () {
-            //
-            // })
-
-            this.socket.on(SOCKET_FROM, ({ type, ...props }) => {
-                switch(type) {
-                    case ON_LOG:
-                        console.log(props);
-                        break;
-                    case ON_PLAYER_UPDATE:
-                        this.onPlayerUpdate(props);
-                        break;
-                    case ON_CALLBACK:
-                        this.onCallback(props);
-                        break;
-                    case ON_MESSAGE:
-                        this.onMessage(props);
-                        break;
-                    case ON_ROOM_UPDATE:
-                        this.onRoomUpdate(props);
-                        break;
-                    case ON_LOBBY:
-                        this.onLobby(props);
-                        break;
-                    default:
-                        break;
-                }
-            });
+            this.socket.on(SOCKET_CHANNEL_INIT, props => {this.socketOnInit(props)});
+            this.socket.on(SOCKET_CHANNEL_MESSAGE, props => {this.socketOnMessage(props)});
+            this.socket.on(SOCKET_CHANNEL_LOBBY, props => {this.socketOnLobby(props)});
+            this.socket.on(SOCKET_CHANNEL_ROOM_ACCESS, props => {this.socketOnRoomAccess(props)});
+            this.socket.on(SOCKET_CHANNEL_ROOM_ADD, props => {this.socketOnRoomAdd(props)});
+            this.socket.on(SOCKET_CHANNEL_CALLBACK, props => {this.socketOnCallback(props)});
+            this.socket.on(SOCKET_CHANNEL_ROOM, props => {this.socketOnRoom(props)});
             this.isConnected = true;
         }
     }
 
-    onLobby = ({ roomList }) => {
-        this.setState(() => ({
-            roomList,
-        }));
+    socketToInit = (props) => {
+        this.socket.emit(SOCKET_CHANNEL_INIT, props);
     }
 
-    onMessage = ({ messageType, message }) => {
-        this.props.enqueueSnackbar(message, {
-            variant: messageType,
-            autoHideDuration: 2000,
-        });
-    }
-
-    onPlayerUpdate = ({ user }) => {
+    socketOnInit = (props) => {
         this.setState(state => ({
-            user: {
-                ...state.user,
-                ...user,
+            server: {
+                ...state.server,
+                user: {
+                    ...state.server.user,
+                    ...props,
+                },
             },
+            nickname: '',
+            lobby_step: 2,
         }));
-    }
-
-    handleConvertToImage = (canvas) => {
-        if(canvas) {
-            let image = canvas.current.toDataURL();
-            this.emitRoomUpdate({ image });
-            // this.setState(() => ({
-            //     image,
-            // }));
-        }
-    }
-
-    handleChat = ({ message }) => {
-        const { user: { id } } = this.state;
-        console.log({ id, message });
-        const chat = { id, message };
-        this.emitRoomUpdate({ chat });
-    }
-
-    onRoomUpdate = ({ room }) => {
-        this.setState(() => ({
-            room,
-        }));
-    }
-
-    emitRoomUpdate = (props) => {
-        this.emit(EMIT_ROOM_UPDATE, props);
     }
 
     handleNicknameChange = (e) => {
         const { value } = e.target;
-        this.setState(state => ({
-            user: {
-                ...state.user,
-                nickname: value,
-            },
+        this.setState(() => ({
+            nickname: value,
         }));
     }
 
-    handleNicknameSubmit = (e) => {
-        const { user } = this.state;
-        e.preventDefault();
-        if(!user.nickname.length) return false;
-        this.listeningToSocket();
-        this.preventMultipleSubmitNickname(() => this.emitPlayerUpdate('handlePlayerInit'));
+    handleNicknameSubmit = () => {
+        const { nickname } = this.state;
+        this.socketToInit({
+            nickname,
+        });
     }
 
-    handlePlayerInit = (id) => {
-        this.handleSetPlayerId(id);
-        this.handleLobbyStepRoomSelection();
+    socketOnMessage = ({ message_type, message }) => {
+        const { enqueueSnackbar } = this.props;
+        enqueueSnackbar(message, {
+            variant: message_type,
+            autoHideDuration: 2000,
+        });
     }
 
-    handleNewRoomSubmit = (e) => {
-        const { newRoomName } = this.state;
-        e.preventDefault();
-        this.preventMultipleSubmitNewRoom(() => this.emit(EMIT_NEW_ROOM, {
-            room: newRoomName,
-            callback: 'handleNewRoomCreateModalClose',
+    socketOnLobby = ({ rooms }) => {
+        this.setState(() => ({
+            rooms,
         }));
     }
 
-    handleSetPlayerId = (id) => {
-        this.setState(state => ({
-            user: {
-                ...state.user,
-                id,
-            },
-        }));
+    handleNewRoomSubmit = (new_room_name) => {
+        console.log(new_room_name);
     }
 
     handleJoinRoom = (room) => {
-        this.emit(EMIT_ROOM_SELECT, {
+        console.log(room);
+        this.socket.emit(SOCKET_CHANNEL_ROOM_ACCESS, {
             room,
-            callback: 'LobbyLeave',
+            action: ROOM_ACTION_JOIN,
+            callback: 'goToGameInterface',
         });
     }
 
-    emitPlayerUpdate = (callback) => {
-        const { user } = this.state;
-        this.emit(EMIT_PLAYER_UPDATE, {
-            user,
-            callback,
-        });
-    }
-
-    onCallback = ({ callback, args }) => {
-        this[callback](...args);
-    }
-
-    LobbyLeave = () => {
+    goToGameInterface = () => {
         this.setState(() => ({
-            lobbyStep: null,
+            lobby_step: null,
         }));
     }
 
-    handleLobbyStepRoomSelection = () => {
-        this.setState(() => ({
-            lobbyStep: LOBBY_STEP_ROOM_SELECTING,
-        }));
+    socketOnCallback = ({ callback, args }) => {
+        this[callback](args);
     }
 
-    handleLobbyExit = () => {
-        this.setState(() => ({
-            lobbyStep: null,
-        }));
+    socketOnRoomAccess = ({ action, room }) => {
+        switch (action) {
+            case ROOM_ACTION_UPDATE:
+                console.log(ROOM_ACTION_UPDATE);
+                this.setState(state => ({
+                    server: {
+                        ...state.server,
+                        room,
+                    },
+                }));
+                break;
+            case ROOM_ACTION_LEAVE:
+                console.log(ROOM_ACTION_LEAVE);
+                this.setState(state => ({
+                    server: {
+                        ...state.server,
+                        room: {},
+                    },
+                    lobby_step: 2,
+                }));
+                break;
+            default:
+                console.log('default');
+                break;
+        }
+
     }
 
-    handleNewRoomNameChange = (e) => {
-        const { value } = e.target;
-        this.setState(() => ({
-            newRoomName: value,
-        }));
+    socketOnRoomAdd = () => {
+
     }
 
-    handleNewRoomCreateModalOpen = () => {
-        this.setState(() => ({
-            isNewRoomCreateModal: true,
-        }));
-    }
-
-    handleNewRoomCreateModalClose = () => {
-        this.setState(() => ({
-            isNewRoomCreateModal: false,
-            newRoomName: '',
-        }));
-    }
-
+    handleConvertToImage = () => {}
+    handleChat = () => {}
     handleLeaveRoom = () => {
-        this.emitRoomUpdate({
-            action: 'LEAVE',
+        const { server: { room: { roomName } } } = this.state;
+        console.log(roomName);
+        this.socket.emit(SOCKET_CHANNEL_ROOM_ACCESS, {
+            action: ROOM_ACTION_LEAVE,
+            room: roomName,
         });
     }
+    handleWordSelect = () => {}
 
-    handleLeaveGame = () => {
-        this.handleLobbyStepRoomSelection();
-        this.handleLeaveRoom();
-    }
-
-    handleRoomLobbyInit = () => {
-        this.emitRoomUpdate({
-            status: ROOM_STATUS_PAINTER_SELECTING,
-            callback: 'setRoomStatusWord',
-        });
-    }
-
-    setRoomStatusWord = () => {
-        console.log('пизда');
-        this.emitRoomUpdate({
-            status: ROOM_STATUS_WORD_SELECTING,
-        });
-    }
-
-    handleWordSelect = (word) => {
-        this.emitRoomUpdate({
-            word,
-            status: ROOM_STATUS_DRAWING,
-        });
-    }
-
-    isLobbyPreset = () => {
-        const { lobbyStep } = this.state;
-        return (lobbyStep === LOBBY_STEP_NICKAME_CHANGING) || (lobbyStep === LOBBY_STEP_ROOM_SELECTING);
+    socketOnRoom = ({ room }) => {
+        this.setState(state => ({
+            server: {
+                ...state.server,
+                room,
+            },
+        }));
     }
 
     render() {
-        const { image, user, lobbyStep, roomList, room, isNewRoomCreateModal, newRoomName } = this.state;
-        return this.isLobbyPreset() ? (
-            <Lobby
-                onNicknameChange={this.handleNicknameChange}
-                onNicknameSubmit={this.handleNicknameSubmit}
-                user={user}
-                lobbyStep={lobbyStep}
-                roomList={roomList}
-                onNewRoomSubmit={this.handleNewRoomSubmit}
-                onRoomSelect={this.handleJoinRoom}
-                isNewRoomCreateModal={isNewRoomCreateModal}
-                newRoomName={newRoomName}
-                onNewRoomCreateModalOpen={this.handleNewRoomCreateModalOpen}
-                onNewRoomCreateModalClose={this.handleNewRoomCreateModalClose}
-                onNewRoomNameChange={this.handleNewRoomNameChange}
-            />
-        ) : (
+        const { nickname, server, lobby_step, rooms } = this.state;
+        console.log({ server, rooms });
+        return lobby_step === null ? (
             <GameInterface
                 onConvertToImage={this.handleConvertToImage}
                 onChat={this.handleChat}
-                user={user}
-                room={room}
-                onGameLeave={this.handleLeaveGame}
+                room={server.room}
+                user={server.user}
                 onRoomLeave={this.handleLeaveRoom}
-                onGamePreStart={this.handleRoomLobbyInit}
                 onWordSelect={this.handleWordSelect}
+            />
+        ) : (
+            <Lobby
+                lobby_step={lobby_step}
+                nickname={nickname}
+                rooms={rooms}
+                onNicknameSubmit={this.handleNicknameSubmit}
+                onNicknameChange={this.handleNicknameChange}
+                onNewRoomSubmit={this.handleNewRoomSubmit}
+                onJoinRoom={this.handleJoinRoom}
             />
         )
     }

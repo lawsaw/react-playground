@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import { withStyles, Grid, Box, Chip, Button, Dialog } from "@material-ui/core";
 import { Chat, Paint, Screen, Game } from "./";
+import { ROOM_STATUS_WORD_SELECTING } from './constants';
 
 const styles = (theme) => ({
     wordList: {
@@ -20,9 +21,9 @@ const styles = (theme) => ({
 
 class GamePainter extends PureComponent {
 
-    state = {
-        isModalWord: true,
-    }
+    // state = {
+    //     isModalWord: false,
+    // }
 
     // handleModalWord = () => {
     //     this.setState(state => ({
@@ -30,17 +31,17 @@ class GamePainter extends PureComponent {
     //     }))
     // }
 
-    handleModalWordOpen = () => {
-        this.setState(() => ({
-            isModalWord: true,
-        }))
-    }
-
-    handleModalWordClose = () => {
-        this.setState(() => ({
-            isModalWord: false,
-        }))
-    }
+    // handleModalWordOpen = () => {
+    //     this.setState(() => ({
+    //         isModalWord: true,
+    //     }))
+    // }
+    //
+    // handleModalWordClose = () => {
+    //     this.setState(() => ({
+    //         isModalWord: false,
+    //     }))
+    // }
 
     getWordList = () => {
         const { room, user } = this.props;
@@ -49,7 +50,7 @@ class GamePainter extends PureComponent {
 
     handleWordSelect = (e, word) => {
         const { onWordSelect } = this.props;
-        this.handleModalWordClose();
+        //this.handleModalWordClose();
         onWordSelect(word);
     }
 
@@ -61,9 +62,15 @@ class GamePainter extends PureComponent {
         } : {};
     }
 
+    isWordSelecting = () => {
+        const { room: { status } } = this.props;
+        console.log(status);
+        return status === ROOM_STATUS_WORD_SELECTING;
+    }
+
     render() {
         const { classes, onConvertToImage, onWordSelect, ...props } = this.props;
-        const { isModalWord } = this.state;
+        //const { isModalWord } = this.state;
         let words = this.getWordList();
         let task = this.getTask();
         return (
@@ -76,7 +83,7 @@ class GamePainter extends PureComponent {
                     <Paint onConvertToImage={onConvertToImage} />
                 </Game>
                 <Dialog
-                    open={isModalWord}
+                    open={this.isWordSelecting()}
                 >
                     <Box
                         className={classes.wordList}

@@ -23,14 +23,14 @@ class ButtonBar extends PureComponent {
     }
 
     render() {
-        const { classes, onGameLeave } = this.props;
+        const { classes, onRoomLeave } = this.props;
         return (
             <Box
                 className={classes.buttonBar}
             >
                 <Button
                     variant="outlined"
-                    onClick={onGameLeave}
+                    onClick={onRoomLeave}
                 >
                     Leave game
                 </Button>

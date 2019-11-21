@@ -24,30 +24,24 @@ const styles = (theme) => ({
 
 class Game extends PureComponent {
 
-    // state = {
-    //     isWinnerModal: false,
-    // }
-    //
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     const { winner } = this.props.room;
-    //     if(winner) {
-    //         this.setState(() => ({
-    //             isWinnerModal: true,
-    //         }))
-    //     }
-    // }
-
-
+    generateStatus = () => {
+        const { room: { status, countdown, players } } = this.props;
+        let newStatus;
+        switch (status) {
+            case ROOM_STATUS_PAINTER_SELECTING:
+                newStatus =  `Game will start in ${countdown}`;
+                break;
+            default:
+                newStatus = status;
+                break;
+        }
+        return newStatus;
+    }
 
     render() {
-        const { classes, onChat, room, user, onGameLeave, onGamePreStart, task, children } = this.props;
-        //const { isWinnerModal } = this.state;
+        const { classes, onChat, room, user, onRoomLeave, onGamePreStart, task, children, chat } = this.props;
         let { winner } = room;
-        let status = room.status === ROOM_STATUS_WAITING ?
-                        Object.keys(room.players).length < 2 ?
-                            `Waiting for more players` :
-                            `Game will start in ${room.countdown}` :
-                        room.status;
+        let status = this.generateStatus();
         console.log(room, user);
         return (
             <Fragment>
@@ -89,12 +83,13 @@ class Game extends PureComponent {
                         <Chat
                             room={room}
                             onChat={onChat}
+                            chat={chat}
                         />
                     </Grid>
                 </Grid>
                 <ButtonBar
                     onGamePreStart={onGamePreStart}
-                    onGameLeave={onGameLeave}
+                    onRoomLeave={onRoomLeave}
                 />
                 <Winner
                     winner={winner}

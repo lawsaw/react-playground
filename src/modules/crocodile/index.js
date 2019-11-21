@@ -18,6 +18,10 @@ import PlayersBar from './PlayersBar';
 import RoomInfoBar from './RoomInfoBar';
 import Winner from './Winner';
 
+
+import LobbyNickname from './LobbyNickname';
+import LobbyRoomSelection from './LobbyRoomSelection';
+
 export {
     Crocodile,
     Desk,
@@ -38,4 +42,8 @@ export {
     PlayersBar,
     RoomInfoBar,
     Winner,
+
+
+    LobbyNickname,
+    LobbyRoomSelection,
 }
