@@ -1,5 +1,9 @@
-import React, {PureComponent } from 'react';
-import { withStyles, Box } from "@material-ui/core";
+import React, {PureComponent, createRef, Fragment} from 'react';
+import { isEqual } from 'lodash';
+import { withStyles, Paper, Box, Button, Chip } from "@material-ui/core";
+import { ROOM_STATUS_PAINTER_SELECTING } from './constants';
+import { PlayersBar } from './';
+import { getHeightFromWidth } from '../../helpers/etc';
 
 const styles = (theme) => ({
     roomInfoBar: {

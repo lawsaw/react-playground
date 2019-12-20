@@ -1,8 +1,11 @@
-import React, { PureComponent, Fragment } from 'react';
-import { withStyles, Paper, IconButton, InputBase, Box, List, ListItem, ListItemText, Divider, Grid, Dialog } from "@material-ui/core";
-import { Send, Add } from '@material-ui/icons';
+import React, { PureComponent } from 'react';
+import { withStyles, Box } from "@material-ui/core";
 import { LobbyNickname, LobbyRoomSelection } from './';
-import { LOBBY_STEPS, LOBBY_STEP_NICKAME_CHANGING, LOBBY_STEP_ROOM_SELECTING, LOBBY_STEP_WORD_SELECTING } from './constants';
+import {
+    SOCKET_ON_LOBBY_STEP_CHANGE,
+    LOBBY_STEP_NICKNAME,
+    LOBBY_STEP_ROOM_SELECTION,
+} from './constants';
 
 const styles = (theme) => ({
     lobby: {
@@ -26,14 +29,61 @@ class Lobby extends PureComponent {
 
     constructor(props) {
         super(props);
+        this.steps = {
+            [LOBBY_STEP_NICKNAME]: this.renderLobbyNickname,
+            [LOBBY_STEP_ROOM_SELECTION]: this.renderLobbyRoomSelection,
+        };
         this.state = {
-
+            step: LOBBY_STEP_NICKNAME,
         };
     }
 
+    componentDidMount() {
+        const { socket } = this.props;
+        socket.on(SOCKET_ON_LOBBY_STEP_CHANGE, this.onStepChange);
+    }
+
+    componentWillUnmount() {
+        const { socket } = this.props;
+        socket.off(SOCKET_ON_LOBBY_STEP_CHANGE, this.onStepChange);
+    }
+
+    onStepChange = ({ step }) => {
+        this.setStep(step);
+    }
+
+    setStep = (step) => {
+        this.setState(() => ({
+            step,
+        }));
+    }
+
+    handleBackToNickname = () => {
+        this.setStep(LOBBY_STEP_NICKNAME);
+    }
+
+    renderLobbyNickname = () => {
+        const { socket } = this.props;
+        return (
+            <LobbyNickname
+                socket={socket}
+            />
+        );
+    }
+
+    renderLobbyRoomSelection = () => {
+        const { socket } = this.props;
+        return (
+            <LobbyRoomSelection
+                socket={socket}
+                onBackToNickname={this.handleBackToNickname}
+            />
+        );
+    }
 
     render() {
-        const { classes, lobby_step, onNicknameSubmit, onNicknameChange, nickname, rooms, onNewRoomSubmit, onJoinRoom } = this.props;
+        const { classes } = this.props;
+        const { step } = this.state;
         return (
             <Box
                 className={classes.lobby}
@@ -42,19 +92,7 @@ class Lobby extends PureComponent {
                     className={classes.lobbyContent}
                 >
                     {
-                        lobby_step === 1 ? (
-                            <LobbyNickname
-                                onNicknameSubmit={onNicknameSubmit}
-                                onNicknameChange={onNicknameChange}
-                                nickname={nickname}
-                            />
-                        ) : lobby_step === 2 ? (
-                            <LobbyRoomSelection
-                                rooms={rooms}
-                                onNewRoomSubmit={onNewRoomSubmit}
-                                onJoinRoom={onJoinRoom}
-                            />
-                        ) : null
+                        this.steps[step]()
                     }
                 </Box>
             </Box>

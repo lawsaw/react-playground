@@ -1,11 +1,10 @@
-import React, { PureComponent, Fragment } from 'react';
-import { withStyles, Paper, IconButton, InputBase, Box, List, ListItem, ListItemText, Divider, Grid, Dialog } from "@material-ui/core";
-import { Send, Add } from '@material-ui/icons';
+import React, { PureComponent } from 'react';
+import { withStyles } from "@material-ui/core";
 import { TextInput } from './';
-import { LOBBY_STEPS, LOBBY_STEP_NICKAME_CHANGING, LOBBY_STEP_ROOM_SELECTING, LOBBY_STEP_WORD_SELECTING } from './constants';
 import { preventMultipleSubmit } from '../../helpers/etc';
+import { SOCKET_ON_NICKNAME_CHANGE } from './constants';
 
-const styles = (theme) => ({
+const styles = () => ({
 
 });
 
@@ -14,18 +13,35 @@ class LobbyNickname extends PureComponent {
     constructor(props) {
         super(props);
         this.handleNicknameSubmitDecorator = preventMultipleSubmit();
+        this.state = {
+            nickname: '',
+        }
+    }
+
+    handleNicknameChange = (e) => {
+        const { value } = e.target;
+        this.setState(() => ({
+            nickname: value,
+        }));
+    }
+
+    submitNickname = () => {
+        const { socket } = this.props;
+        const { nickname } = this.state;
+        socket.emit(SOCKET_ON_NICKNAME_CHANGE, {
+            nickname,
+        });
     }
 
     handleNicknameSubmit = () => {
-        const { onNicknameSubmit } = this.props;
-        this.handleNicknameSubmitDecorator(onNicknameSubmit);
+        this.handleNicknameSubmitDecorator(this.submitNickname);
     }
 
     render() {
-        const { onNicknameChange, nickname } = this.props;
+        const { nickname } = this.state;
         return (
             <TextInput
-                onChange={onNicknameChange}
+                onChange={this.handleNicknameChange}
                 onSubmit={this.handleNicknameSubmit}
                 placeholder="Enter your nickname"
                 value={nickname}

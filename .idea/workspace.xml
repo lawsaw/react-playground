@@ -5,18 +5,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf276a12-ba85-4e17-93a3-7ef6e8fa304c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/modules/crocodile/Body-old.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/crocodile/Lobby-old.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/crocodile/LobbyNickname.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/crocodile/LobbyRoomSelection.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/Body.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/ButtonBar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/Chat.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/ChatWindow.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/ColorPicker.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/Crocodile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/Desk.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/DeskToolbar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/Game.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/GameInterface.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/GamePainter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/GameWatcher.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/Lobby.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/LobbyNickname.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/LobbyRoomSelection.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/Paint.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/PlayersBar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/RoomInfoBar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/Screen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/TextInput.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/Winner.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/constants.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/crocodile222/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Body-old.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile222/Body-old.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Body.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/Body.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/crocodile/ButtonBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/ButtonBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/Chat.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/ChatWindow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/ChatWindow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/ColorPicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/ColorPicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Crocodile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/Crocodile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/Game.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/crocodile/GameInterface.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/GameInterface.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/crocodile/GamePainter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/GamePainter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/GameWatcher.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/GameWatcher.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Lobby-old.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile222/Lobby-old.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Lobby.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/Lobby.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/LobbyNickname.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/LobbyNickname.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/LobbyRoomSelection.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/LobbyRoomSelection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/PlayersBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/PlayersBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/RoomInfoBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/RoomInfoBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Screen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/Screen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Winner.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/Winner.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/crocodile/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/constants.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/crocodile/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/index.js" afterDir="false" />
     </list>
@@ -26,15 +57,53 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Body.js">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/modules/crocodile/GamePainter.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="141" column="4" selection-start-line="141" selection-start-column="4" selection-end-line="141" selection-end-column="4" />
+            <state relative-caret-position="300">
+              <caret line="53" column="49" lean-forward="true" selection-start-line="53" selection-start-column="49" selection-end-line="53" selection-end-column="49" />
               <folding>
                 <element signature="e#0#55#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Winner.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="14" lean-forward="true" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+              <folding>
+                <element signature="e#0#44#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Screen.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="54" lean-forward="true" selection-start-line="19" selection-start-column="54" selection-end-line="19" selection-end-column="54" />
+              <folding>
+                <element signature="e#0#45#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -43,98 +112,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/modules/crocodile/constants.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="38" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Game.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-292">
-              <caret line="30" column="46" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="46" />
-              <folding>
-                <element signature="e#0#55#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/modules/crocodile/ButtonBar.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="26" column="16" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/modules/crocodile/GameInterface.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="472">
-              <caret line="32" column="19" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
-              <folding>
-                <element signature="e#0#55#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/modules/crocodile/LobbyRoomSelection.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="795">
-              <caret line="58" column="34" selection-start-line="58" selection-start-column="34" selection-end-line="58" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#55#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/modules/crocodile/GameWatcher.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="30" column="16" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#55#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Lobby.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="48" column="51" selection-start-line="48" selection-start-column="51" selection-end-line="48" selection-end-column="51" />
-              <folding>
-                <element signature="e#0#55#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Lobby-old.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2310">
-              <caret line="158" column="41" selection-start-line="158" selection-start-column="41" selection-end-line="158" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Body-old.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
-              <caret line="352" column="49" selection-start-line="352" selection-start-column="34" selection-end-line="352" selection-end-column="49" />
-              <folding>
-                <element signature="e#0#55#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="375">
+              <caret line="25" column="32" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -143,36 +122,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>isConnected</find>
-      <find>emit</find>
-      <find>message</find>
-      <find>ON_MESSAGE</find>
-      <find>handleNicknameSubmit</find>
-      <find>socketOnUser</find>
-      <find>roomList</find>
-      <find>isNewRoomCreateModal</find>
-      <find>onNewRoomCreateModalClose</find>
-      <find>onNewRoomCreateModalOpen</find>
-      <find>onNewRoomNameChange</find>
-      <find>onNewRoomSubmit</find>
-      <find>messageType</find>
-      <find>onNicknameSubmit</find>
+      <find>updateRoomList</find>
+      <find>LOBBY_ACTION_ROOM_LIST_UPDATE</find>
+      <find>LOBBY_ACTION_ENTER_TO_ROOM_SELECTION</find>
+      <find>rooms</find>
+      <find>SOCKET_LOBBY_CLIENT</find>
       <find>onNicknameChange</find>
-      <find>newRoomName</find>
-      <find>onRoomSelect</find>
-      <find>SOCKET_CHANNEL_INIT</find>
-      <find>TextInput</find>
+      <find>LOBBY_STEP_NICKNAME</find>
+      <find>LOBBY_STEP_ROOM_SELECTION</find>
+      <find>handleJoinRoom</find>
+      <find>LOBBY_ACTION_VALIDATE_NICKNAME</find>
+      <find>SOCKET_ON_ROOM_LIST_GET</find>
+      <find>LOBBY_ACTION_SET_STEP</find>
+      <find>SOCKET_ON_ROOM_LIST</find>
+      <find>getHeightFromWidth</find>
+      <find>ROOM_STATUS_WORD_SELECTING</find>
       <find>onRoomLeave</find>
-      <find>handleLeaveRoom</find>
-      <find>handleLeaveGame</find>
-      <find>onGameLeave</find>
-      <find>socketOnRoomAccess</find>
-      <find>null</find>
-      <find>JOIN</find>
-      <find>LEAVE</find>
-      <find>UPDATE</find>
-      <find>goToGameInterface</find>
-      <find>SOCKET_CHANNEL_ROOM_ACCESS</find>
+      <find>SOCKET_ON_ROOM</find>
+      <find>SOCKET_ON_ROOM_LEAVE</find>
+      <find>SOCKET_ON_LOBBY_STEP_CHANGE</find>
+      <find>forwardRef</find>
+      <find>SOCKET_ON_ROOM_JOIN</find>
+      <find>ROOM_STATUS_WAITING</find>
+      <find>ROOM_STATUS_PAINTER_SELECTING</find>
+      <find>chat</find>
+      <find>handleWordSelect</find>
+      <find>onChat</find>
+      <find>socket</find>
+      <find>ROOM_STATUS_DRAWING</find>
+      <find>isPainter</find>
+      <find>onConvertToImage</find>
     </findStrings>
     <replaceStrings>
       <replace>idCurrent</replace>
@@ -196,7 +175,9 @@
       <dir>$PROJECT_DIR$/src/modules/dashboard</dir>
       <dir>$PROJECT_DIR$/src/modules/todolist</dir>
       <dir>$PROJECT_DIR$/src/modules</dir>
+      <dir>$PROJECT_DIR$/src</dir>
       <dir>$PROJECT_DIR$/src/modules/crocodile</dir>
+      <dir>$PROJECT_DIR$/src/modules/crocodile222</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -205,7 +186,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/helpers/constants.js" />
         <option value="$PROJECT_DIR$/src/modules/tetris/etc.js" />
         <option value="$PROJECT_DIR$/src/modules/tetris/Tetris.js" />
         <option value="$PROJECT_DIR$/src/modules/tetris/Bar.js" />
@@ -232,36 +212,37 @@
         <option value="$PROJECT_DIR$/src/modules/crocodile/Toolbar.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/ScreenToolbar.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/DeskDrawing.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/ColorPicker.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/DeskToolbar.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/Paint.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/Crocodile.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/ChatWindow.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/TextInput.js" />
         <option value="$PROJECT_DIR$/src/helpers/etc.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/Desk.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/Screen.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/PlayersBar.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/RoomInfoBar.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/Winner.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/GamePainter.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/Chat.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/index.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/Crocodile.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/LobbyNickname.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/Lobby.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/LobbyRoomSelection.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/GameWatcher.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/RoomInfoBar.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/index.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/Winner.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile222/GameInterface.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/ButtonBar.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/LobbyRoomSelection.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/Lobby.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/Body.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/Chat.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/ChatWindow.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/PlayersBar.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/GameWatcher.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/Game.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/ColorPicker.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/GameInterface.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/constants.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/Body.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/Game.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/GamePainter.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/Screen.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="1920" />
-    <option name="width" value="651" />
+    <option name="width" value="1083" />
     <option name="height" value="1200" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -322,10 +303,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/modules/crocodile" />
+      <recent name="$PROJECT_DIR$/src/modules" />
       <recent name="$PROJECT_DIR$/src/route-pages" />
       <recent name="$PROJECT_DIR$/src/modules/tetris" />
       <recent name="$PROJECT_DIR$/src/helpers" />
-      <recent name="$PROJECT_DIR$/src/modules/todolist" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -383,12 +364,18 @@
       <workItem from="1573641096320" duration="13127000" />
       <workItem from="1573809779409" duration="12340000" />
       <workItem from="1574068144965" duration="36626000" />
-      <workItem from="1574325902945" duration="10073000" />
+      <workItem from="1574325902945" duration="10729000" />
+      <workItem from="1574859791081" duration="1747000" />
+      <workItem from="1574938866353" duration="13000" />
+      <workItem from="1575545269193" duration="40288000" />
+      <workItem from="1575880822204" duration="536000" />
+      <workItem from="1575885447377" duration="5832000" />
+      <workItem from="1576588835183" duration="19543000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="850088000" />
+    <option name="totallyTimeSpent" value="918703000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -400,9 +387,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1920" y="0" width="627" height="1200" extended-state="0" />
+    <frame x="1920" y="0" width="1083" height="1200" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.5010846" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28599033" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="npm" order="3" side_tool="true" />
@@ -417,17 +404,18 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="TypeScript" order="10" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.2889096" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.26001865" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" id="Database" order="3" weight="0.32981315" />
     </layout>
     <layout-to-restore>
-      <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.15101388" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.22647059" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info id="npm" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -439,7 +427,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="TypeScript" order="10" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.19850886" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.26001865" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -451,132 +439,10 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/modules/clock/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/@material-ui/core/Grid/Grid.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="78" column="14" selection-start-line="78" selection-start-column="14" selection-end-line="78" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/clock/Arrows.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-446">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/tetris/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="28" selection-start-column="22" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/helpers/routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="49" selection-start-line="1" selection-start-column="49" selection-end-line="1" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/route-pages/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/route-pages/Test.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/clock/Clock.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11">
-          <caret line="27" column="44" selection-start-line="27" selection-start-column="44" selection-end-line="27" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.babelrc" />
-    <entry file="file://$PROJECT_DIR$/src/route-pages/Crocodile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="6024" column="4" selection-start-line="6024" selection-start-column="4" selection-end-line="6024" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/helpers/constants.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/DeskDrawing.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/react-color/lib/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/ColorPicker.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="32" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/DeskToolbar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-43">
-          <caret line="19" column="19" lean-forward="true" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -607,16 +473,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Crocodile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="18" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#55#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/tetris/Tetris.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -638,16 +494,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Paint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="732">
-          <caret line="85" column="36" selection-start-line="85" selection-start-column="20" selection-end-line="85" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#66#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -655,57 +501,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Desk.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="3" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#57#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/@material-ui/core/Dialog/Dialog.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
           <caret line="37" column="14" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/ChatWindow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="21" column="11" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Screen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="874">
-          <caret line="77" column="15" selection-start-line="77" selection-start-column="15" selection-end-line="77" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/RoomInfoBar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="39" column="78" lean-forward="true" selection-start-line="39" selection-start-column="78" selection-end-line="39" selection-end-column="78" />
-          <folding>
-            <element signature="e#0#64#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/PlayersBar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#64#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -736,148 +535,122 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Winner.js">
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Lobby-old.js" />
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Body-old.js" />
+    <entry file="file://$PROJECT_DIR$/src/helpers/etc.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="30" lean-forward="true" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
+        <state relative-caret-position="496">
+          <caret line="109" column="16" selection-start-line="109" selection-start-column="16" selection-end-line="109" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/TextInput.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="466">
+          <caret line="54" column="33" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile222/LobbyNickname.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="36" column="15" selection-start-line="36" selection-start-column="15" selection-end-line="36" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile222/Lobby-old.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="906">
+          <caret line="158" column="41" lean-forward="true" selection-start-line="158" selection-start-column="41" selection-end-line="158" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile222/Lobby.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="55" column="30" lean-forward="true" selection-start-line="51" selection-start-column="28" selection-end-line="55" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/static/js/2.7d5e546b.chunk.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret column="124044" lean-forward="true" selection-start-column="124044" selection-end-column="124044" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@material-ui/icons/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="270" column="22" selection-start-line="270" selection-start-column="13" selection-end-line="270" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile222/Game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-327">
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile222/ButtonBar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="28" column="45" lean-forward="true" selection-start-line="28" selection-start-column="45" selection-end-line="28" selection-end-column="45" />
           <folding>
             <element signature="e#0#64#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/GamePainter.js">
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile222/ChatWindow.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="78" column="17" lean-forward="true" selection-start-line="78" selection-start-column="17" selection-end-line="78" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#55#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Chat.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
-          <caret line="56" column="52" selection-start-line="56" selection-start-column="45" selection-end-line="56" selection-end-column="52" />
+        <state relative-caret-position="-1234">
           <folding>
             <element signature="e#0#66#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/index.js">
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile222/Paint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="655">
-          <caret line="47" column="19" selection-start-line="47" selection-start-column="19" selection-end-line="47" selection-end-column="19" />
+        <state relative-caret-position="-1755">
           <folding>
-            <element signature="e#0#36#0" expanded="true" />
+            <element signature="e#0#66#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/TextInput.js">
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile222/GameWatcher.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="745">
-          <caret line="68" column="15" selection-start-line="68" selection-start-column="15" selection-end-line="68" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="240">
+          <caret line="18" column="38" lean-forward="true" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/LobbyNickname.js">
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile222/Body.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="49" lean-forward="true" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#55#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="218">
+          <caret line="195" column="20" selection-start-line="195" selection-start-column="4" selection-end-line="195" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/ButtonBar.js">
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile222/constants.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="26" column="16" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
+        <state relative-caret-position="105">
+          <caret line="7" column="38" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/LobbyRoomSelection.js">
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile222/GameInterface.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="58" column="34" selection-start-line="58" selection-start-column="34" selection-end-line="58" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#55#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Lobby.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="48" column="51" selection-start-line="48" selection-start-column="51" selection-end-line="48" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#55#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Lobby-old.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2310">
-          <caret line="158" column="41" selection-start-line="158" selection-start-column="41" selection-end-line="158" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/helpers/etc.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="531">
-          <caret line="111" column="29" selection-start-line="111" selection-start-column="29" selection-end-line="111" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Body-old.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="352" column="49" selection-start-line="352" selection-start-column="34" selection-end-line="352" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#55#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/constants.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/GameInterface.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="32" column="19" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#55#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/GameWatcher.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="16" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#55#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-292">
-          <caret line="30" column="46" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="46" />
+        <state relative-caret-position="390">
+          <caret line="26" column="19" lean-forward="true" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
           </folding>
@@ -886,10 +659,218 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Body.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="141" column="4" selection-start-line="141" selection-start-column="4" selection-end-line="141" selection-end-column="4" />
+        <state relative-caret-position="-435">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/ButtonBar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="41" selection-start-line="30" selection-start-column="41" selection-end-line="30" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Chat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1185">
+          <caret line="79" column="21" lean-forward="true" selection-start-line="79" selection-start-column="21" selection-end-line="79" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/ChatWindow.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="99" column="65" lean-forward="true" selection-start-line="99" selection-start-column="65" selection-end-line="99" selection-end-column="65" />
+          <folding>
+            <element signature="e#0#66#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/ColorPicker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-420">
+          <caret line="11" column="16" lean-forward="true" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Crocodile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="9" lean-forward="true" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/DeskToolbar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-487">
+          <caret line="3" column="20" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="46" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="20" column="26" lean-forward="true" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/GameWatcher.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="31" lean-forward="true" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/GameInterface.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="45" column="4" selection-start-line="45" selection-start-column="7" selection-end-line="50" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Lobby.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="36" column="38" lean-forward="true" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/LobbyNickname.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="30" column="48" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/LobbyRoomSelection.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1296">
+          <caret line="55" column="4" selection-start-line="55" selection-start-column="4" selection-end-line="58" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/PlayersBar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/RoomInfoBar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="410">
+          <caret line="43" column="29" lean-forward="true" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Paint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="158" column="23" selection-start-line="158" selection-start-column="23" selection-end-line="158" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#66#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Desk.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="18" column="28" lean-forward="true" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile222/GamePainter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="429">
+          <caret line="82" column="61" selection-start-line="82" selection-start-column="45" selection-end-line="82" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/constants.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="32" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/GamePainter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="53" column="49" lean-forward="true" selection-start-line="53" selection-start-column="49" selection-end-line="53" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Winner.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="14" lean-forward="true" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/crocodile/Screen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="54" lean-forward="true" selection-start-line="19" selection-start-column="54" selection-end-line="19" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
           </folding>
         </state>
       </provider>

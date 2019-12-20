@@ -29,7 +29,7 @@ class Game extends PureComponent {
         let newStatus;
         switch (status) {
             case ROOM_STATUS_PAINTER_SELECTING:
-                newStatus = `Painter is being selected in in ${countdown}`;
+                newStatus =  `Game will start in ${countdown}`;
                 break;
             default:
                 newStatus = status;
@@ -39,10 +39,10 @@ class Game extends PureComponent {
     }
 
     render() {
-        const { classes, room, user, onLeaveRoom, onRoomLeave, onGamePreStart, task, socket, children } = this.props;
+        const { classes, onChat, room, user, onRoomLeave, onGamePreStart, task, children, chat } = this.props;
         let { winner } = room;
         let status = this.generateStatus();
-        //console.log(room, user);
+        console.log(room, user);
         return (
             <Fragment>
                 <RoomInfoBar
@@ -81,14 +81,15 @@ class Game extends PureComponent {
                         className={classes.chat}
                     >
                         <Chat
-                            chat={room.chat}
-                            socket={socket}
+                            room={room}
+                            onChat={onChat}
+                            chat={chat}
                         />
                     </Grid>
                 </Grid>
                 <ButtonBar
                     onGamePreStart={onGamePreStart}
-                    onLeaveRoom={onLeaveRoom}
+                    onRoomLeave={onRoomLeave}
                 />
                 <Winner
                     winner={winner}

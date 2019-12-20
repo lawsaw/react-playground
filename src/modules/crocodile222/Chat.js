@@ -1,8 +1,11 @@
-import React, { PureComponent } from 'react';
-import { withStyles, Grid } from "@material-ui/core";
+import React, { PureComponent, createRef, Fragment } from 'react';
+import { isEqual } from 'lodash';
+import { withStyles, Paper, TextField, Grid, IconButton, InputBase, Box, Card, CardContent, Typography } from "@material-ui/core";
+import { Send } from '@material-ui/icons';
+import { DESK_WIDTH, DESK_HEIGHT } from './constants';
+import { getHeightFromWidth } from '../../helpers/etc';
 import { TextInput, ChatWindow } from './';
 import { preventMultipleSubmit } from '../../helpers/etc';
-import { SOCKET_ON_CHAT } from './constants';
 
 const styles = (theme) => ({
     chat: {
@@ -44,19 +47,14 @@ class Chat extends PureComponent {
         }
     }
 
-    onChat = (message) => {
-        const { socket } = this.props;
-        socket.emit(SOCKET_ON_CHAT, message);
-        console.log(message);
-    }
-
     handleChat = () => {
+        const { onChat } = this.props;
         const { message } = this.state;
         if(message.length > 0) {
             this.setState(() => ({
                 message: '',
             }));
-            this.lockFuncChat(() => this.onChat(message));
+            this.lockFuncChat(() => onChat({ message }));
         }
     }
 
@@ -68,7 +66,7 @@ class Chat extends PureComponent {
     }
 
     render() {
-        const { classes, chat } = this.props;
+        const { classes, room, chat, onChat } = this.props;
         const { message } = this.state;
         return (
             <Grid
@@ -86,7 +84,7 @@ class Chat extends PureComponent {
                     />
                 </Grid>
                 {
-                    true ? (
+                    onChat ? (
                         <Grid
                             item
                             className={classes.wrapSubmit}

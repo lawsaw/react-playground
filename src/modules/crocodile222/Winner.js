@@ -1,7 +1,10 @@
-import React, {PureComponent } from 'react';
-import { withStyles, Box, Dialog, DialogTitle, Table, TableHead, TableCell, TableRow} from "@material-ui/core";
+import React, {PureComponent, createRef, Fragment} from 'react';
+import { isEqual } from 'lodash';
+import { withStyles, Paper, Box, Button, Dialog, DialogTitle, Table, TableHead, TableCell, TableBody, TableRow} from "@material-ui/core";
+import { ROOM_STATUS_PAINTER_SELECTING } from './constants';
+import { getHeightFromWidth } from '../../helpers/etc';
 
-const styles = () => ({
+const styles = (theme) => ({
     table: {
         width: 300,
     },

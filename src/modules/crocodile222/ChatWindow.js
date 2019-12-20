@@ -91,13 +91,13 @@ class ChatWindow extends PureComponent {
                     ref={this.windowRef}
                 >
                     {
-                        chat && chat.length ? chat.map(({ player: { nickname }, message }, index) => {
+                        chat && chat.length ? chat.map(({ id, player, message }, index) => {
                             return (
                                 <Fragment
                                     key={index}
                                 >
                                     {
-                                        nickname === 'SERVER' ? (
+                                        id === 'SERVER' ? (
                                             <MessageServer
                                                 classes={classes}
                                                 message={message}
@@ -106,7 +106,7 @@ class ChatWindow extends PureComponent {
                                             <MessageClient
                                                 classes={classes}
                                                 message={message}
-                                                sender={nickname}
+                                                sender={player.nickname}
                                             />
                                         )
                                     }

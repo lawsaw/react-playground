@@ -1,8 +1,8 @@
 import React, { PureComponent, Fragment } from 'react';
 import { withStyles, Paper, IconButton, InputBase, Box, List, ListItem, ListItemText, Divider, Grid, Dialog } from "@material-ui/core";
-import { Send, Add, ArrowBack } from '@material-ui/icons';
+import { Send, Add } from '@material-ui/icons';
 import { TextInput } from './';
-import { SOCKET_ON_ROOM_LIST, SOCKET_ON_ROOM_ADD, SOCKET_ON_ROOM_JOIN } from './constants';
+import { LOBBY_STEPS, LOBBY_STEP_NICKAME_CHANGING, LOBBY_STEP_ROOM_SELECTING, LOBBY_STEP_WORD_SELECTING } from './constants';
 import { preventMultipleSubmit } from "../../helpers/etc";
 
 const styles = (theme) => ({
@@ -43,36 +43,11 @@ class LobbyRoomSelection extends PureComponent {
         this.state = {
             new_room_name: '',
             isNewRoomModal: false,
-            rooms: null,
         }
     }
-
-    componentDidMount() {
-        const { socket } = this.props;
-        socket.on(SOCKET_ON_ROOM_LIST, this.updateRoomList);
-        this.getRoomList();
-    }
-
-    componentWillUnmount() {
-        const { socket } = this.props;
-        socket.off(SOCKET_ON_ROOM_LIST, this.updateRoomList);
-    }
-
-    getRoomList = () => {
-        const { socket } = this.props;
-        socket.emit(SOCKET_ON_ROOM_LIST);
-    }
-
-    updateRoomList = ({ rooms }) => {
-        console.log('updateRoomList');
-        console.log(rooms);
-        this.setState(() => ({
-            rooms,
-            isNewRoomModal: false,
-            new_room_name: '',
-        }));
-    }
     
+    
+
     handleNewRoomModalOpen = () => {
         this.setState(() => ({
             isNewRoomModal: true,
@@ -94,25 +69,14 @@ class LobbyRoomSelection extends PureComponent {
     }
 
     handleNewRoomSubmit = () => {
+        const { onNewRoomSubmit } = this.props;
         const { new_room_name } = this.state;
-        this.handleNewRoomSubmitDecorator(() => this.submitNewRoom(new_room_name));
-    }
-
-    submitNewRoom = (room) => {
-        const { socket } = this.props;
-        socket.emit(SOCKET_ON_ROOM_ADD, { room });
-    }
-
-
-    handleJoinRoom = (room_name) => {
-        const { socket } = this.props;
-        socket.emit(SOCKET_ON_ROOM_JOIN, { room: room_name });
-        //console.log('join ' + room_name);
+        this.handleNewRoomSubmitDecorator(() => onNewRoomSubmit(new_room_name));
     }
     
     render() {
-        const { classes, onBackToNickname } = this.props;
-        const { rooms, new_room_name, isNewRoomModal } = this.state;
+        const { classes, rooms, onJoinRoom } = this.props;
+        const { new_room_name, isNewRoomModal } = this.state;
         return (
             <Fragment>
                 <Box className={classes.stepTitle} >Select room or create new one: </Box>
@@ -122,12 +86,6 @@ class LobbyRoomSelection extends PureComponent {
                     <Grid
                         item
                     >
-                        <IconButton
-                            className={classes.iconButton}
-                            onClick={onBackToNickname}
-                        >
-                            <ArrowBack />
-                        </IconButton>
                         <IconButton
                             className={classes.iconButton}
                             onClick={this.handleNewRoomModalOpen}
@@ -148,7 +106,7 @@ class LobbyRoomSelection extends PureComponent {
                                             >
                                                 <ListItem
                                                     button
-                                                    onClick={() => this.handleJoinRoom(room)}
+                                                    onClick={() => onJoinRoom(room)}
                                                 >
                                                     <ListItemText primary={room} />
                                                     <Box>({players})</Box>

@@ -1,5 +1,8 @@
-import React, {PureComponent } from 'react';
-import { withStyles, Box, Chip } from "@material-ui/core";
+import React, {PureComponent, createRef, Fragment} from 'react';
+import { isEqual } from 'lodash';
+import { withStyles, Paper, Box, Button, Chip } from "@material-ui/core";
+import { ROOM_STATUS_PAINTER_SELECTING } from './constants';
+import { getHeightFromWidth } from '../../helpers/etc';
 
 const styles = (theme) => ({
     players: {
@@ -15,10 +18,6 @@ const styles = (theme) => ({
 
 class PlayersBar extends PureComponent {
 
-    handleClick = playerId => (e) => {
-        console.log({playerId, e});
-    }
-
     render() {
         const { classes, players } = this.props;
         const arrayOfPlayers = Object.keys(players);
@@ -33,7 +32,6 @@ class PlayersBar extends PureComponent {
                             size="small"
                             label={players[playerId].nickname}
                             color={players[playerId].isPainter ? 'primary' : 'default'}
-                            onClick={this.handleClick(playerId)}
                         />
                     )) : 'There is no players in this room'
                 }

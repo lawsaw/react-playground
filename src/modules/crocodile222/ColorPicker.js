@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
-import { withStyles, Box } from "@material-ui/core";
-import { GithubPicker } from 'react-color';
+import { withStyles, Box, AppBar, Toolbar, IconButton } from "@material-ui/core";
+import { SliderPicker, GithubPicker } from 'react-color';
 
 // const COLORS = [
 //     '#ff00ff',
@@ -9,24 +9,7 @@ import { GithubPicker } from 'react-color';
 //     '#0000ff',
 // ];
 
-const COLORS = [
-    '#B80000',
-    '#DB3E00',
-    '#FCCB00',
-    '#008B02',
-    '#006B76',
-    '#1273DE',
-    '#004DCF',
-    '#5300EB',
-    '#EB9694',
-    '#FAD0C3',
-    '#FEF3BD',
-    '#C1E1C5',
-    '#BEDADC',
-    '#C4DEF6',
-    '#BED3F3',
-    '#D4C4FB'
-];
+const COLORS = ['#B80000', '#DB3E00', '#FCCB00', '#008B02', '#006B76', '#1273DE', '#004DCF', '#5300EB', '#EB9694', '#FAD0C3', '#FEF3BD', '#C1E1C5', '#BEDADC', '#C4DEF6', '#BED3F3', '#D4C4FB'];
 
 const styles = () => ({
     color: {

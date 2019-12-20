@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import { withStyles, Grid, Box, Chip, Button, Dialog } from "@material-ui/core";
 import { Chat, Paint, Screen, Game } from "./";
-import { ROOM_STATUS_WORD_SELECTING, SOCKET_ON_WORD_SELECT, SOCKET_ON_PAINT } from './constants';
+import { ROOM_STATUS_WORD_SELECTING } from './constants';
 
 const styles = (theme) => ({
     wordList: {
@@ -49,18 +49,9 @@ class GamePainter extends PureComponent {
     }
 
     handleWordSelect = (e, word) => {
+        const { onWordSelect } = this.props;
         //this.handleModalWordClose();
-        const { socket } = this.props;
-        socket.emit(SOCKET_ON_WORD_SELECT, word);
-        console.log('handleWordSelect ' + word);
-    }
-
-    handleConvertToImage = (canvas) => {
-        console.log('handleConvertToImage');
-        if(!canvas) return false;
-        const { socket } = this.props;
-        let image = canvas.current.toDataURL();
-        socket.emit(SOCKET_ON_PAINT, image);
+        onWordSelect(word);
     }
 
     getTask = () => {
@@ -71,19 +62,14 @@ class GamePainter extends PureComponent {
         } : {};
     }
 
-    // isWordSelecting = () => {
-    //     const { room: { status } } = this.props;
-    //     console.log(status);
-    //     return status === 'ROOM_STATUS_WORD_SELECTING';
-    // }
-
-    isWordDefined = () => {
-        const { room: { word } } = this.props;
-        return !word ? true : false;
+    isWordSelecting = () => {
+        const { room: { status } } = this.props;
+        console.log(status);
+        return status === ROOM_STATUS_WORD_SELECTING;
     }
 
     render() {
-        const { classes, onWordSelect, ...props } = this.props;
+        const { classes, onConvertToImage, onWordSelect, ...props } = this.props;
         //const { isModalWord } = this.state;
         let words = this.getWordList();
         let task = this.getTask();
@@ -94,10 +80,10 @@ class GamePainter extends PureComponent {
                     task={task}
                     {...props}
                 >
-                    <Paint onConvertToImage={this.handleConvertToImage} />
+                    <Paint onConvertToImage={onConvertToImage} />
                 </Game>
                 <Dialog
-                    open={this.isWordDefined()}
+                    open={this.isWordSelecting()}
                 >
                     <Box
                         className={classes.wordList}
