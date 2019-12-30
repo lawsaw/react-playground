@@ -125,7 +125,7 @@ class Paint extends PureComponent {
     }
 
     handleSizeChange = (e, lineWidth) => {
-        console.log(lineWidth);
+        //console.log(lineWidth);
         this.setState(state => ({
             lineOptions: {
                 ...state.lineOptions,

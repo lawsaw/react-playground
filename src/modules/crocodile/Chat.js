@@ -47,7 +47,7 @@ class Chat extends PureComponent {
     onChat = (message) => {
         const { socket } = this.props;
         socket.emit(SOCKET_ON_CHAT, message);
-        console.log(message);
+        //console.log(message);
     }
 
     handleChat = () => {

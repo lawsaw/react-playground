@@ -43,7 +43,7 @@ const styles = () => ({
 class ColorPicker extends PureComponent {
 
     handleChange = (color, e) => {
-        console.log({color, e});
+        //console.log({color, e});
         const { onColorSelect } = this.props;
         if(onColorSelect) onColorSelect(color.hex);
     }

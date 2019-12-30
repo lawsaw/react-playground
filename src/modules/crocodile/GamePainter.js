@@ -29,11 +29,11 @@ class GamePainter extends PureComponent {
     handleWordSelect = (e, word) => {
         const { socket } = this.props;
         socket.emit(SOCKET_ON_WORD_SELECT, word);
-        console.log('handleWordSelect ' + word);
+        //console.log('handleWordSelect ' + word);
     }
 
     handleConvertToImage = (canvas) => {
-        console.log('handleConvertToImage');
+        //console.log('handleConvertToImage');
         if(!canvas) return false;
         const { socket } = this.props;
         let image = canvas.current.toDataURL();

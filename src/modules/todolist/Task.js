@@ -53,7 +53,7 @@ export default withStyles(styles)(({ classes, id, title, description, isDone, up
     function saveData() {
         setIsTitleEdit(false);
         setIsDescriptionEdit(false);
-        console.log('save');
+        //console.log('save');
     }
 
     function updateValue(field) {

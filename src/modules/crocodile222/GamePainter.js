@@ -64,7 +64,7 @@ class GamePainter extends PureComponent {
 
     isWordSelecting = () => {
         const { room: { status } } = this.props;
-        console.log(status);
+        //console.log(status);
         return status === ROOM_STATUS_WORD_SELECTING;
     }
 

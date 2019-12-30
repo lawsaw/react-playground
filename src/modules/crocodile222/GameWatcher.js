@@ -26,7 +26,7 @@ class GameWatcher extends PureComponent {
         const { room: { image, status } } = this.props;
         let painter = this.getPainterName();
         let task = this.getTask(painter);
-        console.log(painter);
+        //console.log(painter);
         return (
             <Game
                 task={task}

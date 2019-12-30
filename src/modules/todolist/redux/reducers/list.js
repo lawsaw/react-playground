@@ -39,7 +39,7 @@ const list = (state = initialState, action) => {
             let clone = [...state];
             let task = clone.find(item => item.id === id);
             task[field] = value;
-            console.log(id, field, value);
+            //console.log(id, field, value);
             return clone;
         }
         case DONE: {

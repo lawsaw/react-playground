@@ -129,11 +129,11 @@ class Body extends PureComponent {
     }
 
     handleNewRoomSubmit = (new_room_name) => {
-        console.log(new_room_name);
+        //console.log(new_room_name);
     }
 
     handleJoinRoom = (room) => {
-        console.log(room);
+        //console.log(room);
         this.socket.emit(SOCKET_CHANNEL_ROOM_ACCESS_TO, {
             room,
             action: ROOM_ACTION_JOIN,
@@ -154,7 +154,7 @@ class Body extends PureComponent {
     socketOnRoomAccess = ({ action, room }) => {
         switch (action) {
             case ROOM_ACTION_UPDATE:
-                console.log(ROOM_ACTION_UPDATE);
+                //console.log(ROOM_ACTION_UPDATE);
                 this.setState(state => ({
                     server: {
                         ...state.server,
@@ -163,7 +163,7 @@ class Body extends PureComponent {
                 }));
                 break;
             case ROOM_ACTION_LEAVE:
-                console.log(ROOM_ACTION_LEAVE);
+                //console.log(ROOM_ACTION_LEAVE);
                 this.setState(state => ({
                     server: {
                         ...state.server,
@@ -173,7 +173,7 @@ class Body extends PureComponent {
                 }));
                 break;
             default:
-                console.log('default');
+                //console.log('default');
                 break;
         }
 
@@ -187,7 +187,7 @@ class Body extends PureComponent {
     handleChat = () => {}
     handleLeaveRoom = () => {
         const { server: { room: { roomName } } } = this.state;
-        console.log(roomName);
+        //console.log(roomName);
         this.socket.emit(SOCKET_CHANNEL_ROOM_ACCESS_TO, {
             action: ROOM_ACTION_LEAVE,
             room: roomName,
@@ -206,7 +206,7 @@ class Body extends PureComponent {
 
     render() {
         const { nickname, server, lobby_step, rooms } = this.state;
-        console.log({ server, rooms });
+        //console.log({ server, rooms });
         return lobby_step === null ? (
             <GameInterface
                 onConvertToImage={this.handleConvertToImage}

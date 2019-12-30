@@ -61,7 +61,7 @@ class GameInterface extends PureComponent {
 
     render() {
         const { room } = this.state;
-        console.log(room);
+        //console.log(room);
         return room ? (
             <Interface
                 room={room}

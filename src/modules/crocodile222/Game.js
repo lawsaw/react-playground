@@ -42,7 +42,7 @@ class Game extends PureComponent {
         const { classes, onChat, room, user, onRoomLeave, onGamePreStart, task, children, chat } = this.props;
         let { winner } = room;
         let status = this.generateStatus();
-        console.log(room, user);
+        //console.log(room, user);
         return (
             <Fragment>
                 <RoomInfoBar

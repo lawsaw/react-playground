@@ -16,7 +16,7 @@ const styles = (theme) => ({
 class PlayersBar extends PureComponent {
 
     handleClick = playerId => (e) => {
-        console.log({playerId, e});
+        //console.log({playerId, e});
     }
 
     render() {

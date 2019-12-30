@@ -5,20 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf276a12-ba85-4e17-93a3-7ef6e8fa304c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/etc.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/etc.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Body.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/Body.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/Chat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/ChatWindow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/ChatWindow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/Game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/ColorPicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/ColorPicker.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/crocodile/GameInterface.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/GameInterface.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/crocodile/GamePainter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/GamePainter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/GameWatcher.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/GameWatcher.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/crocodile/LobbyRoomSelection.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/LobbyRoomSelection.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/RoomInfoBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/RoomInfoBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Screen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/Screen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/Paint.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/Paint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile/PlayersBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile/PlayersBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile222/Body.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile222/Body.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile222/ColorPicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile222/ColorPicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile222/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile222/Game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile222/GamePainter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile222/GamePainter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile222/GameWatcher.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile222/GameWatcher.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/crocodile222/Paint.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/crocodile222/Paint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/todolist/Task.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/todolist/Task.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/todolist/redux/reducers/list.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/todolist/redux/reducers/list.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,8 +82,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/helpers/constants.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="34" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
+            <state relative-caret-position="180">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -170,14 +171,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/modules/tetris/Bar.js" />
-        <option value="$PROJECT_DIR$/src/modules/tetris/Screen.js" />
-        <option value="$PROJECT_DIR$/src/modules/tetris/Score.js" />
-        <option value="$PROJECT_DIR$/src/modules/tetris/index.js" />
-        <option value="$PROJECT_DIR$/src/modules/tetris/Preview.js" />
-        <option value="$PROJECT_DIR$/src/modules/tetris/Grid.js" />
-        <option value="$PROJECT_DIR$/src/modules/tetris/Friend.js" />
-        <option value="$PROJECT_DIR$/src/modules/tetris/ResultModal.js" />
         <option value="$PROJECT_DIR$/src/modules/tetris/BodyOnline.js" />
         <option value="$PROJECT_DIR$/src/modules/tetris/Body.js" />
         <option value="$PROJECT_DIR$/src/modules/tetris/Multi.js" />
@@ -195,7 +188,6 @@
         <option value="$PROJECT_DIR$/src/modules/crocodile/ScreenToolbar.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/DeskDrawing.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/DeskToolbar.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/Paint.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/TextInput.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/Desk.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/Crocodile.js" />
@@ -205,28 +197,37 @@
         <option value="$PROJECT_DIR$/src/modules/crocodile222/GameInterface.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/ButtonBar.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/Lobby.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/PlayersBar.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/ColorPicker.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/Body.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/RoomName.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/RoomInfoBar.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/GamePainter.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/Screen.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/GameWatcher.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/GameInterface.js" />
         <option value="$PROJECT_DIR$/src/helpers/etc.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/constants.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/Chat.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/ChatWindow.js" />
-        <option value="$PROJECT_DIR$/src/modules/crocodile/LobbyRoomSelection.js" />
         <option value="$PROJECT_DIR$/src/modules/crocodile/Game.js" />
         <option value="$PROJECT_DIR$/src/helpers/constants.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/GamePainter.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/GameInterface.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/LobbyRoomSelection.js" />
+        <option value="$PROJECT_DIR$/src/modules/todolist/Task.js" />
+        <option value="$PROJECT_DIR$/src/modules/todolist/redux/reducers/list.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile222/GameWatcher.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/PlayersBar.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile222/GamePainter.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile222/ColorPicker.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/ColorPicker.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile222/Game.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile222/Body.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/Paint.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile/Chat.js" />
+        <option value="$PROJECT_DIR$/src/modules/crocodile222/Paint.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="1920" />
-    <option name="width" value="994" />
+    <option name="width" value="1276" />
     <option name="height" value="1200" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -246,12 +247,6 @@
               <item name="react-playground" type="b2602c69:ProjectViewProjectNode" />
               <item name="react-playground" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="react-playground" type="b2602c69:ProjectViewProjectNode" />
-              <item name="react-playground" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="helpers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="react-playground" type="b2602c69:ProjectViewProjectNode" />
@@ -348,12 +343,12 @@
       <workItem from="1575880822204" duration="536000" />
       <workItem from="1575885447377" duration="5832000" />
       <workItem from="1576588835183" duration="20215000" />
-      <workItem from="1577696008671" duration="17425000" />
+      <workItem from="1577696008671" duration="17604000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="936800000" />
+    <option name="totallyTimeSpent" value="936979000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -365,10 +360,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1920" y="0" width="994" height="1200" extended-state="0" />
-    <editor active="true" />
+    <frame x="1920" y="0" width="1276" height="1200" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25687104" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19788274" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="npm" order="3" side_tool="true" />
@@ -843,8 +837,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/helpers/constants.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="34" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
+        <state relative-caret-position="180">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>

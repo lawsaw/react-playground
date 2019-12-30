@@ -64,8 +64,8 @@ class LobbyRoomSelection extends PureComponent {
     }
 
     updateRoomList = ({ rooms }) => {
-        console.log('updateRoomList');
-        console.log(rooms);
+        //console.log('updateRoomList');
+        //console.log(rooms);
         this.setState(() => ({
             rooms,
             isNewRoomModal: false,
