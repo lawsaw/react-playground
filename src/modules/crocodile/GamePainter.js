@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
-import { withStyles, Grid, Box, Chip, Button, Dialog } from "@material-ui/core";
-import { Chat, Paint, Screen, Game } from "./";
-import { ROOM_STATUS_WORD_SELECTING, SOCKET_ON_WORD_SELECT, SOCKET_ON_PAINT } from './constants';
+import { withStyles, Box, Button, Dialog } from "@material-ui/core";
+import { Paint, Game } from "./";
+import { SOCKET_ON_WORD_SELECT, SOCKET_ON_PAINT } from './constants';
 
 const styles = (theme) => ({
     wordList: {
@@ -21,35 +21,12 @@ const styles = (theme) => ({
 
 class GamePainter extends PureComponent {
 
-    // state = {
-    //     isModalWord: false,
-    // }
-
-    // handleModalWord = () => {
-    //     this.setState(state => ({
-    //         isModalWord: !state.isModalWord,
-    //     }))
-    // }
-
-    // handleModalWordOpen = () => {
-    //     this.setState(() => ({
-    //         isModalWord: true,
-    //     }))
-    // }
-    //
-    // handleModalWordClose = () => {
-    //     this.setState(() => ({
-    //         isModalWord: false,
-    //     }))
-    // }
-
     getWordList = () => {
-        const { room, user } = this.props;
-        return room.players[user.id].words;
+        const { room, player } = this.props;
+        return room.players[player.id].words;
     }
 
     handleWordSelect = (e, word) => {
-        //this.handleModalWordClose();
         const { socket } = this.props;
         socket.emit(SOCKET_ON_WORD_SELECT, word);
         console.log('handleWordSelect ' + word);
@@ -71,12 +48,6 @@ class GamePainter extends PureComponent {
         } : {};
     }
 
-    // isWordSelecting = () => {
-    //     const { room: { status } } = this.props;
-    //     console.log(status);
-    //     return status === 'ROOM_STATUS_WORD_SELECTING';
-    // }
-
     isWordDefined = () => {
         const { room: { word } } = this.props;
         return !word ? true : false;
@@ -84,14 +55,12 @@ class GamePainter extends PureComponent {
 
     render() {
         const { classes, onWordSelect, ...props } = this.props;
-        //const { isModalWord } = this.state;
         let words = this.getWordList();
-        let task = this.getTask();
         return (
             <Fragment>
 
                 <Game
-                    task={task}
+                    task={this.getTask()}
                     {...props}
                 >
                     <Paint onConvertToImage={this.handleConvertToImage} />

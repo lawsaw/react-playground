@@ -115,7 +115,7 @@ export function preventMultipleSubmit() {
             callback();
             setTimeout(() => {
                 isLocked = false;
-            }, 1000);
+            }, 750);
         }
     }
     return func;

@@ -3,7 +3,7 @@ import { withSnackbar } from 'notistack';
 import socketIOClient from 'socket.io-client';
 import { withStyles } from "@material-ui/core";
 import { Lobby, GameInterface } from './';
-import {SOCKET_MESSAGE, SOCKET_ON_LOBBY_STEP_CHANGE, SOCKET_ON_ROOM_JOIN, SOCKET_ON_ROOM_LEAVE} from "./constants";
+import { SOCKET_MESSAGE, SOCKET_ON_ROOM_JOIN, SOCKET_ON_ROOM_LEAVE } from "./constants";
 
 export const SOCKET_SERVER = 'http://localhost:3005/';
 

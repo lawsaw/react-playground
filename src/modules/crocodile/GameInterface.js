@@ -7,13 +7,14 @@ const styles = (theme) => ({
 
 });
 
+const Interface = props => {
+    return props.player.isPainter ? <GamePainter {...props} /> : <GameWatcher {...props} />
+};
+
 class GameInterface extends PureComponent {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            room: null,
-        }
+    state = {
+        room: null,
     }
 
     componentDidMount() {
@@ -43,13 +44,6 @@ class GameInterface extends PureComponent {
         socket.emit(SOCKET_ON_ROOM_LEAVE);
     }
 
-    // getPainter = () => {
-    //     const { room } = this.props;
-    //     let players = (room && room.players) || {};
-    //     let id = Object.keys(players).find(player => players[player].isPainter);
-    //     return players[id];
-    // }
-
     getPlayer = () => {
         const { socket: { id } } = this.props;
         const { room } = this.state;
@@ -58,30 +52,24 @@ class GameInterface extends PureComponent {
         return player;
     }
 
-    render() {
-        const { onConvertToImage, onWordSelect, ...props } = this.props;
+    getPainter = () => {
         const { room } = this.state;
-        let currentPlayer = this.getPlayer();
+        let players = (room && room.players) || {};
+        let id = Object.keys(players).find(player => players[player].isPainter);
+        return players[id];
+    }
+
+    render() {
+        const { room } = this.state;
+        console.log(room);
         return room ? (
-            <Fragment>
-                {
-                    currentPlayer.isPainter ? (
-                        <GamePainter
-                            room={room}
-                            user={currentPlayer}
-                            onLeaveRoom={this.handleLeaveRoom}
-                            {...props}
-                        />
-                    ) : (
-                        <GameWatcher
-                            room={room}
-                            painter={currentPlayer.nickname}
-                            onLeaveRoom={this.handleLeaveRoom}
-                            {...props}
-                        />
-                    )
-                }
-            </Fragment>
+            <Interface
+                room={room}
+                onLeaveRoom={this.handleLeaveRoom}
+                painter={this.getPainter()}
+                player={this.getPlayer()}
+                {...this.props}
+            />
         ) : 'Room is loading'
     }
 }

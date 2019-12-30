@@ -1,5 +1,8 @@
 import React, { PureComponent, Fragment, createRef } from 'react';
-import {withStyles, Paper, Box } from "@material-ui/core";
+import cx from 'classnames';
+import { withStyles, Paper, Box, Badge } from "@material-ui/core";
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
 const styles = (theme) => ({
     window: {
@@ -17,7 +20,17 @@ const styles = (theme) => ({
         overflowY: 'scroll',
     },
     card: {
-        margin: theme.spacing(1),
+        padding: theme.spacing(1),
+        '&:nth-child(2n)': {
+            backgroundColor: fade(theme.palette.grey[400], 0.1),
+        },
+    },
+    cardActive: {
+        cursor: 'pointer',
+        display: 'block',
+        '&:hover': {
+            backgroundColor: fade(theme.palette.primary.light, 0.2),
+        },
     },
     name: {
         textAlign: 'left',
@@ -33,14 +46,29 @@ const styles = (theme) => ({
         textAlign: 'right',
         fontSize: theme.typography.pxToRem(10),
     },
+    thumb: {
+        fontSize: theme.typography.pxToRem(14),
+        verticalAlign: 'middle',
+        marginRight: theme.spacing(1),
+        color: theme.palette.primary.main,
+    },
 });
 
-const MessageClient = ({ classes, sender, message }) => {
+const MessageClient = ({ classes, sender, message, onLikeMessage, isLiked }) => {
+    let clickHandler = onLikeMessage ? {
+        onClick: onLikeMessage,
+    } : null;
     return (
         <Box
-            className={classes.card}
+            className={cx(classes.card, onLikeMessage && classes.cardActive)}
+            {...clickHandler}
         >
-            <Box fontWeight="fontWeightBold" className={classes.name}>{sender}</Box>
+            <Box fontWeight="fontWeightBold" className={classes.name}>
+                {
+                    isLiked ? <ThumbUpIcon className={classes.thumb} /> : null
+                }
+                {sender}
+            </Box>
             <Box className={classes.message}>{message}</Box>
         </Box>
     );
@@ -79,7 +107,11 @@ class ChatWindow extends PureComponent {
     }
 
     render() {
-        const { classes, chat } = this.props;
+        const { classes, chat, isPainter, onLikeMessage } = this.props;
+        let lenta = chat && chat.length ? chat : [{
+            player: {nickname: 'SERVER'},
+            message: 'This chat is currently empty',
+        }];
         return (
             <Paper
                 elevation={5}
@@ -91,7 +123,11 @@ class ChatWindow extends PureComponent {
                     ref={this.windowRef}
                 >
                     {
-                        chat && chat.length ? chat.map(({ player: { nickname }, message }, index) => {
+                        lenta.map(({ player, message, id, isLiked }, index) => {
+                            let { nickname } = player;
+                            let likeHandler = isPainter ? {
+                                onLikeMessage: onLikeMessage(id),
+                            } : null;
                             return (
                                 <Fragment
                                     key={index}
@@ -107,12 +143,14 @@ class ChatWindow extends PureComponent {
                                                 classes={classes}
                                                 message={message}
                                                 sender={nickname}
+                                                isLiked={isLiked}
+                                                {...likeHandler}
                                             />
                                         )
                                     }
                                 </Fragment>
                             )
-                        }) : 'This chat is currently empty'
+                        })
                     }
                 </Box>
             </Paper>

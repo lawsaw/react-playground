@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { withStyles, Grid } from "@material-ui/core";
 import { TextInput, ChatWindow } from './';
 import { preventMultipleSubmit } from '../../helpers/etc';
-import { SOCKET_ON_CHAT } from './constants';
+import { SOCKET_ON_CHAT, SOCKET_ON_MESSAGE_LIKE } from './constants';
 
 const styles = (theme) => ({
     chat: {
@@ -67,8 +67,13 @@ class Chat extends PureComponent {
         }));
     }
 
+    handleLikeMessage = id => e => {
+        const { socket } = this.props;
+        socket.emit(SOCKET_ON_MESSAGE_LIKE, id);
+    }
+
     render() {
-        const { classes, chat } = this.props;
+        const { classes, chat, isPainter } = this.props;
         const { message } = this.state;
         return (
             <Grid
@@ -83,10 +88,12 @@ class Chat extends PureComponent {
                 >
                     <ChatWindow
                         chat={chat}
+                        isPainter={isPainter}
+                        onLikeMessage={this.handleLikeMessage}
                     />
                 </Grid>
                 {
-                    true ? (
+                    !isPainter ? (
                         <Grid
                             item
                             className={classes.wrapSubmit}
@@ -94,7 +101,7 @@ class Chat extends PureComponent {
                             <TextInput
                                 onChange={this.handleMessageChange}
                                 onSubmit={this.handleChat}
-                                placeholder="Enter your variant"
+                                placeholder="Message"
                                 value={message}
                                 className={classes.textField}
                                 elevation={5}

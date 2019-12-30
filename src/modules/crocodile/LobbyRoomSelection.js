@@ -131,6 +131,7 @@ class LobbyRoomSelection extends PureComponent {
                         <IconButton
                             className={classes.iconButton}
                             onClick={this.handleNewRoomModalOpen}
+                            disabled
                         >
                             <Add />
                         </IconButton>

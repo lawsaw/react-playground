@@ -10,13 +10,13 @@ const styles = (theme) => ({
     },
     item: {
         display: 'flex',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         justifyContent: 'flex-start',
         flexWrap: 'wrap',
         flexDirection: 'row',
     },
     label: {
-        flexBasis: 110,
+        flexBasis: 80,
     },
     value: {
         marginLeft: theme.spacing(2),

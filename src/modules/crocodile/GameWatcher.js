@@ -12,12 +12,12 @@ class GameWatcher extends PureComponent {
         const { room: { word }, painter } = this.props;
         return word && word.length ? {
             label: 'Your task',
-            value: `Try to guess the word that ${painter} is drawing`,
+            value: `Try to guess the word that ${(painter || {}).nickname} is drawing`,
         } : {};
     }
 
     render() {
-        const { room: { image, status }, painter } = this.props;
+        const { room: { image, status } } = this.props;
         let task = this.getTask();
         return (
             <Game
@@ -27,7 +27,6 @@ class GameWatcher extends PureComponent {
                 <Screen
                     image={image}
                     status={status}
-                    painter={painter}
                 />
             </Game>
         )
