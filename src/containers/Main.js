@@ -30,6 +30,9 @@ const styles = () => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingLeft: `0 !important`,
+        paddingRight: `0 !important`,
+        paddingBottom: `0 !important`,
     },
 });
 
