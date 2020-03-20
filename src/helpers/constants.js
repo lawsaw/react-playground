@@ -4,12 +4,12 @@ import {
     Home,
     Crocodile,
     // About,
-    // Test,
+    Test,
     // Clock,
     // Dashboard,
     // TodoList,
     //Tetris,
 } from '../route-pages';
 
-export const HOME_PAGE = props => <Crocodile {...props} />;
-export const IS_SINGLE_PAGE = true;
+export const HOME_PAGE = props => <Home {...props} />;
+export const IS_SINGLE_PAGE = false;
