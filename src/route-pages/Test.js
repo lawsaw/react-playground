@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classes from '../styles/Test.module.scss';
 
 export default class extends Component {
 
@@ -32,8 +33,9 @@ export default class extends Component {
     }
 
     render() {
+
         return (
-            <div>
+            <div className={classes.main}>
                 Test
             </div>
         )
