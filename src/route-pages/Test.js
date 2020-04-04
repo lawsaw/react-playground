@@ -35,7 +35,7 @@ export default class extends Component {
     render() {
 
         return (
-            <div className={classes.main}>
+            <div className={classes.main2}>
                 Test
             </div>
         )
